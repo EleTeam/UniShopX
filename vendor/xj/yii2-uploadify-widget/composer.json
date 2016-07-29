@@ -1,0 +1,19 @@
+{
+    "name": "xj/yii2-uploadify-widget",
+    "description": "yii2-uploadify-widget",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "xjflyttp",
+            "email": "xjflyttp@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "xj\\uploadify\\": ""
+        }
+    }
+}
