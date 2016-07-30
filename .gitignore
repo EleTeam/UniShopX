@@ -1,7 +1,7 @@
 # yii runtime dirs
-backend/runtime
-frontend/runtime
-console/runtime
+#backend/runtime
+#frontend/runtime
+#console/runtime
 
 # yii console command
 #/yii
