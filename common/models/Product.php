@@ -130,12 +130,6 @@ class Product extends ETActiveRecord
         ];
     }
 
-    public function getAttribute($name)
-    {
-        $value = parent::getAttribute($name);
-        return 'a';
-    }
-
     public function __get($name)
     {
         $value = parent::__get($name);
