@@ -1,0 +1,15 @@
+# 安装环境要求:
+    php-5.6.x
+    mysql-server-5.6.x
+    httpd-2.x
+
+# 配置项目:
+    以下文件夹要求读写权限:
+        chmod -R 777 frontend/runtime backend/runtime api/runtime console/runtime
+        chmod -R 777 frontend/web/assets backend/web/assets
+
+# 访问地址:
+    前台: http://eleteam.ygcr8.com
+    后台: http://eleteambackend.ygcr8.com
+    api: http://eleteamapi.ygcr8.com/v1/product/view?id=1
+    数据: http://eleteamdata.ygcr8.com
