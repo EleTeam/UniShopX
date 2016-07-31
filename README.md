@@ -9,46 +9,46 @@
     php-5.6.x
     mysql-server-5.6.x
     httpd-2.x/nginx
-
+    
 #### 该项目分为4个小项目，Apache需要创建4个虚拟主机，存放该项目的所有代码，虚拟主机的配置如下：
-<VirtualHost *:80>
-    ServerAdmin 908601756@qq.com
-    DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/ETShop-for-PHP-Yii2/backend/web"
-    ServerName local.eleteambackend.ygcr8.com
-    ErrorLog "logs/local.eleteambackend.ygcr8.com-error_log"
-    CustomLog "logs/local.eleteambackend.ygcr8.com-access_log" common
-</VirtualHost>
-<VirtualHost *:80>
-    ServerAdmin 908601756@qq.com
-    DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/ETShop-for-PHP-Yii2/frontend/web"
-    ServerName local.eleteam.ygcr8.com
-    ServerAlias local.eleteam.ygcr8.com
-    ErrorLog "logs/local.eleteam.ygcr8.com-error_log"
-    CustomLog "logs/local.eleteam.ygcr8.com-access_log" common
-</VirtualHost>
-<VirtualHost *:80>
-    ServerAdmin 908601756@qq.com
-    DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/ETShop-for-PHP-Yii2/data"
-    ServerName local.eleteamdata.ygcr8.com
-    ServerAlias local.eleteamdata.ygcr8.com
-    ErrorLog "logs/local.eleteamdata.ygcr8.com-error_log"
-    CustomLog "logs/local.eleteamdata.ygcr8.com-access_log" common
-</VirtualHost>
-<VirtualHost *:80>
-    ServerAdmin 908601756@qq.com
-    DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/ETShop-for-PHP-Yii2/api/web"
-    ServerName local.eleteamapi.ygcr8.com
-    ServerAlias local.eleteamapi.ygcr8.com
-    ErrorLog "logs/local.eleteamapi.ygcr8.com-error_log"
-    CustomLog "logs/local.eleteamapi.ygcr8.com-access_log" common
-</VirtualHost>
+    <VirtualHost *:80>
+        ServerAdmin 908601756@qq.com
+        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/ETShop-for-PHP-Yii2/backend/web"
+        ServerName local.eleteambackend.ygcr8.com
+        ErrorLog "logs/local.eleteambackend.ygcr8.com-error_log"
+        CustomLog "logs/local.eleteambackend.ygcr8.com-access_log" common
+    </VirtualHost>
+    <VirtualHost *:80>
+        ServerAdmin 908601756@qq.com
+        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/ETShop-for-PHP-Yii2/frontend/web"
+        ServerName local.eleteam.ygcr8.com
+        ServerAlias local.eleteam.ygcr8.com
+        ErrorLog "logs/local.eleteam.ygcr8.com-error_log"
+        CustomLog "logs/local.eleteam.ygcr8.com-access_log" common
+    </VirtualHost>
+    <VirtualHost *:80>
+        ServerAdmin 908601756@qq.com
+        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/ETShop-for-PHP-Yii2/data"
+        ServerName local.eleteamdata.ygcr8.com
+        ServerAlias local.eleteamdata.ygcr8.com
+        ErrorLog "logs/local.eleteamdata.ygcr8.com-error_log"
+        CustomLog "logs/local.eleteamdata.ygcr8.com-access_log" common
+    </VirtualHost>
+    <VirtualHost *:80>
+        ServerAdmin 908601756@qq.com
+        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/ETShop-for-PHP-Yii2/api/web"
+        ServerName local.eleteamapi.ygcr8.com
+        ServerAlias local.eleteamapi.ygcr8.com
+        ErrorLog "logs/local.eleteamapi.ygcr8.com-error_log"
+        CustomLog "logs/local.eleteamapi.ygcr8.com-access_log" common
+    </VirtualHost>
 
 #### 配置本地的hosts文件
-127.0.0.1       local.eleteam.ygcr8.com
-127.0.0.1       local.eleteambackend.ygcr8.com
-127.0.0.1       local.eleteamdata.ygcr8.com
-127.0.0.1       local.eleteamapi.ygcr8.com
-
+    127.0.0.1       local.eleteam.ygcr8.com
+    127.0.0.1       local.eleteambackend.ygcr8.com
+    127.0.0.1       local.eleteamdata.ygcr8.com
+    127.0.0.1       local.eleteamapi.ygcr8.com
+    
 #### 配置项目:
     以下文件夹要求读写权限:
         chmod -R 777 frontend/runtime backend/runtime api/runtime console/runtime
