@@ -22,6 +22,8 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'adminlte/others/font-awesome.min.css',
+        'adminlte/others/ionicons.min.css',
         'adminlte/plugins/jvectormap/jquery-jvectormap-1.2.2.css',
         'adminlte/dist/css/AdminLTE.min.css',
         'adminlte/dist/css/skins/_all-skins.min.css',

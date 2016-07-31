@@ -32,8 +32,8 @@ AppAsset::register($this);
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="/adminlte/others/html5shiv.min.js"></script>
+    <script src="/adminlte/others/respond.min.js"></script>
     <![endif]-->
     <?php $this->head() ?>
 </head>
@@ -346,6 +346,17 @@ AppAsset::register($this);
                     <ul class="treeview-menu">
                         <li><a href="<?=Url::toRoute('/product') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Product')?></a></li>
                         <li><a href="<?=Url::toRoute('/category') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Category')?></a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span><?=Yii::t('app','User')?></span>
+                        <span class="label label-primary pull-right">4</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="<?=Url::toRoute('/user') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','User')?></a></li>
+                        <li><a href="<?=Url::toRoute('/admin') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Authority Manager')?></a></li>
                     </ul>
                 </li>
                 <li class="treeview">
