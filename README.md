@@ -59,6 +59,7 @@
     后台: http://eleteambackend.ygcr8.com
     api: http://eleteamapi.ygcr8.com/v1/product/view?id=1
     数据: http://eleteamdata.ygcr8.com
+    gii: http://local.eleteam.ygcr8.com/gii
 
 ###### @author Tony Wong
 ###### @email 908601756@qq.com
