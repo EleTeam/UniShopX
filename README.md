@@ -56,10 +56,12 @@
 
 #### 线上的访问地址:
     前台: http://eleteam.ygcr8.com
-    后台: http://eleteambackend.ygcr8.com
     api: http://eleteamapi.ygcr8.com/v1/product/view?id=1
     数据: http://eleteamdata.ygcr8.com
     gii: http://local.eleteam.ygcr8.com/gii
+    后台: http://eleteambackend.ygcr8.com
+        后台超级用户: admin/123456
+        后台普通用户: demo/123456
 
 ###### @author Tony Wong
 ###### @email 908601756@qq.com
