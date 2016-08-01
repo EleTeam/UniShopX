@@ -11,10 +11,11 @@
 
 namespace backend\controllers;
 
+use common\components\ETWebController;
 use Yii;
 use common\models\Product;
 use common\models\ProductSearch;
-use common\components\ETWebController;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -28,14 +29,14 @@ class ProductController extends ETWebController
      */
     public function behaviors()
     {
-        return [
+        return array_merge(parent::behaviors(), [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-        ];
+        ]);
     }
 
     /**

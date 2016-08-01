@@ -1,13 +1,22 @@
 <?php
+/**
+ * ETShop-for-PHP-Yii2
+ *
+ * @author Tony Wong
+ * @date 2016-07-31
+ * @email 908601756@qq.com
+ * @copyright Copyright © 2016年 EleTeam
+ * @license The MIT License (MIT)
+ */
 
 namespace backend\controllers;
 
+use common\components\ETWebController;
 use Yii;
 use common\models\User;
 use common\models\UserSearch;
-use common\components\ETWebController;
+use common\models\LoginForm;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -15,18 +24,36 @@ use yii\filters\VerbFilter;
 class UserController extends ETWebController
 {
     /**
-     * @inheritdoc
+     * Logs in a user.
+     *
+     * @return mixed
      */
-    public function behaviors()
+    public function actionLogin()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
+        $this->layout = 'login';
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        } else {
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Logs out the current user.
+     *
+     * @return mixed
+     */
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+        return $this->goHome();
     }
 
     /**

@@ -1,4 +1,13 @@
 <?php
+/**
+ * ETShop-for-PHP-Yii2
+ *
+ * @author Tony Wong
+ * @date 2016-07-31
+ * @email 908601756@qq.com
+ * @copyright Copyright © 2016年 EleTeam
+ * @license The MIT License (MIT)
+ */
 
 use yii\helpers\Html;
 use yii\grid\GridView;
