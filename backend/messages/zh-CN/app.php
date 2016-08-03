@@ -11,8 +11,10 @@
 
 return [
     'Homepage' => '首页',
-    'Setting' => '系统',
-    'Settings' => '系统',
+    'System' => '系统',
+    'Area' => '区域',
+    'Setting' => '设置',
+    'Settings' => '设置',
     'Cache' => '缓存',
     'Content' => '内容',
     'Albums' => '相册',
@@ -42,24 +44,9 @@ return [
     'Updated At' => '更新时间',
     'User Id' => '用户 ID',
     'User ID' => '用户 ID',
+    'User Address' => '用户地址',
 
-    'Forum' => '论坛',
-    'Forum ID' => '论坛 ID',
-    'Forum Name' => '论坛名称',
-    'Forum Description' => '论坛描述',
-    'Forum Url' => '论坛网址',
-    'Board Name' => '版块名称',
-    'Board Description' => '版块描述',
-
-    'Parent' => '父级',
-
-    'Explore' => '探索',
-    'Recommendation' => '推荐',
-    'Create a post' => '发表新文章',
-
-	'Site Name' => '站点名称',
-	'Site Title' => '站点标题',
-	'Site Description' => '站点描述',
-	'Site Keyword' => '站点关键字',
-	'Statistics Code' => '统计代码'
+    'Order' => '订单',
+    'Preorder' => '预订单',
+    'Preorder Show Notice' => '预订单表示用户从购物车下预定单, 但是没有提交订单, 用于分析用户的行为, 给未下单的用户做营销手段',
 ];

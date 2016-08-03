@@ -16,6 +16,7 @@ use common\models\User;
 use Yii;
 use yii\helpers\Json;
 use yii\rest\Controller;
+use yii\web\Response;
 
 class ETRestController extends Controller
 {
@@ -31,7 +32,6 @@ class ETRestController extends Controller
      */
     private function jsonEncode($status, $data=[], $message='', $code=1, $share=[])
     {
-        header('Content-type:application/json;charset=utf-8'); // 中文乱码问题
         $status     = boolval($status);
         $data       = $data ? $data : (object)array();
         $message    = strval($message);
@@ -46,21 +46,22 @@ class ETRestController extends Controller
             'share'      => $share,
         ];
 
-        //echo json_encode($result, JSON_UNESCAPED_UNICODE);
-        echo Json::encode($result);
-        exit;
+        //设置响应对象
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data = $result;
     }
 
     protected function jsonSuccess($data=[], $message='', $code=1, $share=array())
     {
         $message = $message ? $message : '调用成功';
-        return $this->jsonEncode(true, $data, $message, $code, $share);
+        $this->jsonEncode(true, $data, $message, $code, $share);
     }
 
     protected function jsonFail($data=array(), $message='', $code=0, $share=array())
     {
         $message = $message ? $message : '调用失败';
-        return $this->jsonEncode(false, $data, $message, $code, $share);
+        $this->jsonEncode(false, $data, $message, $code, $share);
     }
 
     protected function isLoggedIn()

@@ -94,6 +94,8 @@ class User extends ETActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
+        if(!$token)
+            return null;
         return static::findOne(['access_token' => $token]);
     }
 

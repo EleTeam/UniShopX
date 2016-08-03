@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => Yii::t('app', 'Small Image'),
                 'format' => ['image',['width'=>'30','height'=>'30',]],
                 'value' => function($dataProvider){
-                    return Yii::getAlias('@imghost') . $dataProvider->image_small;
+                    return Yii::getAlias('@dataHost') . $dataProvider->image_small;
                 }
 
             ],

@@ -35,7 +35,7 @@ use xj\uploadify\Uploadify;
         <label for="product-image" class="col-lg-2 control-label"><?=Yii::t('app', 'Image')?></label>
         <div class="col-lg-8">
             <input type="hidden" value="<?=$model->image?>" name="Product[image]" class="form-control" id="product-image">
-            <img id="show-product-image" src="<?=Yii::getAlias('@imghost').$model->image?>" class="" width="80" height="80" style="margin-right:10px;"/>
+            <img id="show-product-image" src="<?=$model->image?>" class="" width="80" height="80" style="margin-right:10px;"/>
             <?php
             echo Html::fileInput('image', $model->image, ['id' => 'image']);
             echo Uploadify::widget([
@@ -75,7 +75,7 @@ EOF
     <div class="form-group field-product-image_small">
         <label for="product-image_small" class="col-lg-2 control-label"><?=Yii::t('app', 'Small Image')?></label>
         <div class="col-lg-8">
-            <img id="show-product-image_small" src="<?=Yii::getAlias('@imghost').$model->image_small?>" class="" width="80" height="80" style="margin-right:10px;"/>
+            <img id="show-product-image_small" src="<?=$model->image_small?>" class="" width="80" height="80" style="margin-right:10px;"/>
             <?php
             echo Html::fileInput('image_small', $model->image, ['id' => 'image_small']);
             echo Uploadify::widget([

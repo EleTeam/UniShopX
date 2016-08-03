@@ -163,4 +163,19 @@ class CartItem extends ETActiveRecord
         }
         return $rows;
     }
+
+    /**
+     * 获取购物车项
+     *      foreach 时用 $cartItem->product, $cartItem->cartItemAttrs获取相应的关联对象
+     * @param $user_id
+     * @param int $is_selected
+     * @return array|null|\yii\db\ActiveRecord[]
+     */
+    public static function findByUserId($user_id, $is_selected=1)
+    {
+        if(!$user_id)
+            return null;
+        $cartItems = static::find()->where(['user_id'=>$user_id, 'is_selected'=>$is_selected])->all();
+        return $cartItems;
+    }
 }

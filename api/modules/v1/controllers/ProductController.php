@@ -15,7 +15,6 @@ use common\components\ETRestController;
 use common\models\Cart;
 use common\models\ProductAttrItem;
 use Yii;
-use yii\data\ActiveDataProvider;
 use common\models\Product;
 
 class ProductController extends ETRestController
@@ -61,6 +60,7 @@ class ProductController extends ETRestController
     /**
      * 收藏商品
      * @param $id 商品id
+     * @return string
      */
     public function actionCollect($id)
     {
@@ -70,6 +70,7 @@ class ProductController extends ETRestController
     /**
      * 取消收藏商品
      * @param $id 商品id
+     * @return string
      */
     public function actionUncollect($id)
     {

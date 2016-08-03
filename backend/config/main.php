@@ -25,7 +25,7 @@ return [
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => '@data/uploads/public/editor',
-            'uploadUrl' => '@imghost/uploads/public/editor',
+            'uploadUrl' => '@dataHost/uploads/public/editor',
             'imageAllowExtensions' => ['jpg','jpeg','png','gif','bmp'],
             //'widgetClientOptions' => ['plugins' => ['clips', 'fontcolor','imagemanager'], 'lang'=>'zh_cn'],
             'widgetClientOptions' => ['plugins' => ['fontcolor'], 'lang'=>'zh_cn'],

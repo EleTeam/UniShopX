@@ -341,11 +341,21 @@ AppAsset::register($this);
                     <a href="#">
                         <i class="fa fa-files-o"></i>
                         <span><?=Yii::t('app','Product')?></span>
-                        <span class="label label-primary pull-right">4</span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="<?=Url::toRoute('/product') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Product')?></a></li>
                         <li><a href="<?=Url::toRoute('/category') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Category')?></a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span><?=Yii::t('app','Order')?></span>
+                        <span class="label label-primary pull-right">4</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="<?=Url::toRoute('/order') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Order')?></a></li>
+                        <li><a href="<?=Url::toRoute('/preorder') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Preorder')?></a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -356,7 +366,18 @@ AppAsset::register($this);
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="<?=Url::toRoute('/user') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','User')?></a></li>
+                        <li><a href="<?=Url::toRoute('/address') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','User Address')?></a></li>
                         <li><a href="<?=Url::toRoute('/admin') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Authority Manager')?></a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-laptop"></i>
+                        <span><?=Yii::t('app','System')?></span>
+                        <span class="label label-primary pull-right">4</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="<?=Url::toRoute('/area') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Area')?></a></li>
                     </ul>
                 </li>
                 <li class="treeview">

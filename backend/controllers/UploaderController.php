@@ -58,7 +58,7 @@ class UploaderController extends ETWebController
                 'afterValidate' => function (UploadAction $action) {},
                 'beforeSave' => function (UploadAction $action) {},
                 'afterSave' => function (UploadAction $action) {
-                    $action->output['fileUrl'] = Yii::getAlias('@imghost') . $action->getWebUrl();
+                    $action->output['fileUrl'] = Yii::getAlias('@dataHost') . $action->getWebUrl();
                     $action->output['filePath'] = $action->getWebUrl();
                     $action->getFilename(); // "image/yyyymmddtimerand.jpg"
                     $action->getWebUrl(); //  "baseUrl + filename, /upload/image/yyyymmddtimerand.jpg"

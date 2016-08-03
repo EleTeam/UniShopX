@@ -22,13 +22,15 @@ use common\components\ETActiveRecord;
  * @property string $image
  * @property string $featured_image
  * @property string $image_small
+ * @property string $image_medium
+ * @property string $image_large
  * @property string $name
  * @property integer $sort
  * @property integer $created_at
  * @property integer $created_by
  * @property integer $updated_at
  * @property integer $updated_by
- * @property string $price
+ * @property string $price 数据库的decimal类型自动生成string类型
  * @property string $featured_price
  * @property string $featured_position
  * @property integer $featured_position_sort
@@ -42,8 +44,6 @@ use common\components\ETActiveRecord;
  * @property string $remarks
  * @property string $featured
  * @property string $description
- * @property string $image_medium
- * @property string $image_large
  * @property string $app_featured_topic
  * @property integer $app_featured_topic_sort
  * @property string $app_long_image1
@@ -130,29 +130,6 @@ class Product extends ETActiveRecord
         ];
     }
 
-    public function __get($name)
-    {
-        $value = parent::__get($name);
-
-        //图片加上前缀
-        if($name == 'app_long_image1' && $value)
-            $value = Yii::getAlias('@imghost') . $value;
-        if($name == 'app_long_image2' && $value)
-            $value = Yii::getAlias('@imghost') . $value;
-        if($name == 'app_long_image3' && $value)
-            $value = Yii::getAlias('@imghost') . $value;
-        if($name == 'app_long_image4' && $value)
-            $value = Yii::getAlias('@imghost') . $value;
-        if($name == 'app_long_image5' && $value)
-            $value = Yii::getAlias('@imghost') . $value;
-        if($name == 'image_small' && $value)
-            $value = Yii::getAlias('@imghost') . $value;
-        if($name == 'image' && $value)
-            $value = Yii::getAlias('@imghost') . $value;
-
-        return $value;
-    }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -186,7 +163,11 @@ class Product extends ETActiveRecord
             ->orderBy($orderBy);
     }
 
-    public function showCurrentPrice()
+    /**
+     * 转到商品的最终价格
+     * @return string
+     */
+    public function turnToFinalPrice()
     {
         if($this->featured_price){
             return $this->featured_price;

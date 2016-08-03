@@ -258,7 +258,7 @@ class Cart extends ETActiveRecord
     {
         $total_price = 0;
         foreach($items as $item){
-            $total_price += $item->product->showCurrentPrice() * $item->count;
+            $total_price += $item->product->turnToFinalPrice() * $item->count;
         }
         return $total_price;
     }
