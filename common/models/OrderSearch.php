@@ -28,7 +28,7 @@ class OrderSearch extends Order
         return [
             [['id', 'created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'area_id', 'area_parent_id', 'cart_id', 'cookie_id', 'ip', 'preorder_id', 'user_id', 'total_count', 'print_count'], 'integer'],
             [['address_detail', 'address_fullname', 'address_telephone', 'area_name', 'area_path_ids', 'area_path_names', 'area_simple_name', 'area_zip_code', 'serial_no', 'coupon_user_id', 'address_id', 'has_paid', 'pay_type', 'notice', 'rough_pay_type', 'status_id', 'op_transaction_id', 'status_union', 'min_total_price_label', 'paid_date', 'store_id'], 'safe'],
-            [['total_price', 'coupon_user_total_price', 'origin_total_price'], 'number'],
+            [['total_price', 'coupon_item_total_price', 'origin_total_price'], 'number'],
         ];
     }
 
@@ -84,7 +84,7 @@ class OrderSearch extends Order
             'total_price' => $this->total_price,
             'total_count' => $this->total_count,
             'print_count' => $this->print_count,
-            'coupon_user_total_price' => $this->coupon_user_total_price,
+            'coupon_item_total_price' => $this->coupon_item_total_price,
             'origin_total_price' => $this->origin_total_price,
             'paid_date' => $this->paid_date,
         ]);
@@ -98,7 +98,7 @@ class OrderSearch extends Order
             ->andFilterWhere(['like', 'area_simple_name', $this->area_simple_name])
             ->andFilterWhere(['like', 'area_zip_code', $this->area_zip_code])
             ->andFilterWhere(['like', 'serial_no', $this->serial_no])
-            ->andFilterWhere(['like', 'coupon_user_id', $this->coupon_user_id])
+            ->andFilterWhere(['like', 'coupon_item_id', $this->coupon_item_id])
             ->andFilterWhere(['like', 'address_id', $this->address_id])
             ->andFilterWhere(['like', 'has_paid', $this->has_paid])
             ->andFilterWhere(['like', 'pay_type', $this->pay_type])

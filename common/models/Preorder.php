@@ -30,8 +30,8 @@ use Yii;
  * @property integer $total_count
  * @property string $total_price
  * @property integer $is_ordered
- * @property integer $coupon_user_id
- * @property string $coupon_user_total_price
+ * @property integer $coupon_item_id
+ * @property string $coupon_item_total_price
  * @property string $origin_total_price
  * @property integer $area_id
  * @property string $area_name
@@ -68,9 +68,9 @@ class Preorder extends ETActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'ip', 'user_id', 'cart_id', 'total_count', 'is_ordered', 'coupon_user_id', 'area_id', 'area_parent_id', 'address_id', 'pay_type', 'product_type', 'rough_pay_type', 'store_id'], 'integer'],
+            [['created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'ip', 'user_id', 'cart_id', 'total_count', 'is_ordered', 'coupon_item_id', 'area_id', 'area_parent_id', 'address_id', 'pay_type', 'product_type', 'rough_pay_type', 'store_id'], 'integer'],
             [['total_count', 'total_price'], 'required'],
-            [['total_price', 'coupon_user_total_price', 'origin_total_price'], 'number'],
+            [['total_price', 'coupon_item_total_price', 'origin_total_price'], 'number'],
             [['cookie_id'], 'string', 'max' => 64],
             [['area_name', 'area_simple_name', 'min_total_price_label'], 'string', 'max' => 50],
             [['area_path_ids', 'area_path_names', 'address_fullname', 'address_detail'], 'string', 'max' => 255],
@@ -98,8 +98,8 @@ class Preorder extends ETActiveRecord
             'total_count' => Yii::t('app', 'Total Count'),
             'total_price' => Yii::t('app', 'Total Price'),
             'is_ordered' => Yii::t('app', 'Is Ordered'),
-            'coupon_user_id' => Yii::t('app', 'Coupon User ID'),
-            'coupon_user_total_price' => Yii::t('app', 'Coupon User Total Price'),
+            'coupon_item_id' => Yii::t('app', 'Coupon Item ID'),
+            'coupon_item_total_price' => Yii::t('app', 'Coupon Item Total Price'),
             'origin_total_price' => Yii::t('app', 'Origin Total Price'),
             'area_id' => Yii::t('app', 'Area ID'),
             'area_name' => Yii::t('app', 'Area Name'),

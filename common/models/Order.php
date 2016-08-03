@@ -42,8 +42,8 @@ use Yii;
  * @property string $total_price  订单最后价格
  * @property integer $total_count
  * @property integer $print_count
- * @property string $coupon_user_id  用户代金券id, CouponUser::$id
- * @property string $coupon_user_total_price  用户代金券总额, CouponUser::$total_price
+ * @property string $coupon_item_id  用户代金券id, CouponItem::$id
+ * @property string $coupon_item_total_price  用户代金券总额, CouponItem::$total_price
  * @property string $origin_total_price  订单未减去优惠(如代金券)的价格
  * @property string $address_id
  * @property integer $is_paid
@@ -95,10 +95,10 @@ class Order extends ETActiveRecord
         return [
             [['created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'area_id', 'area_parent_id', 'cart_id', 'cookie_id', 'ip', 'preorder_id', 'user_id', 'total_count', 'print_count', 'is_paid', 'pay_type', 'store_id'], 'integer'],
             [['status', 'address_fullname', 'address_telephone', 'area_id', 'area_name', 'area_parent_id', 'area_path_ids', 'area_path_names', 'total_price', 'total_count'], 'required'],
-            [['total_price', 'coupon_user_total_price', 'origin_total_price'], 'number'],
+            [['total_price', 'coupon_item_total_price', 'origin_total_price'], 'number'],
             [['paid_date'], 'safe'],
             [['address_detail', 'address_fullname', 'address_telephone', 'area_name', 'area_path_ids', 'area_path_names', 'area_simple_name', 'area_zip_code', 'serial_no', 'status_union'], 'string', 'max' => 255],
-            [['coupon_user_id', 'address_id', 'status_id', 'op_transaction_id'], 'string', 'max' => 64],
+            [['coupon_item_id', 'address_id', 'status_id', 'op_transaction_id'], 'string', 'max' => 64],
             [['notice'], 'string', 'max' => 1000],
             [['rough_pay_type'], 'string', 'max' => 1],
             [['min_total_price_label'], 'string', 'max' => 50],
@@ -136,8 +136,8 @@ class Order extends ETActiveRecord
             'total_price' => Yii::t('app', 'Total Price'),
             'total_count' => Yii::t('app', 'Total Count'),
             'print_count' => Yii::t('app', 'Print Count'),
-            'coupon_user_id' => Yii::t('app', 'Coupon User ID'),
-            'coupon_user_total_price' => Yii::t('app', 'Coupon User Total Price'),
+            'coupon_item_id' => Yii::t('app', 'Coupon Item ID'),
+            'coupon_item_total_price' => Yii::t('app', 'Coupon Item Total Price'),
             'origin_total_price' => Yii::t('app', 'Origin Total Price'),
             'address_id' => Yii::t('app', 'Address ID'),
             'is_paid' => Yii::t('app', 'Is Paid'),

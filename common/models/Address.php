@@ -78,4 +78,14 @@ class Address extends ETActiveRecord
     {
         return $this->hasOne(Area::className(), ['id' => 'area_id']);
     }
+
+    /**
+     * 获取默认的地址
+     * @param $user_id
+     * @return null|static
+     */
+    public static function findDefault($user_id)
+    {
+        return static::findOne(['user_id'=>$user_id, 'is_default'=>static::YES, 'status'=>static::YES]);
+    }
 }

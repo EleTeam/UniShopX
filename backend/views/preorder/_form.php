@@ -45,9 +45,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'is_ordered')->textInput() ?>
 
-    <?= $form->field($model, 'coupon_user_id')->textInput() ?>
+    <?= $form->field($model, 'coupon_item_id')->textInput() ?>
 
-    <?= $form->field($model, 'coupon_user_total_price')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'coupon_item_total_price')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'origin_total_price')->textInput(['maxlength' => true]) ?>
 

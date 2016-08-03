@@ -15,7 +15,7 @@ use Yii;
 use common\components\ETActiveRecord;
 
 /**
- * This is the model class for table "coupon_user".
+ * This is the model class for table "coupon_item".
  *
  * @property integer $id
  * @property integer $coupon_id
@@ -28,14 +28,14 @@ use common\components\ETActiveRecord;
  *
  * @property Coupon $coupon
  */
-class CouponUser extends ETActiveRecord
+class CouponItem extends ETActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'coupon_user';
+        return 'coupon_item';
     }
 
     /**

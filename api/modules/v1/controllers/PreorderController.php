@@ -13,6 +13,7 @@ namespace api\modules\v1\controllers;
 
 use common\components\ETActiveRecord;
 use common\components\ETRestController;
+use common\models\Address;
 use common\models\Cart;
 use common\models\CartItem;
 use common\models\Order;
@@ -36,9 +37,17 @@ class PreorderController extends ETRestController
             return $this->jsonFail([], '您还没有登录');
         }
 
-        $preorder = Preorder::findOne(['id'=>$id, 'user_id'=>$this->getUserId()]);
+        $user_id = $this->getUserId();
+        $preorder = Preorder::findOne(['id'=>$id, 'user_id'=>$user_id]);
         if(!$preorder){
             return $this->jsonFail([], "预购订单(ID:" + $id + ")不存在");
+        }
+
+        $addressArr = [];
+        $address = Address::findDefault($user_id);
+        if($address){
+            $addressArr = $address->toArray();
+            $addressArr['area'] = $address->area->toArray();
         }
 
         //前端提交后, 再次查看预订单所有这些数据可不返回
@@ -58,7 +67,7 @@ class PreorderController extends ETRestController
         }
         $preorderArr['preorderItems'] = $itemsArr;
 
-        return $this->jsonSuccess(['preorder'=>$preorderArr]);
+        return $this->jsonSuccess(['preorder'=>$preorderArr, 'address'=>$addressArr]);
     }
 
     /**

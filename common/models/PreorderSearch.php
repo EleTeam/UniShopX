@@ -17,9 +17,9 @@ class PreorderSearch extends Preorder
     public function rules()
     {
         return [
-            [['id', 'created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'ip', 'user_id', 'cart_id', 'total_count', 'is_ordered', 'coupon_user_id', 'area_id', 'area_parent_id', 'address_id', 'pay_type', 'product_type', 'rough_pay_type', 'store_id'], 'integer'],
+            [['id', 'created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'ip', 'user_id', 'cart_id', 'total_count', 'is_ordered', 'coupon_item_id', 'area_id', 'area_parent_id', 'address_id', 'pay_type', 'product_type', 'rough_pay_type', 'store_id'], 'integer'],
             [['cookie_id', 'area_name', 'area_path_ids', 'area_path_names', 'area_simple_name', 'area_zip_code', 'address_fullname', 'address_telephone', 'address_detail', 'min_total_price_label'], 'safe'],
-            [['total_price', 'coupon_user_total_price', 'origin_total_price'], 'number'],
+            [['total_price', 'coupon_item_total_price', 'origin_total_price'], 'number'],
         ];
     }
 
@@ -71,8 +71,8 @@ class PreorderSearch extends Preorder
             'total_count' => $this->total_count,
             'total_price' => $this->total_price,
             'is_ordered' => $this->is_ordered,
-            'coupon_user_id' => $this->coupon_user_id,
-            'coupon_user_total_price' => $this->coupon_user_total_price,
+            'coupon_item_id' => $this->coupon_item_id,
+            'coupon_item_total_price' => $this->coupon_item_total_price,
             'origin_total_price' => $this->origin_total_price,
             'area_id' => $this->area_id,
             'area_parent_id' => $this->area_parent_id,

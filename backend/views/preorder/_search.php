@@ -50,9 +50,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'is_ordered') ?>
 
-    <?php // echo $form->field($model, 'coupon_user_id') ?>
+    <?php // echo $form->field($model, 'coupon_item_id') ?>
 
-    <?php // echo $form->field($model, 'coupon_user_total_price') ?>
+    <?php // echo $form->field($model, 'coupon_item_total_price') ?>
 
     <?php // echo $form->field($model, 'origin_total_price') ?>
 

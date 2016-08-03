@@ -65,7 +65,7 @@ class CartController extends ETRestController
 
         $data = [
             'cartItems' => $cartItemsArr,
-            'couponUsers' => null,
+            'couponItems' => null,
             'cart_num' => $cart_num,
             'total_price' => $total_price,
             'is_logged_in' => $this->isLoggedIn(),

@@ -36,7 +36,7 @@ use common\components\ETActiveRecord;
  * @property integer $status
  * @property integer $count
  *
- * @property CouponUser[] $couponUsers
+ * @property CouponItem[] $couponItems
  */
 class Coupon extends ETActiveRecord
 {
@@ -91,8 +91,8 @@ class Coupon extends ETActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCouponUsers()
+    public function getCouponItems()
     {
-        return $this->hasMany(CouponUser::className(), ['coupon_id' => 'id']);
+        return $this->hasMany(CouponItem::className(), ['coupon_id' => 'id']);
     }
 }
