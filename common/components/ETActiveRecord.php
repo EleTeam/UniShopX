@@ -95,6 +95,10 @@ class ETActiveRecord extends ActiveRecord
      */
     public static function trimDataHost($url)
     {
-        return ltrim(Yii::getAlias('@dataHost'), $url);
+        $url = ltrim($url, Yii::getAlias('@dataHost'));
+        $url = ltrim($url, '/');
+        if($url)
+            $url = '/' . $url;
+        return $url;
     }
 }
