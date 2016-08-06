@@ -34,6 +34,15 @@ use Yii;
  */
 class Area extends ETActiveRecord
 {
+    //shopping_group, 送货组
+    const SHIPPING_GROUP_STORE = "1"; //店内消费
+
+    const PROVINCE_PARENT_ID = "1";
+
+    const DEFAULT_AREA_ID = "29722";
+
+    const PREFIX_AREA_ID = "29722";
+
     /**
      * @inheritdoc
      */

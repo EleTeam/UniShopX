@@ -22,27 +22,6 @@ use yii\db\Exception as DbException;
  */
 class CartController extends ETRestController
 {
-//    /**
-//     * 行为: 登录认证
-//     *    actionAdd() 登录或非登录用户都可以访问,所有不能用这种验证方法
-//     * @return array
-//     */
-//    public function behaviors()
-//    {
-//        return ArrayHelper::merge(parent::behaviors(), [
-//            'authenticator' => [
-//                #这个地方使用`ComopositeAuth` 混合认证
-//                'class' => CompositeAuth::className(),
-//                #`authMethods` 中的每一个元素都应该是 一种 认证方式的类或者一个 配置数组
-//                'authMethods' => [
-//                    //HttpBasicAuth::className(),
-//                    //HttpBearerAuth::className(),
-//                    QueryParamAuth::className(), //url as: http://api.eleteam.com/v1/users?access-token=123
-//                ]
-//            ]
-//        ]);
-//    }
-
     /**
      * 购物车首页
      */

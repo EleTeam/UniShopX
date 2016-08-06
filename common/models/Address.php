@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use common\components\ETActiveRecord;
 use Yii;
 
 /**
@@ -24,7 +23,7 @@ use Yii;
  *
  * @property Area $area
  */
-class Address extends ETActiveRecord
+class Address extends \common\components\ETActiveRecord
 {
     /**
      * @inheritdoc
@@ -40,12 +39,14 @@ class Address extends ETActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id', 'area_id', 'user_id', 'created_at', 'created_by', 'is_default', 'status', 'updated_at', 'updated_by'], 'integer'],
+            [['area_id', 'user_id', 'created_at', 'created_by', 'is_default', 'status', 'updated_at', 'updated_by'], 'integer'],
+            [['fullname', 'telephone'], 'required'],
             [['detail', 'fullname'], 'string', 'max' => 255],
             [['telephone'], 'string', 'max' => 11],
             [['cookie_id'], 'string', 'max' => 64],
             [['area_id'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['area_id' => 'id']],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
@@ -87,5 +88,12 @@ class Address extends ETActiveRecord
     public static function findDefault($user_id)
     {
         return static::findOne(['user_id'=>$user_id, 'is_default'=>static::YES, 'status'=>static::YES]);
+    }
+
+    public static function findByUser($user_id)
+    {
+        return static::find()->where('user_id=:user_id and status=:status',
+            ['user_id'=>$user_id, 'status'=>static::STATUS_ACTIVE])
+            ->with(['area'])->all();
     }
 }
