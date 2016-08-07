@@ -145,7 +145,7 @@ class CartItem extends ETActiveRecord
     }
 
     /**
-     * 软删除
+     * 硬删除, 不能用软删除, 因为通过关联获取的时候, 会把关联的所有都包含进来, 如 $items = $preorder->preorderItems;
      * @param $id
      * @param $user_id
      * @param $app_cart_cookie_id
@@ -153,14 +153,26 @@ class CartItem extends ETActiveRecord
      */
     public static function deleteByMore($id, $user_id, $app_cart_cookie_id)
     {
+        //硬删除
         $rows = 0;
-        if($user_id){
-            $rows = static::deleteBy($id, $user_id);
-        }elseif($app_cart_cookie_id){
-            $rows = static::updateAll(['status'=>static::STATUS_DELETED],
-                'id=:id and app_cart_cookie_id=:app_cart_cookie_id',
-                ['id'=>$id, 'app_cart_cookie_id'=>$app_cart_cookie_id]);
+        $item = static::findOne($id);
+        if($user_id && $item && $item->user_id == $user_id){
+            $rows = $item->delete();
+        }elseif($app_cart_cookie_id && $item && $item->app_cart_cookie_id == $app_cart_cookie_id){
+            $rows = $item->delete();
         }
+
+
+        //软删除
+//        $rows = 0;
+//        if($user_id){
+//            $rows = static::deleteBy($id, $user_id);
+//        }elseif($app_cart_cookie_id){
+//            $rows = static::updateAll(['status'=>static::STATUS_DELETED],
+//                'id=:id and app_cart_cookie_id=:app_cart_cookie_id',
+//                ['id'=>$id, 'app_cart_cookie_id'=>$app_cart_cookie_id]);
+//        }
+
         return $rows;
     }
 

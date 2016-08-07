@@ -105,4 +105,46 @@ class Area extends ETActiveRecord
     {
         return $this->hasMany(Address::className(), ['area_id' => 'id']);
     }
+
+    /**
+     * 查找一个前缀地域
+     * @return null|Area
+     */
+    public static function findOnePrefixArea()
+    {
+        return static::findOne(static::PREFIX_AREA_ID);
+    }
+
+    public function getChildren()
+    {
+//        return $this->hasMany(Area::className(), ['parent_id' => 'id']);
+        return $this->find()->where('parent_id=:parent_id', [':parent_id'=>$this->id])->all();
+    }
+
+    /**
+     * 获取级联的地址列表
+     * @param $area_id
+     * @return null|array  [{area, children}, {area, children}...]
+     */
+    public static function findChainedAreas($area_id)
+    {
+        $chainedAreas = [];
+        $area = static::findOne($area_id);
+        if(!$area || !$area->path_ids){
+            return null;
+        }
+
+        $area_ids = explode('/', $area->path_ids);
+        foreach($area_ids as $id){
+            $theArea = static::findOne($id);
+            $item = [
+                'area' => $theArea,
+                'children' => $theArea->children,
+            ];
+            $chainedAreas[] = $item;
+        }
+
+        return $chainedAreas;
+    }
+
 }

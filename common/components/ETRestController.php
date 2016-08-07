@@ -14,7 +14,6 @@ namespace common\components;
 use common\models\Cart;
 use common\models\User;
 use Yii;
-use yii\helpers\Json;
 use yii\rest\Controller;
 use yii\web\Response;
 

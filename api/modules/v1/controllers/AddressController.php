@@ -26,7 +26,7 @@ class AddressController extends ETRestController
     /**
      * 地址列表
      */
-    public function actionList()
+    public function actionIndex()
     {
         if(!$this->isLoggedIn()){
             return $this->jsonFail([], '您还没有登录');
@@ -50,7 +50,7 @@ class AddressController extends ETRestController
     /**
      * 添加地址
      */
-    public function actionAdd()
+    public function actionCreate()
     {
         if(!$this->isLoggedIn()){
             return $this->jsonFail([], '您还没有登录');

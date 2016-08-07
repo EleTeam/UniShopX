@@ -40,7 +40,7 @@ class PreorderController extends ETRestController
         $user_id = $this->getUserId();
         $preorder = Preorder::findOne(['id'=>$id, 'user_id'=>$user_id]);
         if(!$preorder){
-            return $this->jsonFail([], "预购订单(ID:" + $id + ")不存在");
+            return $this->jsonFail([], "预购订单(ID:$id)不存在");
         }
 
         $addressArr = [];
