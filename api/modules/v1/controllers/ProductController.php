@@ -13,6 +13,7 @@ namespace api\modules\v1\controllers;
 
 use common\components\ETRestController;
 use common\models\Cart;
+use common\models\OrderItem;
 use common\models\ProductAttrItem;
 use Yii;
 use common\models\Product;
@@ -75,6 +76,61 @@ class ProductController extends ETRestController
     public function actionUncollect($id)
     {
         return $this->jsonSuccess([], '取消收藏');
+    }
+
+    /**
+     * 查看打折的商品列表
+     */
+    public function actionListFeaturedPrice()
+    {
+        $products = Product::find()
+            ->where('featured_price>0 and status=:status', [':status'=>Product::STATUS_ACTIVE])
+            ->orderBy('(price - featured_price) desc')
+            ->all();
+        $productsArr = [];
+        foreach($products as $product){
+            $productsArr[] = $product->toArray();
+        }
+        return $this->jsonSuccess(['products'=>$productsArr]);
+    }
+
+    /**
+     * 为你精选的商品列表
+     */
+    public function actionListFeaturedTopic()
+    {
+        $products = Product::find()
+            ->where('app_featured_topic=1 and status=1')
+            ->orderBy('app_featured_topic_sort')
+            ->all();
+        $productsArr = [];
+        foreach($products as $product){
+            $productsArr[] = $product->toArray();
+        }
+        return $this->jsonSuccess(['products'=>$productsArr]);
+    }
+
+    /**
+     * 销量最高的商品列表
+     */
+    public function actionListTopSeller()
+    {
+        $productsArr = [];
+        $orderItems = OrderItem::find()->alias('t')
+            ->innerJoin('Order o', 'o.id = t.order_id')
+            ->innerJoin('Product p', 'p.id = t.product_id')
+            ->select('t.id, t.product_id, SUM(t.count) total_count')
+            ->where('o.is_paid = 1 and p.status = 1')
+            ->orderBy('total_count desc')
+            ->limit(30)
+            ->all();
+        foreach($orderItems as $item){
+            $product = Product::findOne($item['product_id']);
+            if($product)
+                $productsArr[] = $product;
+        }
+
+        return $this->jsonSuccess($productsArr);
     }
 
     //yii\rest\ActiveController 的用法
