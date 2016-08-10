@@ -11,22 +11,21 @@
 
 namespace api\modules\v1\controllers;
 
+use api\models\AddressHelper;
+use api\models\PreorderHelper;
 use common\components\ETActiveRecord;
 use common\components\ETRestController;
 use common\models\Address;
-use common\models\Cart;
 use common\models\CartItem;
 use common\models\Order;
 use common\models\Preorder;
 use common\models\PreorderItem;
 use common\models\PreorderItemAttr;
-use common\models\ProductAttrItem;
 use Yii;
-use common\models\Product;
 
 /**
  * 预订单控制器
- * Class ProductController
+ * Class PreorderController
  * @package api\modules\v1\controllers
  */
 class PreorderController extends ETRestController
@@ -38,43 +37,24 @@ class PreorderController extends ETRestController
         }
 
         $user_id = $this->getUserId();
-        $preorder = Preorder::findOne(['id'=>$id, 'user_id'=>$user_id]);
-        if(!$preorder){
-            return $this->jsonFail([], "预购订单(ID:$id)不存在");
-        }
 
-        $addressArr = [];
-        $address = Address::findDefault($user_id);
-        if($address){
-            $addressArr = $address->toArray();
-            $addressArr['area'] = $address->area->toArray();
-        }
+        //默认地址
+        $addressArr = AddressHelper::findDefaultArr($user_id);
 
-        //前端提交后, 再次查看预订单所有这些数据可不返回
-        //preorder转为对应数组返回
-        $preorderArr = $preorder->toArray();
-        $itemsArr = [];
-        $items = $preorder->preorderItems;
-        foreach($items as $item){
-            $itemAttrsArr = [];
-            $itemAttrs = $item->preorderItemAttrs;
-            foreach($itemAttrs as $itemAttr){
-                $itemAttrsArr[] = $itemAttr->toArray();
-            }
-            $itemArr = $item->toArray();
-            $itemArr['preorderItemAttrs'] = $itemAttrsArr;
-            $itemsArr[] = $itemArr;
+        //preorder数组
+        try {
+            $preorderArr = PreorderHelper::findPreorderArr($id, $user_id);
+            return $this->jsonSuccess(['preorder'=>$preorderArr, 'address'=>$addressArr]);
+        } catch (\yii\db\Exception $e){
+            return $this->jsonFail([], $e->getMessage());
         }
-        $preorderArr['preorderItems'] = $itemsArr;
-
-        return $this->jsonSuccess(['preorder'=>$preorderArr, 'address'=>$addressArr]);
     }
 
     /**
      * 通过购物车(is_selected字段)创建预备订单
      * @return string
      */
-    public function actionAdd()
+    public function actionCreate()
     {
         if(!$this->isLoggedIn()){
             return $this->jsonFail([], '您还没有登录');
@@ -177,5 +157,55 @@ class PreorderController extends ETRestController
 //        return $this->jsonSuccess(['preorder'=>$preorderArr]);
 
         return $this->jsonSuccess(['preorder'=>$preorder]);
+    }
+
+    public function actionSetPayType()
+    {
+        if(!$this->isLoggedIn()){
+            return $this->jsonFail([], '您还没有登录');
+        }
+
+        $user_id = $this->getUserId();
+        $id = $this->getParam('id');
+        $pay_type = $this->getParam('pay_type');
+
+        /**
+         * @var Preorder $preorder
+         */
+        $preorder = Preorder::findOne(['id'=>$id, 'user_id'=>$user_id]);
+        if(!$preorder){
+            return $this->jsonFail(['preorder'=>$preorder]);
+        }
+
+        $preorder->pay_type = $pay_type;
+
+        //在线支付可以使用优惠券
+        if($pay_type == Order::PAY_TYPE_WX || $pay_type == Order::PAY_TYPE_ALIPAY){
+            $preorder->rough_pay_type = Order::ROUGH_PAY_TYPE_OP;
+        }
+        //货到付款不能使用优惠券, 使用原来的商品价格
+        elseif($pay_type == Order::PAY_TYPE_CASH){
+            $preorder->rough_pay_type = Order::ROUGH_PAY_TYPE_CASH;
+            $preorder->total_price = $preorder->origin_total_price;
+            $preorder->coupon_item_id = null;
+            $preorder->coupon_item_total_price = null;
+        }
+        else{
+            return $this->jsonFail([], '支付方式不存在');
+        }
+
+        //保存preorder
+        $preorder->save();
+
+        //默认地址
+        $addressArr = AddressHelper::findDefaultArr($user_id);
+
+        //preorder数组
+        try {
+            $preorderArr = PreorderHelper::findPreorderArr($id, $user_id);
+            return $this->jsonSuccess(['preorder'=>$preorderArr, 'address'=>$addressArr]);
+        } catch (\yii\db\Exception $e){
+            return $this->jsonFail([], $e->getMessage());
+        }
     }
 }

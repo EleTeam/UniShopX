@@ -49,6 +49,7 @@ class UserController extends ETRestController
         $user = $this->getUser();
         $userArr = [];
         $user && $userArr = $user->toArray();
+        $userArr['level_label'] = '铜牌用户';
         $data = [
             'user' => $userArr,
             'user_id' => $this->getUserId(),

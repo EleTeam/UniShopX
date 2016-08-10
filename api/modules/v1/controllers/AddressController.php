@@ -36,9 +36,9 @@ class AddressController extends ETRestController
         $addresses = Address::findByUser($user_id);
         $addressesArr = [];
         foreach($addresses as $address){
-            $addressesArr[] = $address->toArray([], ['area']);
-//            $addressArr = $address->toArray();
-//            $addressArr = ['area'=>$address->area->toArray()];
+            $addrArr = $address->toArray([], ['area']);
+            $addrArr['area']['path_names_4print'] = $address->area->getPathNames4Print();
+            $addressesArr[] = $addrArr;
         }
 
         $data = [
@@ -119,10 +119,25 @@ class AddressController extends ETRestController
             $addressesArr[] = $item->toArray([], ['area']);
         }
 
+        //带有区域对象的新地址
+        $addrArr = [];
+        $addrArr[] = $address->toArray();
+        $addrArr['area'] = $address->area->toArray();
+        $addrArr['area']['path_names_4print'] = $address->area->getPathNames4Print();
+
         $data = [
             'addresses' => $addressesArr,
-            'address' => $address,
+            'address' => $addrArr,
         ];
         return $this->jsonSuccess($data);
+    }
+
+    public function delete()
+    {
+        if(!$this->isLoggedIn()){
+            return $this->jsonFail([], '您还没有登录');
+        }
+
+        $id = $this->getParam('id');
     }
 }

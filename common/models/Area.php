@@ -1,4 +1,13 @@
 <?php
+/**
+ * ETShop-for-PHP-Yii2
+ *
+ * @author Tony Wong
+ * @date 2016-08-08
+ * @email 908601756@qq.com
+ * @copyright Copyright © 2016年 EleTeam
+ * @license The MIT License (MIT)
+ */
 
 namespace common\models;
 
@@ -147,4 +156,15 @@ class Area extends ETActiveRecord
         return $chainedAreas;
     }
 
+    /**
+     * 用于简短显示去掉前缀"中国/广东省/"的path_names, 不存在于数据库的字段
+     * @return string
+     */
+    public function getPathNames4Print()
+    {
+        $path_names_4print = ltrim($this->path_names, '中国/广东省/');
+        $path_names_4print =  str_replace('/', '', $path_names_4print);
+        return $path_names_4print;
+
+    }
 }
