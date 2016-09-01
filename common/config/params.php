@@ -1,6 +1,6 @@
 <?php
 /**
- * ETShop-for-PHP-Yii2
+ * ETShop-PHP-Yii2
  *
  * @author Tony Wong
  * @date 2015-05-18
