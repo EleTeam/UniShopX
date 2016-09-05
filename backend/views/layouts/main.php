@@ -360,6 +360,17 @@ AppAsset::register($this);
                 </li>
                 <li class="treeview">
                     <a href="#">
+                        <i class="fa fa-laptop"></i>
+                        <span><?=Yii::t('app','CMS Manager')?></span>
+                        <span class="label label-primary pull-right">4</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="<?=Url::toRoute('/cms-article') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Article')?></a></li>
+                        <li><a href="<?=Url::toRoute('/banner') ?>"><i class="fa fa-circle-o"></i> <?=Yii::t('app','Banner')?></a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
                         <i class="fa fa-files-o"></i>
                         <span><?=Yii::t('app','User')?></span>
                         <span class="label label-primary pull-right">4</span>

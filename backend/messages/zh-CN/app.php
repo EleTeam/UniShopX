@@ -49,4 +49,10 @@ return [
     'Order' => '订单',
     'Preorder' => '预订单',
     'Preorder Show Notice' => '预订单表示用户从购物车下预定单, 但是没有提交订单, 用于分析用户的行为, 给未下单的用户做营销手段',
+
+    'CMS Manager' => '内容',
+    'CMS List' => '内容',
+    'Article' => '文章',
+
+    'Banner' => '广告',
 ];
