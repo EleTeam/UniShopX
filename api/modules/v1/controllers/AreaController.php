@@ -3,9 +3,9 @@
  * ETShop-PHP-Yii2
  *
  * @author Tony Wong
- * @date 2015-08-04
+ * @date 2016-08-04
  * @email 908601756@qq.com
- * @copyright Copyright © 2016年 EleTeam
+ * @copyright Copyright © 2016 EleTeam
  * @license The MIT License (MIT)
  */
 

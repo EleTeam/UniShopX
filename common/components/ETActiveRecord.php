@@ -44,6 +44,53 @@ class ETActiveRecord extends ActiveRecord
     }
 
     /**
+     * 保存数据前自动处理
+     * @param boolean $insert whether this method called while inserting a record.
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+//        if(parent::beforeSave()){
+//            if($this->isNewRecord){
+//                $this->create_time = date('y-m-d H:m:s');
+//                $this->create_user_id = Yii::app()->user->id;
+//                $this->status_id = '0';
+//            }else{
+//                $this->update_time = date('y-m-d H:m:s');
+//                $this->update_user_id = Yii::app()->user->id;
+//            }
+//            return true;
+//        }else{
+//            return false;
+//        }
+
+        if(parent::beforeSave($insert)){
+            if($this->isNewRecord){
+                $this->created_by = Yii::$app->user->id;
+                $this->updated_by = Yii::$app->user->id;
+                $this->status = self::STATUS_ACTIVE;
+            }else{
+                $this->updated_by = Yii::$app->user->id;
+            }
+
+            //图片保存去掉本网站前缀
+            $attrs = $this->getAttributes();
+            $imageFields = ['app_long_image1', 'app_long_image2', 'app_long_image3', 'app_long_image4',
+                'app_long_image5', 'image_small', 'image_medium', 'image_large', 'image', 'featured_image'];
+            foreach($attrs as $key => $value){
+                if($value && in_array($key, $imageFields)) {
+                    $value = str_replace(Yii::getAlias('@dataHost'), '', $value);
+                    $this->$key = $value;
+                }
+            }
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
      * 自动设置模型字段, 每个表必须存在这些字段: created_at, updated_at
      * @inheritdoc
      */
