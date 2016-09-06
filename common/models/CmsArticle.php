@@ -3,12 +3,14 @@
 namespace common\models;
 
 use Yii;
+use common\components\ETActiveRecord;
 
 /**
  * This is the model class for table "cms_article".
  *
  * @property integer $id
  * @property integer $category_id
+ * @property string $short_title
  * @property string $title
  * @property string $link
  * @property string $color
@@ -31,7 +33,7 @@ use Yii;
  * @property CmsCategory $category
  * @property CmsComment[] $cmsComments
  */
-class CmsArticle extends \common\components\ETActiveRecord
+class CmsArticle extends ETActiveRecord
 {
     /**
      * @inheritdoc
@@ -50,10 +52,13 @@ class CmsArticle extends \common\components\ETActiveRecord
             [['category_id', 'weight', 'hits', 'created_by', 'created_at', 'updated_by', 'updated_at', 'status'], 'integer'],
             [['weight_date'], 'safe'],
             [['view_config'], 'string'],
-            [['title', 'link', 'image', 'keywords', 'description', 'custom_content_view', 'remarks'], 'string', 'max' => 255],
+            [['title', 'short_title', 'link', 'image', 'keywords', 'description', 'custom_content_view', 'remarks'], 'string', 'max' => 255],
             [['color'], 'string', 'max' => 50],
             [['posid'], 'string', 'max' => 10],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CmsCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
+            ['hits', 'default', 'value' => 0],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
@@ -66,6 +71,7 @@ class CmsArticle extends \common\components\ETActiveRecord
             'id' => Yii::t('app', 'ID'),
             'category_id' => Yii::t('app', '分类编号'),
             'title' => Yii::t('app', '标题'),
+            'short_title' => Yii::t('app', '短标题'),
             'link' => Yii::t('app', '文章链接'),
             'color' => Yii::t('app', '标题颜色'),
             'image' => Yii::t('app', '文章图片'),
