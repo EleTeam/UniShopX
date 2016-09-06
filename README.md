@@ -1,6 +1,8 @@
 # Shop-PHP-Yii2
 
-#### 亲~您的一个小动作，会大大地鼓励EleTeam团队继续维护该项目，请 Watch、Star、Fork、Follow Me。
+#### 如果你支持这个项目，请 Star and Fork Me。
+
+#### 注：有任何问题请在Issues提交，EleTeam会尽快回复。
 
 #### EleTeam开源项目-电商全套解决方案之iOS版-ETShop-PHP-Yii2。一个类似京东/天猫/淘宝的商城，有对应的APP支持，由EleTeam团队维护！
 #### 客户端是iOS商城，对应项目是 ETShop-for-iOS，https://github.com/EleTeam/Shop-PHP-Yii2
