@@ -28,11 +28,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category_id') ?>
 
+    <?= $form->field($model, 'short_title') ?>
+
     <?= $form->field($model, 'title') ?>
-
-    <?= $form->field($model, 'link') ?>
-
-    <?= $form->field($model, 'color') ?>
 
     <?php // echo $form->field($model, 'image') ?>
 

@@ -19,11 +19,12 @@ class CmsArticleController extends ETRestController
 {
     public function actionView($id)
     {
+        $article = CmsArticle::findOne($id);
 
-    }
+        //点击数加1
+        $article->hits++;
+        $article->save();
 
-    public function actionList()
-    {
-
+        return $this->jsonSuccess(['article'=>$article]);
     }
 }
