@@ -168,6 +168,71 @@ class UserController extends ETRestController
     }
 
     /**
+     * 直接注册 - 提交手机号码、密码、验证码
+     * @return string
+     */
+    public function actionRegister()
+    {
+        $mobile = $this->getParam('mobile');
+        $password = $this->getParam('password');
+        $code = $this->getParam('code');
+        if(strlen($mobile)<11){
+            return $this->jsonFail([], '手机号格式不正确');
+        }
+
+        $user = User::findOneByMobile($mobile, null);
+        if($user){
+            return $this->jsonFail([], '手机号已存在');
+        }
+
+        if(strlen($password) < 6){
+            return $this->jsonFail([], '密码必须大于6位');
+        }
+
+        //比较验证码
+        //if (smsService.checkRegisterCode(username, code)) {
+        //短信验证码已过期，现在固定用 "8888"
+        if($code != '8888'){
+            return $this->jsonFail([], '验证码不正确');
+        }
+
+        //创建用户
+        $user = new User();
+        $user->mobile = $mobile;
+        $user->password_plain = $password;
+        $user->setPassword($password);
+        $user->generateAccessToken();
+        if($user->save()){
+            $app_cart_cookie_id = $this->getAppCartCookieId();
+            $user_id = $user->id;
+
+            //给新注册用户发送优惠券
+            //couponUserService.send4NewUser(loginUser.getId());
+
+            //转移购物车给用户
+            if($app_cart_cookie_id) {
+                $cart = Cart::findOneByAppCartCookieId($app_cart_cookie_id);
+                if(!$cart){ //创建购物车
+                    $cart = new Cart();
+                    $cart->user_id = $user_id;
+                    $cart->save();
+                }else{ //转移购物车项给用户
+                    Cart::updateAll(['user_id'=>$user_id], 'app_cart_cookie_id=:app_cart_cookie_id', ['app_cart_cookie_id' => $app_cart_cookie_id]);
+                    CartItem::updateAll(['user_id'=>$user_id], 'app_cart_cookie_id=:app_cart_cookie_id', ['app_cart_cookie_id' => $app_cart_cookie_id]);
+                }
+            }
+
+            $data = [
+                'user' => $user->toArray(),
+                'app_cart_cookie_id' => Cart::genAppCartCookieId(), //重新生成保存在前端, 当没登陆时用新的购物车
+            ];
+            return $this->jsonSuccess($data);
+        }
+
+        return $this->jsonFail(['user'=>$user->toArray()], '注册用户失败');
+    }
+
+    /**
      * 通过手机号码快捷登录
      * @param $mobile
      * @param $code
