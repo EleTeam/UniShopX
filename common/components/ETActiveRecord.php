@@ -34,7 +34,7 @@ class ETActiveRecord extends ActiveRecord
         $value = parent::__get($name);
 
         //图片加上前缀
-        $imageFields = ['app_long_image1', 'app_long_image2', 'app_long_image3', 'app_long_image4',
+        $imageFields = ['app_long_image1', 'app_long_image2', 'app_long_image3', 'app_long_image4', 'avatar',
             'app_long_image5', 'image_small', 'image_medium', 'image_large', 'image', 'featured_image'];
         if($value && in_array($name, $imageFields)) {
             $value = Yii::getAlias('@dataHost') . $value;
@@ -75,7 +75,7 @@ class ETActiveRecord extends ActiveRecord
 
             //图片保存去掉本网站前缀
             $attrs = $this->getAttributes();
-            $imageFields = ['app_long_image1', 'app_long_image2', 'app_long_image3', 'app_long_image4',
+            $imageFields = ['app_long_image1', 'app_long_image2', 'app_long_image3', 'app_long_image4', 'avatar',
                 'app_long_image5', 'image_small', 'image_medium', 'image_large', 'image', 'featured_image'];
             foreach($attrs as $key => $value){
                 if($value && in_array($key, $imageFields)) {

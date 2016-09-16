@@ -176,7 +176,7 @@ class UserController extends ETRestController
         $mobile = $this->getParam('mobile');
         $password = $this->getParam('password');
         $code = $this->getParam('code');
-        if(strlen($mobile)<11){
+        if(strlen($mobile) != 11){
             return $this->jsonFail([], '手机号格式不正确');
         }
 
@@ -281,6 +281,14 @@ class UserController extends ETRestController
         $mobile = $this->getParam('mobile');
         $password = $this->getParam('password');
         $app_cart_cookie_id = $this->getAppCartCookieId();
+
+        if(strlen($mobile) != 11){
+            return $this->jsonFail([], '手机号格式不正确');
+        }
+
+        if(!strlen($password)){
+            return $this->jsonFail([], '请输入密码');
+        }
 
         $user = User::findOneByMobile($mobile);
         if($user && $user->validatePassword($password)){

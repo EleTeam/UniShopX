@@ -31,9 +31,13 @@ use common\components\ETActiveRecord;
  * @property string $password_plain 明文密码, 你懂的, 在项目前期方便登陆用户的账户进行debug
  * @property string $access_token
  * @property string $mobile
+ * @property string $avatar 头像
  */
 class User extends ETActiveRecord implements IdentityInterface
 {
+    //默认的用户头像
+    const DEFAULT_AVATAR = '/uploads/public/user/default.jpg';
+
     /**
      * @inheritdoc
      */
@@ -50,11 +54,12 @@ class User extends ETActiveRecord implements IdentityInterface
         return [
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'auth_key', 'access_token', 'password_plain'], 'string', 'max' => 32],
-            [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['password_hash', 'password_reset_token', 'email', 'avatar'], 'string', 'max' => 255],
             [['mobile'], 'string', 'max' => 11],
             [['username'], 'unique'],
             [['email'], 'unique'],
             [['mobile'], 'unique'],
+            ['avatar', 'default', 'value' => self::DEFAULT_AVATAR],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
@@ -77,6 +82,7 @@ class User extends ETActiveRecord implements IdentityInterface
             'updated_at' => Yii::t('app', 'Updated At'),
             'access_token' => Yii::t('app', 'Access Token'),
             'mobile' => Yii::t('app', 'Mobile'),
+            'avatar' => Yii::t('app', '头像'),
         ];
     }
 
