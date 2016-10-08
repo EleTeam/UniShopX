@@ -83,7 +83,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         header("Location:http://eleteamwap.ygcr8.com");
-        return $this->render('index');
+        exit;
+
+        //return $this->render('index');
     }
 
     /**
