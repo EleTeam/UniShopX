@@ -44,12 +44,21 @@
         ErrorLog "logs/local.eleteamapi.ygcr8.com-error_log"
         CustomLog "logs/local.eleteamapi.ygcr8.com-access_log" common
     </VirtualHost>
+    <VirtualHost *:80>
+        ServerAdmin 908601756@qq.com
+        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/Shop-PHP-Yii2/wap/web"
+        ServerName local.eleteamwap.ygcr8.com
+        ServerAlias local.eleteamwap.ygcr8.com
+        ErrorLog "logs/local.eleteamwap.ygcr8.com-error_log"
+        CustomLog "logs/local.eleteamwap.ygcr8.com-access_log" common
+    </VirtualHost>
 
 #### 配置本地的hosts文件:
     127.0.0.1       local.eleteam.ygcr8.com
     127.0.0.1       local.eleteambackend.ygcr8.com
     127.0.0.1       local.eleteamdata.ygcr8.com
     127.0.0.1       local.eleteamapi.ygcr8.com
+    127.0.0.1       local.eleteamwap.ygcr8.com
     
 #### 配置项目:
     以下文件夹要求读写权限:
@@ -61,9 +70,10 @@
 
 #### 线上的访问地址:
     前台: http://eleteam.ygcr8.com
+    wap: http://eleteamwap.ygcr8.com
     api: http://eleteamapi.ygcr8.com/v1/product/view?id=3
     数据: http://eleteamdata.ygcr8.com
-    gii: http://local.eleteam.ygcr8.com/gii
+    gii: http://eleteam.ygcr8.com/gii
     后台: http://eleteambackend.ygcr8.com
         后台超级用户: admin/123456
         后台普通用户: demo/123456
