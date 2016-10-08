@@ -9,9 +9,18 @@
  * @license The MIT License (MIT)
  */
 
+use yii\helpers\Html;
+
 /* @var $this yii\web\View */
+/* @var $categories */
 ?>
-<div class="row">
-    在紧急开发中。。。
-</div>
+
+    <?php foreach($categories as $category): ?>
+        <?php foreach($category->products as $product): ?>
+            <div class="row">
+                <?= Html::a($product->name, ['product/view', 'id' => $product->id], ['class' => 'btn btn-primary']) ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
+
 <!-- /.row -->

@@ -61,7 +61,7 @@ class AddressController extends ETRestController
 //        $telephone = $this->getParam('telephone');
 //        $detail = $this->getParam('detail');
 //        $fullname = $this->getParam('fullname');
-
+//
 //        //字段验证, 不能用
 //        if(empty($area_id)){
 //
@@ -141,3 +141,5 @@ class AddressController extends ETRestController
         $id = $this->getParam('id');
     }
 }
+
+

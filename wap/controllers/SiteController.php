@@ -12,6 +12,7 @@
 namespace wap\controllers;
 
 use common\components\ETWebController;
+use common\models\ProductCategory;
 use Yii;
 
 /**
@@ -31,9 +32,16 @@ class SiteController extends ETWebController
         ];
     }
 
-
     public function actionIndex()
     {
-        return $this->render('index');
+        $categories = ProductCategory::find()
+            ->where('status = :status and id != :id',
+                [':status'=>ProductCategory::STATUS_ACTIVE, ':id'=>ProductCategory::ROOT_LEVEL_ID])
+            ->with(['products'])
+            ->all();
+
+        return $this->render('index', [
+            'categories' => $categories,
+        ]);
     }
 }
