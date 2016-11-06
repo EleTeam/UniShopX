@@ -7,6 +7,14 @@
 #### EleTeam开源项目-电商全套解决方案之iOS版-ETShop-PHP-Yii2。一个类似京东/天猫/淘宝的商城，有对应的APP支持，由EleTeam团队维护！
 #### 客户端是iOS商城，对应项目是 ETShop-for-iOS，https://github.com/EleTeam/Shop-PHP-Yii2
 
+#### 该电商网站的基础架构，能承担上万的并发请求：
+    一份代码拆分为五个项目
+    业务项目：GatewayWorker + Redis
+    API项目：Nginx + PHP-FPM，PHP通过RPC调用业务项目提供的接口。该层同时是手机APP和手机WAP的接口
+    WAP项目：Nginx只返回静态html页面，在浏览器端用AJAX调用API层的接口。JS框架是 Framework7 + SeaJS
+    图片项目：Nginx存放图片等静态文件
+    后台项目：Nginx + PHP-FPM，UI框架用 Framework7
+
 #### 安装环境要求:
     php-5.6.x
     mysql-server-5.6.x
