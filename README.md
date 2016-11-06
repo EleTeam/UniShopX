@@ -11,7 +11,7 @@
     一份代码拆分为五个项目
     业务项目：GatewayWorker + Redis
     API项目：Nginx + PHP-FPM，PHP通过RPC调用业务项目提供的接口。该层同时是手机APP和手机WAP的接口
-    WAP项目：Nginx只返回静态html页面，在浏览器端用AJAX调用API层的接口。JS框架是 Framework7 + SeaJS
+    WAP项目：Nginx只返回静态html页面，在浏览器端用AJAX调用API层的接口。JS框架是 SUI Mobile
     图片项目：Nginx存放图片等静态文件
     WEB项目：Nginx + PHP-FPM，UI框架用 Framework7，PHP通过RPC调用业务项目提供的接口
     后台项目：Nginx + PHP-FPM，UI框架用 Framework7
