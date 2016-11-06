@@ -39,7 +39,7 @@
 
         <!-- 工具栏 -->
         <nav class="bar bar-tab">
-            <a class="tab-item external active" href="/tab/home.html">
+            <a class="tab-item external active" href="/tab/index.html">
                 <span class="icon icon-home"></span>
                 <span class="tab-label">首页</span>
             </a>
@@ -50,6 +50,7 @@
             <a class="tab-item external" href="#">
                 <span class="icon icon-cart"></span>
                 <span class="tab-label">购物车</span>
+                <span class="badge">2</span>
             </a>
             <a class="tab-item external" href="#">
                 <span class="icon icon-me"></span>
@@ -59,25 +60,50 @@
 
         <!-- 这里是页面内容区 -->
         <div class="content">
-            <div class="content-block">这里是content</div>
+            <div class="content-block">这里是contentx</div>
+            <div class="content-block">
+                <ul>
+                    <li><a href="/product/product.html">内联的新页面</a></li>
+                </ul>
+            </div>
+            <div class="content-block">
+                <div class="content-block-title">风格卡片</div>
+                <div class="card demo-card-header-pic">
+                    <div valign="bottom" class="card-header color-white no-border no-padding">
+                        <img class='card-cover' src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" alt="">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <p class="color-gray">发表于 2015/01/15</p>
+                            <p>此处是内容...</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="link">赞</a>
+                        <a href="#" class="link">更多</a>
+                    </div>
+                </div>
+                <div class="content-block-title">Facebook卡片</div>
+                <div class="card facebook-card">
+                    <div class="card-header no-border">
+                        <div class="facebook-avatar"><img src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="34" height="34"></div>
+                        <div class="facebook-name">夜萧</div>
+                        <div class="facebook-date">星期一 3:47pm</div>
+                    </div>
+                    <div class="card-content"><img src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="100%"></div>
+                    <div class="card-footer no-border">
+                        <a href="#" class="link">赞</a>
+                        <a href="#" class="link">评论</a>
+                        <a href="#" class="link">分享</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- 其他的单个page内联页（如果有） -->
-    <div class="page">...</div>
 </div>
 
 <!-- popup, panel 等放在这里 -->
 <div class="panel-overlay"></div>
-<!-- Left Panel with Reveal effect -->
-<div class="panel panel-left panel-reveal">
-    <div class="content-block">
-        <p>这是一个侧栏</p>
-        <p></p>
-        <!-- Click on link with "close-panel" class will close panel -->
-        <p><a href="#" class="close-panel">关闭</a></p>
-    </div>
-</div>
 
 <!-- 正式环境 -->
 <!--
