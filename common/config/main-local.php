@@ -1,6 +1,6 @@
 <?php
 /**
- * ETShop-PHP-Yii2
+ * Shop-PHP-Yii2
  *
  * @author Tony Wong
  * @date 2015-05-18
@@ -13,8 +13,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=127.0.0.1;dbname=etshop',
-            'username' => 'etshop',
+            //'dsn' => 'mysql:host=127.0.0.1;dbname=etshop',
+            'dsn' => 'mysql:host=192.168.1.102;dbname=etshop',
+            'username' => 'root',
 //            'dsn' => 'mysql:host=120.24.54.172;dbname=yii',
 //            'username' => 'etshop',
             'password' => '123456',
