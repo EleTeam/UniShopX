@@ -12,6 +12,7 @@
 namespace common\models;
 
 use Yii;
+use common\components\ETActiveRecord;
 
 /**
  * This is the model class for table "banner".
@@ -32,7 +33,7 @@ use Yii;
  * @property integer $ended_at
  * @property integer $started_at
  */
-class Banner extends \common\components\ETActiveRecord
+class Banner extends ETActiveRecord
 {
     /**
      * @inheritdoc
@@ -78,5 +79,17 @@ class Banner extends \common\components\ETActiveRecord
             'ended_at' => Yii::t('app', '结束时间'),
             'started_at' => Yii::t('app', '开始时间'),
         ];
+    }
+
+    /**
+     * 获取所有进行中的广告
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function findBanners()
+    {
+        return self::find()->where('started_at <= :now_time and ended_at >= :now_time and status = :status',
+                    [':now_time'=>time(), ':status'=>Banner::STATUS_ACTIVE])
+                ->orderBy('position asc')
+                ->all();
     }
 }

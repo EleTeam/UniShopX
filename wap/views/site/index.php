@@ -12,15 +12,11 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $categories */
+/* @var $banners */
 ?>
 
-    <?php foreach($categories as $category): ?>
-        <?php foreach($category->products as $product): ?>
-            <div class="row">
-                <?= Html::a($product->name, ['product/view', 'id' => $product->id], ['class' => 'btn btn-primary']) ?>
-            </div>
-        <?php endforeach; ?>
+    <?php foreach($banners as $banner): ?>
+        <div class="row">
+            <?= Html::img($banner->image) ?>
+        </div>
     <?php endforeach; ?>
-
-<!-- /.row -->
