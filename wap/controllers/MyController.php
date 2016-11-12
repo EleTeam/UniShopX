@@ -17,10 +17,10 @@ use Yii;
 /**
  * 广告控制器
  *
- * Class CategoryController
+ * Class MyController
  * @package wap\controllers
  */
-class CategoryController extends BaseController
+class MyController extends BaseController
 {
     public function actionIndex()
     {

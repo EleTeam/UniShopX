@@ -15,8 +15,19 @@ use yii\helpers\Html;
 /* @var $banners */
 ?>
 
-    <?php foreach($banners as $banner): ?>
-        <div class="row">
-            <?= Html::img($banner->image) ?>
-        </div>
-    <?php endforeach; ?>
+<style>
+    .swiper-container {
+        width: 100%;
+        height: 180px;
+    }
+</style>
+
+<!-- Slider -->
+<div class="swiper-container" data-space-between='10' data-height="10px">
+    <div class="swiper-wrapper">
+        <?php foreach($banners as $banner): ?>
+        <div class="swiper-slide"><?=Html::img($banner->image)?></div>
+        <?php endforeach; ?>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>

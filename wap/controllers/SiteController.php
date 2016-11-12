@@ -38,7 +38,6 @@ class SiteController extends ETWebController
 
         return $this->render('index', [
             'banners' => $banners,
-            'a'=>'aa',
         ]);
     }
 }

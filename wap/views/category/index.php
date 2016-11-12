@@ -11,6 +11,8 @@
 
 use yii\helpers\Html;
 
+$this->title = Yii::t('app', 'Products');
+
 /* @var $this yii\web\View */
 /* @var $categories */
 ?>

@@ -59,4 +59,16 @@ class BaseController extends Controller
             Yii::$app->language = 'zh-CN';
         }
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
 }

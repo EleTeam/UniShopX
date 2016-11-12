@@ -58,11 +58,11 @@ AppAsset::register($this);
                 <span class="icon icon-menu"></span>
                 <span class="tab-label">分类</span>
             </a>
-            <a class="tab-item external" href="#">
+            <a class="tab-item external <?php echo $this->context->id == 'cart' ? 'active' : '' ?>" href="<?=Url::toRoute('/cart')?>"">
                 <span class="icon icon-cart"></span>
                 <span class="tab-label">购物车</span>
             </a>
-            <a class="tab-item external" href="#">
+            <a class="tab-item external <?php echo $this->context->id == 'my' ? 'active' : '' ?>" href="<?=Url::toRoute('/my')?>"">
                 <span class="icon icon-me"></span>
                 <span class="tab-label">我的</span>
             </a>
@@ -77,6 +77,11 @@ AppAsset::register($this);
 </div>
 
 <?php $this->endBody() ?>
+
+<script>
+    $.init();
+</script>
+
 </body>
 </html>
 <?php $this->endPage() ?>
