@@ -12,7 +12,7 @@
 namespace wap\controllers;
 
 use common\components\ETWebController;
-use common\models\ProductCategory;
+use common\models\Banner;
 use Yii;
 
 /**
@@ -34,14 +34,10 @@ class SiteController extends ETWebController
 
     public function actionIndex()
     {
-        $categories = ProductCategory::find()
-            ->where('status = :status and id != :id',
-                [':status'=>ProductCategory::STATUS_ACTIVE, ':id'=>ProductCategory::ROOT_LEVEL_ID])
-            ->with(['products'])
-            ->all();
+        $banners = Banner::findBanners();
 
         return $this->render('index', [
-            'categories' => $categories,
+            'banners' => $banners,
         ]);
     }
 }

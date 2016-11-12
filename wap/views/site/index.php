@@ -12,15 +12,22 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $categories */
+/* @var $banners */
 ?>
 
-    <?php foreach($categories as $category): ?>
-        <?php foreach($category->products as $product): ?>
-            <div class="row">
-                <?= Html::a($product->name, ['product/view', 'id' => $product->id], ['class' => 'btn btn-primary']) ?>
-            </div>
-        <?php endforeach; ?>
-    <?php endforeach; ?>
+<style>
+    .swiper-container {
+        width: 100%;
+        height: 180px;
+    }
+</style>
 
-<!-- /.row -->
+<!-- Slider -->
+<div class="swiper-container" data-space-between='10' data-height="10px">
+    <div class="swiper-wrapper">
+        <?php foreach($banners as $banner): ?>
+        <div class="swiper-slide"><?=Html::img($banner->image)?></div>
+        <?php endforeach; ?>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
