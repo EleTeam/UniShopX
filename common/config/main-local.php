@@ -9,19 +9,30 @@
  * @license The MIT License (MIT)
  */
 
+$isLocal = null;
+$dbConfig = null;
+if(strpos($_SERVER['HTTP_HOST'], 'local.') === 0){
+    $isLocal = true;
+    $dbConfig = [
+        'class' => 'yii\db\Connection',
+        'dsn' => 'mysql:host=192.168.1.111;dbname=etshop', //用内网Mac电脑的数据库
+        'username' => 'root',
+        'password' => '123456',
+        'charset' => 'utf8',
+    ];
+}else{
+    $dbConfig = [
+        'class' => 'yii\db\Connection',
+        'dsn' => 'mysql:host=172.0.0.1;dbname=etshop',
+        //'dsn' => 'mysql:host=120.24.54.172;dbname=etshop',
+        'username' => 'root',
+        'password' => '123456',
+        'charset' => 'utf8',
+    ];
+}
 return [
     'components' => [
-        'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=127.0.0.1;dbname=etshop',
-//            'dsn' => 'mysql:host=192.168.1.102;dbname=etshop',
-            'username' => 'root',
-//            'dsn' => 'mysql:host=120.24.54.172;dbname=yii',
-//            'username' => 'etshop',
-            'password' => '123456',
-            'charset' => 'utf8',
-            //'tablePrefix' => 'pre_',
-        ],
+        'db' => $dbConfig,
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
