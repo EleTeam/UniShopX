@@ -50,19 +50,19 @@ AppAsset::register($this);
 
         <!-- 工具栏 -->
         <nav class="bar bar-tab">
-            <a class="tab-item external <?php echo $this->context->id == 'site' ? 'active' : '' ?>" href="<?=Url::toRoute('/')?>">
+            <a class="tab-item <?php echo $this->context->id == 'site' ? 'active' : '' ?>" href="<?=Url::toRoute('/')?>">
                 <span class="icon icon-home"></span>
                 <span class="tab-label">首页</span>
             </a>
-            <a class="tab-item external <?php echo $this->context->id == 'category' ? 'active' : '' ?>" href="<?=Url::toRoute('/category')?>">
+            <a class="tab-item <?php echo $this->context->id == 'category' ? 'active' : '' ?>" href="<?=Url::toRoute('/category')?>">
                 <span class="icon icon-menu"></span>
                 <span class="tab-label">分类</span>
             </a>
-            <a class="tab-item external <?php echo $this->context->id == 'cart' ? 'active' : '' ?>" href="<?=Url::toRoute('/cart')?>"">
+            <a class="tab-item <?php echo $this->context->id == 'cart' ? 'active' : '' ?>" href="<?=Url::toRoute('/cart')?>"">
                 <span class="icon icon-cart"></span>
                 <span class="tab-label">购物车</span>
             </a>
-            <a class="tab-item external <?php echo $this->context->id == 'my' ? 'active' : '' ?>" href="<?=Url::toRoute('/my')?>"">
+            <a class="tab-item <?php echo $this->context->id == 'my' ? 'active' : '' ?>" href="<?=Url::toRoute('/my')?>"">
                 <span class="icon icon-me"></span>
                 <span class="tab-label">我的</span>
             </a>

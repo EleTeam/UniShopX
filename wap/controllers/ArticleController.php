@@ -26,7 +26,7 @@ class ArticleController extends BaseController
         $articles = $query->all();
 //        die($query->createCommand()->getRawSql());
 
-        $articlesArray = [];
+        $articleArrays = [];
         $i = 0;
         foreach($articles as $article){
             $articleArray = $article->toArray();
@@ -35,13 +35,12 @@ class ArticleController extends BaseController
                 $is_show_image = true;
             }
             $articleArray['is_show_image'] = $is_show_image;
-            $articlesArray[] = $articleArray;
+            $articleArrays[] = $articleArray;
             $i++;
         }
 
-        $data = [
-            'articles' => $articlesArray,
-        ];
-        return $this->jsonSuccess($data);
+        return $this->render('list', [
+            'articles' => $articleArrays,
+        ]);
     }
 }
