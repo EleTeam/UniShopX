@@ -13,13 +13,23 @@ $isLocal = null;
 $dbConfig = null;
 if(strpos($_SERVER['HTTP_HOST'], 'local.') === 0){
     $isLocal = true;
-    $dbConfig = [
-        'class' => 'yii\db\Connection',
-        'dsn' => 'mysql:host=192.168.1.111;dbname=etshop', //用内网Mac电脑的数据库
-        'username' => 'root',
-        'password' => '123456',
-        'charset' => 'utf8',
-    ];
+    if(strpos($_SERVER['HTTP_USER_AGENT'], '(Macintosh;') !== false) {
+        $dbConfig = [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=etshop', //用本地Mac电脑的数据库
+            'username' => 'root',
+            'password' => '123456',
+            'charset' => 'utf8',
+        ];
+    }else{
+        $dbConfig = [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=192.168.1.111;dbname=etshop', //用内网Mac电脑的数据库
+            'username' => 'root',
+            'password' => '123456',
+            'charset' => 'utf8',
+        ];
+    }
 }else{
     $dbConfig = [
         'class' => 'yii\db\Connection',
@@ -30,6 +40,7 @@ if(strpos($_SERVER['HTTP_HOST'], 'local.') === 0){
         'charset' => 'utf8',
     ];
 }
+
 return [
     'components' => [
         'db' => $dbConfig,

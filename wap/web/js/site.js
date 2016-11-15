@@ -10,6 +10,15 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
 });
 
+var mySwiper = new Swiper('.swiper-container', {
+    preloadImages: false,
+    lazyLoading: true,
+    pagination: '.swiper-pagination'
+})
+
+
+
+
 // Callbacks to run specific code for specific pages, for example for About page:
 myApp.onPageInit('about', function (page) {
     // run createContentPage func after link was clicked
