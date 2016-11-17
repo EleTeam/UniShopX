@@ -19,6 +19,15 @@ use common\models\CmsArticle;
  */
 class ArticleController extends BaseController
 {
+    public function actionView($id=0)
+    {
+        $article = CmsArticle::findOne($id);
+
+        return $this->render('view', [
+            'article' => $article,
+        ]);
+    }
+
     public function actionList($page, $row=10)
     {
         $query = CmsArticle::find()->where('status=:status', [':status'=>CmsArticle::STATUS_ACTIVE])

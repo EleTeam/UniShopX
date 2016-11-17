@@ -16,13 +16,14 @@ $this->title = Yii::t('app', 'Products');
 /* @var $this yii\web\View */
 /* @var $categories */
 ?>
-
-    <?php foreach($categories as $category): ?>
-        <?php foreach($category->products as $product): ?>
-            <div class="row">
-                <?= Html::a($product->name, ['product/view', 'id' => $product->id], ['class' => 'btn btn-primary']) ?>
-            </div>
+<div data-page="category-index" class="page">
+    <div class="page-content">
+        <?php foreach($categories as $category): ?>
+            <?php foreach($category->products as $product): ?>
+                <div class="row">
+                    <?= Html::a($product->name, ['product/view', 'id' => $product->id], ['class' => 'btn btn-primary']) ?>
+                </div>
+            <?php endforeach; ?>
         <?php endforeach; ?>
-    <?php endforeach; ?>
-
-<!-- /.row -->
+    </div>
+</div>

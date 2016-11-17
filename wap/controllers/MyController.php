@@ -24,6 +24,8 @@ class MyController extends BaseController
 {
     public function actionIndex()
     {
+        $this->layout = 'main';
+
         $categories = ProductCategory::find()
             ->where('status = :status and id != :id',
                 [':status'=>ProductCategory::STATUS_ACTIVE, ':id'=>ProductCategory::ROOT_LEVEL_ID])

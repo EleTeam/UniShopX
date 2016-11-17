@@ -27,12 +27,14 @@ class CartController extends BaseController
      */
     public function actionIndex()
     {
-        $cartItemsArr = [];
-        $cart_num = 0;
-        $total_price = 0;
-        $app_cart_cookie_id = $this->getAppCartCookieId();
+        $this->layout = 'main';
 
-        $cart = Cart::myCart($this->getUserId(), $app_cart_cookie_id);
+//        $cartItemsArr = [];
+//        $cart_num = 0;
+//        $total_price = 0;
+//        $app_cart_cookie_id = $this->getAppCartCookieId();
+//
+//        $cart = Cart::myCart($this->getUserId(), $app_cart_cookie_id);
 //        if($cart) {
 //            $items = Cart::findItems($cart->id);
 //            foreach($items as $cartItem){
@@ -51,8 +53,8 @@ class CartController extends BaseController
 //            'app_cart_cookie_id' => $app_cart_cookie_id,
 //        ];
         return $this->render('index', [
-            'cart' => $cart,
-            'total_price' => $total_price,
+//            'cart' => $cart,
+//            'total_price' => $total_price,
 
         ]);
     }

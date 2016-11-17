@@ -21,7 +21,7 @@ use yii\helpers\Url;
 
 <?php foreach($articles as $article):?>
     <li class="card">
-        <a href="<?=$article->link?>">
+        <a href="<?=Url::toRoute('/article/view?id=').$article->id?>">
             <div class="card-header"><?=$article->title?></div>
             <div class="card-content">
                 <div class="card-content-inner"><?=Html::img($article->image)?></div>
