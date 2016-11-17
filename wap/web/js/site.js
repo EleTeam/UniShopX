@@ -10,15 +10,43 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
 });
 
+
+//首页-幻灯片
 var mySwiper = new Swiper('.swiper-container', {
     preloadImages: false,
     lazyLoading: true,
     pagination: '.swiper-pagination'
-})
+});
+
+//首页-无限滚动(上拉刷新)
+var homeLoading = false;
+// Last loaded index
+var homePage = 2;
+// Attach 'infinite' event handler
+$$('.infinite-scroll').on('infinite', function(){
+    // Exit, if loading in progress
+    if (homeLoading)
+        return;
+
+    // Set loading flag
+    homeLoading = true;
+    var url = '/site/index-list?page=' + homePage;
+
+    $$.ajax({
+        url: url,
+        method: 'GET',
+        success: function(html){
+            $$('.list-block ul').append(html);
+            homePage ++;
+            homeLoading = false;
+        }
+    });
+});
 
 
 
 
+/////////////////////
 // Callbacks to run specific code for specific pages, for example for About page:
 myApp.onPageInit('about', function (page) {
     // run createContentPage func after link was clicked

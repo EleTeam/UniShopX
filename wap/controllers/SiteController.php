@@ -11,7 +11,6 @@
 
 namespace wap\controllers;
 
-use common\components\ETWebController;
 use common\models\Banner;
 use common\models\CmsArticle;
 use Yii;
@@ -19,8 +18,13 @@ use Yii;
 /**
  * Site controller
  */
-class SiteController extends ETWebController
+class SiteController extends BaseController
 {
+    /**
+     * 首页初始化列表的个数
+     */
+    const LIST_INIT_ROW = 10;
+
     /**
      * @inheritdoc
      */
@@ -33,34 +37,49 @@ class SiteController extends ETWebController
         ];
     }
 
-    public function actionIndex($page=1, $row=10)
+    /**
+     * Wap首页
+     *
+     * @return string
+     */
+    public function actionIndex()
     {
-        $banners = [];
-        if($page == 1) {
-            $banners = Banner::findBanners();
-        }
+        $this->layout = 'main';
+
+        $banners = Banner::findBanners();
 
         $query = CmsArticle::find()->where('status=:status', [':status'=>CmsArticle::STATUS_ACTIVE])
-            ->offset($row * ($page-1))->limit($row);
+            ->offset(0)->limit(self::LIST_INIT_ROW);
         $articles = $query->all();
 //        die($query->createCommand()->getRawSql());
 
-        $articleArrays = [];
-        $i = 0;
-        foreach($articles as $article){
-            $articleArray = $article->toArray();
-            $is_show_image = false;
-            if(($i % 2 == 1) && $article->image){
-                $is_show_image = true;
-            }
-            $articleArray['is_show_image'] = $is_show_image;
-            $articleArrays[] = $articleArray;
-            $i++;
-        }
+//        $articleArrays = [];
+//        $i = 0;
+//        foreach($articles as $article){
+//            $articleArray = $article->toArray();
+//            $is_show_image = false;
+//            if(($i % 2 == 1) && $article->image){
+//                $is_show_image = true;
+//            }
+//            $articleArray['is_show_image'] = $is_show_image;
+//            $articleArrays[] = $articleArray;
+//            $i++;
+//        }
 
         return $this->render('index', [
             'banners' => $banners,
-            'articles' => $articleArrays,
+            'articles' => $articles,
+        ]);
+    }
+
+    public function actionIndexList($page=2)
+    {
+        $query = CmsArticle::find()->where('status=:status', [':status'=>CmsArticle::STATUS_ACTIVE])
+            ->offset(self::LIST_INIT_ROW * ($page-1))->limit(self::LIST_INIT_ROW);
+        $articles = $query->all();
+
+        return $this->render('indexList', [
+            'articles' => $articles,
         ]);
     }
 }
