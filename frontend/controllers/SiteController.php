@@ -83,12 +83,12 @@ class SiteController extends Controller
     public function actionIndex()
     {
         //header("Location:http://eleteamwap.ygcr8.com");
-        header("Content-Type: text/html; charset=utf-8");
-        echo '<h2><a href="http://eleteamwap.ygcr8.com">外网手机网站</a></h2>';
-        echo '<h2><a href="http://local.eleteamwap.ygcr8.com">本地手机网站</a></h2>';
-        exit;
+//        header("Content-Type: text/html; charset=utf-8");
+//        echo '<h2><a href="http://eleteamwap.ygcr8.com">外网手机网站</a></h2>';
+//        echo '<h2><a href="http://local.eleteamwap.ygcr8.com">本地手机网站</a></h2>';
+//        exit;
 
-        //return $this->render('index');
+        return $this->render('index');
     }
 
     /**

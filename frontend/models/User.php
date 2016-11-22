@@ -48,7 +48,7 @@ class User extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'pre_user';
+        return 'user';
     }
 
     /**

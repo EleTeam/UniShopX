@@ -10,12 +10,35 @@
  */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $banners */
 ?>
+<style type="text/css">
+    /* 头部登陆 */
+    .login {background-image: url('../image/personal_bkg.jpg');background-repeat: no-repeat; background-size: contain;position: relative;height:100px;}
+    .loginbg {/*position: absolute;*/ width: 100%;}
+    .login .personal_logo {position: absolute; top:30px; width: 70px; left: 70px;}
+    .person_arrow {position: absolute;height: 20px; right: 10px; top:40px;}
+    .login .userinfo {position: absolute; top:30px; margin-left: 150px;}
+    .login .userinfo .title {font-size: 20px; color: #fff;}
+    .login .userinfo .subtitle {font-size: 14px; color: #fff;border: 1px solid #fff;display: inline-block;padding: 3px;border-radius: 4px;margin-top: 5px;}
+</style>
 <div data-page="category-index" class="page">
     <div class="page-content">
+        <!-- 头部登陆 -->
+        <a href="<?=Url::toRoute('user/signup')?>">
+            <div class="login">
+                <img src="../image/personal_bkg.jpg" alt="" class="loginbg">
+                <img src="../image/profile_default.png" alt="" class="personal_logo">
+                <div class="userinfo">
+                    <div id="userLoginName" class="title"></div>
+                    <div id="userLevel" class="subtitle"></div>
+                </div>
+                <img src="../image/personal_icon_arrow.png" alt="" class="person_arrow">
+            </div>
+        </a>
         <div class="list-block">
             <!-- First group-->
             <div class="list-group">
@@ -57,7 +80,6 @@ use yii\helpers\Html;
                             <div class="item-after"><span class="badge">5</span></div>
                         </div>
                     </li>
-                    ...
                 </ul>
             </div>
         </div>
