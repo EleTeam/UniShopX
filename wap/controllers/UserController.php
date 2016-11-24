@@ -56,7 +56,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Signs user up.
+     * 用户注册
      *
      * @return mixed
      */
@@ -72,6 +72,27 @@ class UserController extends BaseController
         }
 
         return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * 用户登录
+     *
+     * @return mixed
+     */
+    public function actionLogin()
+    {
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->render('login', [
             'model' => $model,
         ]);
     }

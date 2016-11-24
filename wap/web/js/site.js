@@ -43,6 +43,23 @@ $$('.infinite-scroll').on('infinite', function(){
     });
 });
 
+//用户登录
+myApp.onPageInit('user-login', function(page){
+    $$('.user-login .login-btn').on('click', function(){
+        var page = $$(this).attr('data-reload-page');
+        mainView.router.reloadPage(page);
+    });
+});
+
+//用户注册
+myApp.onPageInit('user-signup', function(page) {
+    $$('.user-signup .signup-btn').on('click', function(){
+        var page = $$(this).attr('data-reload-page');
+        mainView.router.reloadPage(page);
+    });
+});
+
+
 
 
 
