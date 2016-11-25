@@ -13,6 +13,8 @@ namespace wap\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\Response;
+use common\models\Cart;
 
 /**
  * Wap项目的根控制器
@@ -26,10 +28,11 @@ class BaseController extends Controller
 
     public function init()
     {
+        parent::init();
         $this->setLanguage();
     }
 
-    /** 
+    /**
      * Set the language displayed on the current site
      */
     public function setLanguage()
@@ -72,5 +75,54 @@ class BaseController extends Controller
                 'class' => 'yii\web\ErrorAction',
             ],
         ];
+    }
+
+    /**
+     * api返回的json
+     * @param $status
+     * @param $code
+     * @param $message
+     * @param $data
+     * @param array $share
+     * @return string
+     * @apiVersion 1.0
+     */
+    protected function jsonEncode($status, $data=[], $message='', $code=1, $share=[])
+    {
+        $status     = boolval($status);
+        $data       = $data ? $data : (object)array();
+        $message    = strval($message);
+        $code       = intval($code);
+        $share      = $share ? $share : (object)array();
+
+        $result = [
+            'status'     => $status,
+            'code' => $code,
+            'message'    => $message,
+            'data'       => $data,
+            'share'      => $share,
+        ];
+
+        //设置响应对象
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data = $result;
+    }
+
+    protected function jsonSuccess($data=[], $message='', $code=1, $share=array())
+    {
+        $message = $message ? $message : '调用成功';
+        $this->jsonEncode(true, $data, $message, $code, $share);
+    }
+
+    protected function jsonFail($data=array(), $message='', $code=0, $share=array())
+    {
+        $message = $message ? $message : '调用失败';
+        $this->jsonEncode(false, $data, $message, $code, $share);
+    }
+
+    protected function getAppCartCookieId()
+    {
+        return $this->getParam('app_cart_cookie_id') ? $this->getParam('app_cart_cookie_id') : Cart::genAppCartCookieId();
     }
 }

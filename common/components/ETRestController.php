@@ -29,7 +29,7 @@ class ETRestController extends Controller
      * @return string
      * @apiVersion 1.0
      */
-    private function jsonEncode($status, $data=[], $message='', $code=1, $share=[])
+    protected function jsonEncode($status, $data=[], $message='', $code=1, $share=[])
     {
         $status     = boolval($status);
         $data       = $data ? $data : (object)array();

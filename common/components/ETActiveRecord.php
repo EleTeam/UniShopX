@@ -119,6 +119,20 @@ class ETActiveRecord extends ActiveRecord
     }
 
     /**
+     * 转换模型的错误信息数组为字符串, 只取最前面的一个
+     * @return string
+     */
+    public function errorsToOneString()
+    {
+        foreach($this->errors as $attribute => $msgs){
+            foreach($msgs as $msg){
+                return $msg;
+            }
+        }
+        return '';
+    }
+
+    /**
      * 软删除
      * @param $id
      * @param $user_id

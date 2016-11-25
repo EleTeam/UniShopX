@@ -1,0 +1,35 @@
+.toast-container{
+  position: fixed;
+  width: 150px;
+  left: 50%;
+  top: 50%;
+  padding: 0 15px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  z-index: 11800;
+  color: #fff;
+  font-size: 20px;
+  font-weight: normal;
+  font-family: 'Helvetica-Neue', 'HelveticaNeue', arial, sans-serif;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.8s
+}
+
+.toast-container.show{
+  display: block;
+}
+
+.toast-container.fadein{
+  opacity: 1;
+}
+
+.toast-icon{
+  font-size:85px;
+  text-align:center;
+}
+
+.toast-msg{
+  text-align:center;
+  font-weight:normal;
+}

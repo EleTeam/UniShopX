@@ -12,12 +12,12 @@
 namespace common\models;
 
 use Yii;
-use yii\base\Model;
+use common\components\ETModel;
 
 /**
  * Login form
  */
-class LoginForm extends Model
+class LoginForm extends ETModel
 {
     public $username;
     public $password;

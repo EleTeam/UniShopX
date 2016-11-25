@@ -23,10 +23,12 @@ class AppAsset extends AssetBundle
     public $css = [
         'f7/css/framework7.ios.min.css',
         'f7/css/framework7.ios.colors.min.css',
+        'f7/plugins/toast/toast.css',
         'css/site.css',
     ];
     public $js = [
         'f7/js/framework7.min.js',
+        'f7/plugins/toast/toast.js',
         'js/site.js',
     ];
     public $depends = [

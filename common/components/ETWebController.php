@@ -18,6 +18,7 @@ class ETWebController extends Controller
 {
     public function init()
     {
+        parent::init();
         $this->setLanguage();
     }
 

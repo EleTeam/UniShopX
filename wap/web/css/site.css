@@ -39,14 +39,14 @@ i.tabbar-demo-icon-4 {
 .user-login .loginmore .forget {margin-left: 10px;}
 .user-login .loginmore .phone {margin-right: 10px;float: right;}
 
-.user-login input {height: 50px;font-size: 18px; color:#8E8C8C; width:80%;}
+.user-login input {height: 50px;font-size: 18px; color:#8E8C8C; width:70%;}
 .user-login input::-webkit-input-placeholder {color: #ccc;}
-.user-login .email, .user-login .password {background: #fff;}
-.user-login .password img, .email img {vertical-align: top;}
+.user-login .username, .user-login .password {background: #fff;}
+.user-login .password img, .username img {vertical-align: top;}
 .user-login .item {background-color: #fff; border-bottom: 1px solid #e0e0e0;position: relative; margin-top:30px;}
 .user-login .btn {margin:3px 10px;}
 .user-login .btn {background: #ff6836;height: 40px; text-align: center; line-height: 40px; font-size: 20px;margin-top: 20px;border-radius: 5px;}
-.user-login .email img {width: 25px; margin-top: 15px; margin-left: 10px; margin-right: 9px;}
+.user-login .username img {width: 25px; margin-top: 15px; margin-left: 10px; margin-right: 9px;}
 .user-login .password img {height: 25px;margin-top: 10px; margin-left: 10px;margin-right: 10px;}
 
 
@@ -56,12 +56,12 @@ i.tabbar-demo-icon-4 {
 .user-signup .loginmore .forget {margin-left: 10px; }
 .user-signup .loginmore .phone {margin-right: 10px;float: right;}
 
-.user-signup input {height: 50px;font-size: 18px; color:#8E8C8C; width:80%;}
+.user-signup input {height: 50px;font-size: 18px; color:#8E8C8C; width:70%;}
 .user-signup input::-webkit-input-placeholder {color: #ccc;}
-.user-signup .email, .user-login .password {background: #fff;}
-.user-signup .password img, .email img {vertical-align: top;}
+.user-signup .username, .user-login .password {background: #fff;}
+.user-signup .password img, .username img {vertical-align: top;}
 .user-signup .item {background-color: #fff; border-bottom: 1px solid #e0e0e0;position: relative; margin-top:30px;}
 .user-signup .btn {margin:3px 10px;}
 .user-signup .btn {background: #ff6836;height: 40px; text-align: center; line-height: 40px; font-size: 20px;margin-top: 20px;border-radius: 5px;}
-.user-signup .email img {width: 25px; margin-top: 15px; margin-left: 10px; margin-right: 9px;}
+.user-signup .username img {width: 25px; margin-top: 15px; margin-left: 10px; margin-right: 9px;}
 .user-signup .password img {height: 25px;margin-top: 10px; margin-left: 10px;margin-right: 10px;}

@@ -1,11 +1,11 @@
 // Initialize your app
-var myApp = new Framework7();
+var app = new Framework7();
 
 // Export selectors engine
 var $$ = Dom7;
 
 // Add view
-var mainView = myApp.addView('.view-main', {
+var mainView = app.addView('.view-main', {
     // Because we use fixed-through navbar we can enable dynamic navbar
     dynamicNavbar: true
 });
@@ -44,16 +44,46 @@ $$('.infinite-scroll').on('infinite', function(){
 });
 
 //用户登录
-myApp.onPageInit('user-login', function(page){
+app.onPageInit('user-login', function(page){
     $$('.user-login .login-btn').on('click', function(){
-        var page = $$(this).attr('data-reload-page');
-        mainView.router.reloadPage(page);
+        var loginUrl = $$('.user-login .login-form').attr('action');
+        var mobile = $$('.login-form .mobile').val();
+        var password = $$('.login-form .password').val();
+        var data = app.formToJSON($$('.user-login .login-form'));
+        $$.ajax({
+            url: loginUrl,
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function(json){
+                if(json.result){
+                    var page = $$(this).attr('data-reload-page');
+                    mainView.router.reloadPage(page);
+                }else{
+                    var toast = app.toast(json.message, '', {});
+                    toast.show(true);
+                }
+            }
+        });
     });
 });
 
 //用户注册
-myApp.onPageInit('user-signup', function(page) {
+app.onPageInit('user-signup', function(page) {
     $$('.user-signup .signup-btn').on('click', function(){
+        $$('.user-signup .signup-form').data();
+    //$$('.user-signup .signup-btn').on('click', function(){
+
+        //var signupUrl = $$(this).attr('data-signup-url');
+        //$$.ajax({
+        //    url: signupUrl,
+        //    method: 'GET',
+        //    success: function(html){
+        //        $$('.list-block ul').append(html);
+        //        homePage ++;
+        //        homeLoading = false;
+        //    }
+        //});
         var page = $$(this).attr('data-reload-page');
         mainView.router.reloadPage(page);
     });
@@ -65,7 +95,7 @@ myApp.onPageInit('user-signup', function(page) {
 
 /////////////////////
 // Callbacks to run specific code for specific pages, for example for About page:
-myApp.onPageInit('about', function (page) {
+app.onPageInit('about', function (page) {
     // run createContentPage func after link was clicked
     $$('.create-page').on('click', function () {
         createContentPage();

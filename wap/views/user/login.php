@@ -30,8 +30,9 @@ use yii\helpers\Url;
 <div class="page" data-page="user-login">
     <div class="page-content user-login">
         <div class="divider"></div>
-            <form action="/app/user/login-post" id="user-login-form">
-                <div class="item email"><img src="../image/login01.png" alt=""><input type="tel" placeholder="手机号" name="username"></div>
+            <form action="<?=Url::toRoute('user/login')?>" class="login-form">
+                <input name="_csrf" type="hidden" value="<?=Yii::$app->request->csrfToken?>">
+                <div class="item username"><img src="../image/login01.png" alt=""><input type="text" placeholder="手机号" name="username"></div>
                 <div class="item password"><img src="../image/login02.png" alt=""><input type="password" placeholder="密码" name="password"></div>
                 <div class="btn login-btn" data-reload-page="<?=Url::toRoute('/my')?>">登  录</div>
             </form>
