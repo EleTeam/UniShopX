@@ -41,7 +41,7 @@ class UserController extends BaseController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -111,13 +111,6 @@ class UserController extends BaseController
     public function actionView()
     {
         $user = $this->getUser();
-        $userArr = [];
-        $user && $userArr = $user->toArray();
-        $userArr['level_label'] = '铜牌用户';
-        $data = [
-            'user' => $userArr,
-            'user_id' => $this->getUserId(),
-        ];
-        return $this->jsonSuccess($data);
+        return $this->render('view', ['user' => $user]);
     }
 }

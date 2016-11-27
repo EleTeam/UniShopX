@@ -72,7 +72,7 @@ AppAsset::register($this);
                 </div>
             </div>
             <div class="pages navbar-through">
-                <div class="page" data-page="site">
+                <div class="page" data-page="home">
                     <div class="page-content">
                         <!-- ajax load -->
                     </div>

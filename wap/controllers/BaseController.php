@@ -11,6 +11,7 @@
 
 namespace wap\controllers;
 
+use common\models\User;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -124,5 +125,14 @@ class BaseController extends Controller
     protected function getAppCartCookieId()
     {
         return $this->getParam('app_cart_cookie_id') ? $this->getParam('app_cart_cookie_id') : Cart::genAppCartCookieId();
+    }
+
+    protected function getUser()
+    {
+        if(Yii::$app->user->isGuest){
+            return null;
+        }else{
+            return User::findOne(Yii::$app->user->id);
+        }
     }
 }

@@ -27,7 +27,7 @@ use yii\helpers\Url;
         <div class="center sliding">用户登录</div>
     </div>
 </div>
-<div class="page" data-page="user-login">
+<div class="page no-tabbar" data-page="user-login">
     <div class="page-content user-login">
             <form action="<?=Url::toRoute('user/login')?>" class="login-form">
                 <input name="_csrf" type="hidden" value="<?=Yii::$app->request->csrfToken?>">

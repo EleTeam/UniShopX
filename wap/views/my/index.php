@@ -18,7 +18,7 @@ use yii\helpers\Url;
 <div class="page" data-page="my">
     <div class="page-content my">
         <!-- 头部登陆 -->
-        <a href="<?=Url::toRoute('user/login')?>">
+        <a href="<?=Yii::$app->user->isGuest ? Url::toRoute('user/login') : Url::toRoute('user/view')?>">
             <div class="login">
                 <img src="../image/personal_bkg.jpg" alt="" class="loginbg">
                 <img src="../image/profile_default.png" alt="" class="personal_logo">

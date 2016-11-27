@@ -3,18 +3,19 @@
  * Shop-PHP-Yii2
  *
  * @author Tony Wong
- * @date 2016-11-17
+ * @date 2016-09-30
  * @email 908601756@qq.com
  * @copyright Copyright © 2016年 EleTeam
  * @license The MIT License (MIT)
  */
 
+use yii\helpers\Html;
+use yii\helpers\Url;
+
 /**
- * @var $this yii\web\View
- * @var $article common\models\CmsArticle
+ * @var $user \common\models\User
  */
 ?>
-
 <!-- Top Navbar-->
 <div class="navbar">
     <div class="navbar-inner">
@@ -24,11 +25,12 @@
                 <span>返回</span>
             </a>
         </div>
-        <div class="center sliding">文章详情</div>
+        <div class="center sliding">用户信息</div>
     </div>
 </div>
-<div class="page no-tabbar" data-page="article-view">
-    <div class="page-content">
-        <?=$article->title?>
+<div class="page no-tabbar" data-page="user-view">
+    <div class="page-content user-login">
+        <div>用户ID: <?=$user->id?></div>
+        <div>手机号: <?=$user->mobile?></div>
     </div>
 </div>
