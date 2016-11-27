@@ -13,7 +13,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $banners */
+/* @var $user common\models\User */
 ?>
 <style type="text/css">
     /* 头部登陆 */
@@ -33,7 +33,7 @@ use yii\helpers\Url;
                 <img src="../image/personal_bkg.jpg" alt="" class="loginbg">
                 <img src="../image/profile_default.png" alt="" class="personal_logo">
                 <div class="userinfo">
-                    <div id="userLoginName" class="title">用户名</div>
+                    <div id="userLoginName" class="title"><?= $user ? $user->mobile : '点击去登录' ?></div>
                     <div id="userLevel" class="subtitle">余额: 0.00 元</div>
                 </div>
                 <img src="../image/personal_icon_arrow.png" alt="" class="person_arrow">

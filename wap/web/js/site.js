@@ -4,12 +4,11 @@ var app = new Framework7();
 // Export selectors engine
 var $$ = Dom7;
 
-// Add view
-var mainView = app.addView('.view-main', {
-    // Because we use fixed-through navbar we can enable dynamic navbar
-    dynamicNavbar: true
-});
-
+// 必须初始化视图才能加载数据, 使用导航条穿透布局必须使用{dynamicNavbar:true}
+var viewTab1 = app.addView('#tab1', {dynamicNavbar:true});
+var viewTab2 = app.addView('#tab2', {dynamicNavbar:true});
+var viewTab3 = app.addView('#tab3', {dynamicNavbar:true});
+var viewTab4 = app.addView('#tab4', {dynamicNavbar:true, dynamicPageUrl:true});
 
 //首页-幻灯片
 var mySwiper = new Swiper('.swiper-container', {
@@ -47,20 +46,20 @@ $$('.infinite-scroll').on('infinite', function(){
 app.onPageInit('user-login', function(page){
     $$('.user-login .login-btn').on('click', function(){
         var loginUrl = $$('.user-login .login-form').attr('action');
-        var mobile = $$('.login-form .mobile').val();
-        var password = $$('.login-form .password').val();
         var data = app.formToJSON($$('.user-login .login-form'));
         $$.ajax({
             url: loginUrl,
             method: 'POST',
             data: data,
             dataType: 'json',
-            success: function(json){
-                if(json.result){
+            success: function(result){
+                if(result.status){
+                    console.log(1);
                     var page = $$(this).attr('data-reload-page');
                     mainView.router.reloadPage(page);
+                    console.log(2);
                 }else{
-                    var toast = app.toast(json.message, '', {});
+                    var toast = app.toast(result.message, '', {});
                     toast.show(true);
                 }
             }
@@ -71,21 +70,23 @@ app.onPageInit('user-login', function(page){
 //用户注册
 app.onPageInit('user-signup', function(page) {
     $$('.user-signup .signup-btn').on('click', function(){
-        $$('.user-signup .signup-form').data();
-    //$$('.user-signup .signup-btn').on('click', function(){
-
-        //var signupUrl = $$(this).attr('data-signup-url');
-        //$$.ajax({
-        //    url: signupUrl,
-        //    method: 'GET',
-        //    success: function(html){
-        //        $$('.list-block ul').append(html);
-        //        homePage ++;
-        //        homeLoading = false;
-        //    }
-        //});
-        var page = $$(this).attr('data-reload-page');
-        mainView.router.reloadPage(page);
+        var signupUrl = $$('.user-signup .signup-form').attr('action');
+        var data = app.formToJSON($$('.user-signup .signup-form'));
+        $$.ajax({
+            url: signupUrl,
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function(result){
+                if(result.status){
+                    var page = $$(this).attr('data-reload-page');
+                    mainView.router.reloadPage(page);
+                }else{
+                    var toast = app.toast(result.message, '', {});
+                    toast.show(true);
+                }
+            }
+        });
     });
 });
 

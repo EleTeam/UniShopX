@@ -44,7 +44,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        $this->layout = 'main';
+//        $this->layout = 'main';
 
         $banners = Banner::findBanners();
 

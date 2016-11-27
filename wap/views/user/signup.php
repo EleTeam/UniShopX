@@ -30,7 +30,8 @@ use yii\helpers\Url;
 <div class="page" data-page="user-signup">
     <div class="page-content user-signup">
         <form class="signup-form" action="<?=Url::toRoute('user/signup')?>">
-            <div class="item username"><img src="../image/login01.png" alt=""><input type="tel" placeholder="手机号" name="username"></div>
+            <input name="_csrf" type="hidden" value="<?=Yii::$app->request->csrfToken?>">
+            <div class="item username"><img src="../image/login01.png" alt=""><input type="tel" placeholder="手机号" name="mobile"></div>
             <div class="item password"><img src="../image/login03.png" alt=""><input type="tel" placeholder="验证码: 8888" name="code"></div>
             <div class="item password"><img src="../image/login02.png" alt=""><input type="password" placeholder="设置登录密码" name="password"></div>
             <div class="btn signup-btn" data-reload-page="<?=Url::toRoute('/my')?>">注 册</div>

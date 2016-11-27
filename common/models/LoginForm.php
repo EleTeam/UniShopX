@@ -80,7 +80,13 @@ class LoginForm extends ETModel
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
+            if(is_numeric($this->username)) {
+                //通过手机号登录
+                $this->_user = User::findOneByMobile($this->username);
+            }else {
+                //通过用户名登录
+                $this->_user = User::findByUsername($this->username);
+            }
         }
 
         return $this->_user;

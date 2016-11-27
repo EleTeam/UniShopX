@@ -29,7 +29,6 @@ use yii\helpers\Url;
 </div>
 <div class="page" data-page="user-login">
     <div class="page-content user-login">
-        <div class="divider"></div>
             <form action="<?=Url::toRoute('user/login')?>" class="login-form">
                 <input name="_csrf" type="hidden" value="<?=Yii::$app->request->csrfToken?>">
                 <div class="item username"><img src="../image/login01.png" alt=""><input type="text" placeholder="手机号" name="username"></div>

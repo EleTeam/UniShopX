@@ -3,25 +3,25 @@
  * Shop-PHP-Yii2
  *
  * @author Tony Wong
- * @date 2015-05-06
+ * @date 2016-11-26
  * @email 908601756@qq.com
- * @copyright Copyright © 2015年 EleTeam
+ * @copyright Copyright © 2016年 EleTeam
  * @license The MIT License (MIT)
  */
 
 namespace wap\models;
 
-use yii\base\Model;
+use common\components\ETModel;
 use common\models\User;
 
 /**
  * Signup form
  */
-class SignupForm extends Model
+class SignupForm extends ETModel
 {
     public $mobile;
-    public $email;
     public $password;
+    public $code; //验证码
 
     /**
      * @inheritdoc
@@ -29,19 +29,18 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['mobile', 'filter', 'filter' => 'trim'],
+            ['mobile', 'required'],
+            ['mobile', 'string', 'min' => 11, 'max' => 11],
+            ['mobile', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This mobile number has already been taken.'],
 
-            ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-
+            ['password', 'filter', 'filter' => 'trim'],
             ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            ['password', 'string', 'min' => 6, 'max' => 32],
+
+            ['code', 'filter', 'filter' => 'trim'],
+            ['code', 'required'],
+            ['code', 'string', 'length' => 4],
         ];
     }
 
@@ -57,15 +56,19 @@ class SignupForm extends Model
         }
         
         $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
+        $user->mobile = $this->mobile;
         $user->setPassword($this->password);
         $user->generateAuthKey();
 
-        if(!$user->save()){
-            print_r($user->getErrors());exit;
+        if($this->code != '8888') {
+            $this->addError('code', '验证码不正确');
+            return null;
+        }
+
+        if($user->save()){
+            return $user;
         }
         
-        return $user->save() ? $user : null;
+        return null;
     }
 }

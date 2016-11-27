@@ -52,30 +52,8 @@ AppAsset::register($this);
         </div>
 
         <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
-        <div class="pages navbar-through toolbar-through">
+        <div class="pages navbar-through toolbar-fixed">
             <?= $content ?>
-        </div>
-
-        <!-- Bottom Toolbar-->
-        <div class="toolbar tabbar tabbar-labels">
-            <div class="toolbar-inner">
-                <a href="<?=Url::toRoute('/')?>" class="tab-link <?php echo $this->context->id == 'site' ? 'active' : '' ?>">
-                    <i class="icon tabbar-demo-icon-1"></i>
-                    <span class="tabbar-label">首页</span>
-                </a>
-                <a href="<?=Url::toRoute('/category')?>" class="tab-link <?php echo $this->context->id == 'category' ? 'active' : '' ?>">
-                    <i class="icon tabbar-demo-icon-2"></i>
-                    <span class="tabbar-label">分类</span>
-                </a>
-                <a  href="<?=Url::toRoute('/cart')?>" class="tab-link <?php echo $this->context->id == 'cart' ? 'active' : '' ?>">
-                    <i class="icon tabbar-demo-icon-3"><span class="badge bg-red">5</span></i>
-                    <span class="tabbar-label">购物车</span>
-                </a>
-                <a href="<?=Url::toRoute('/my')?>" class="tab-link <?php echo $this->context->id == 'my' ? 'active' : '' ?>">
-                    <i class="icon tabbar-demo-icon-4"></i>
-                    <span class="tabbar-label">我的</span>
-                </a>
-            </div>
         </div>
     </div>
 </div>

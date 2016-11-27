@@ -12,6 +12,7 @@
 namespace wap\controllers;
 
 use common\models\ProductCategory;
+use common\models\User;
 use Yii;
 
 /**
@@ -32,8 +33,14 @@ class MyController extends BaseController
             ->with(['products'])
             ->all();
 
+        $user = null;
+        if(!Yii::$app->user->isGuest) {
+            $user = User::findOne(Yii::$app->user->id);
+        }
+
         return $this->render('index', [
             'categories' => $categories,
+            'user' => $user,
         ]);
     }
 }

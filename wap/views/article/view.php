@@ -27,7 +27,7 @@
         <div class="center sliding">文章详情</div>
     </div>
 </div>
-<div data-page="article-view" class="page">
+<div class="page" data-page="article-view">
     <div class="page-content">
         <?=$article->title?>
     </div>
