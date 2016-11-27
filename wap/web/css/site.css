@@ -1,3 +1,20 @@
+/* 公共样式 */
+li {list-style:none;}
+
+/* 行高 */
+.h80 {height: 80px; background: #f0f0f0;}
+.h70 {height: 70px; background: #f0f0f0;}
+.h60 {height: 60px;}
+.h50 {height: 50px;}
+.h40 {height: 40px;}
+.h30 {height: 30px;}
+.h20 {height: 20px;}
+.hn10 {height: 10px;}
+.h10 {height: 10px;background: #f0f0f0;}
+.h6 {height: 3px;background: #f0f0f0;}
+.h3 {height: 3px;background: #f0f0f0;}
+.h1 {height: 1px;background: #f0f0f0;}
+
 /* Tab bar icons */
 i.tabbar-demo-icon-1 {
     width: 30px;
@@ -32,6 +49,13 @@ i.tabbar-demo-icon-4 {
     background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 25 19' fill='%23007aff'><g><path d='M23,3h-4.1l-2.4-2.4c0,0,0,0,0,0l0,0C16.1,0.2,15.6,0,15.1,0h-5C9.5,0,9,0.3,8.6,0.6l0,0L6.2,3H2C0.9,3,0,3.9,0,5v12 c0,1.1,0.9,2,2,2h21c1.1,0,2-0.9,2-2V5C25,3.9,24.1,3,23,3z M12.5,16c-3,0-5.5-2.5-5.5-5.5C7,7.5,9.5,5,12.5,5c3,0,5.5,2.5,5.5,5.5 C18,13.5,15.5,16,12.5,16z'/><circle cx='12.5' cy='10.5' r='4.5'/></g></svg>");
 }
 
+/* 公用块 */
+.block {background-color: #fff;}
+.block .item {height: 50px;line-height: 50px;padding-left: 10px;background-color: #fff;}
+.block .item_ico {float: left;width: 30px;padding: 10px 10px 10px 0;}
+.block .item_arrow {float: right;width: 16px;padding: 17px 15px 15px 0;}
+
+
 /****** 首页 ******/
 .card-content-inner {
     text-align: center;
@@ -44,14 +68,45 @@ i.tabbar-demo-icon-4 {
 
 /******** 我的 ********/
 /* 头部登陆 */
-.my .login {background-image: url('../image/personal_bkg.jpg');background-repeat: no-repeat; background-size: contain;position: relative;height:100px;}
-.my .loginbg {/*position: absolute;*/ width: 100%;}
-.my .login .personal_logo {position: absolute; top:30px; width: 70px; left: 70px;}
-.my .person_arrow {position: absolute;height: 20px; right: 10px; top:40px;}
-.my .login .userinfo {position: absolute; top:30px; margin-left: 150px;}
+.my .login {background-image: url('../image/personal_bkg.jpg'); background-repeat: no-repeat; background-size: contain;position: relative; height:100px;}
+.my .loginbg {position: absolute; width: 100%; height: 100px;}
+.my .login .personal_logo {position:absolute; top:15px; width:70px; left:30px;}
+.my .person_arrow {position: absolute; height: 20px; right: 10px; top:38px;}
+.my .login .userinfo {position: absolute; top: 15px; margin-left: 120px;}
 .my .login .userinfo .title {font-size: 20px; color: #fff;}
-.my .login .userinfo .subtitle {font-size: 14px; color: #fff;border: 1px solid #fff;display: inline-block;padding: 3px;border-radius: 4px;margin-top: 5px;}
+.my .login .userinfo .subtitle {font-size: 14px; color: #fff;border: 1px solid #fff;display: inline-block;padding: 3px;border-radius: 4px;margin-top: 8px;}
+/* 列表 */
+.my .firstblock, .my .secondblock, .my .thirdblock {background-color: #fff;}/* 设置条目 */
+.my .item {height: 50px;line-height: 50px;padding-left: 15px;background-color: #fff;}
+.my .item_ico {float: left;width: 30px; height:30px; padding: 10px 10px 10px 0;}
+.my .item_arrow {float: right;width: 16px;padding: 17px 15px 15px 0;}
 
+/* 全部订单栏 */
+.my .menu-list {
+    overflow: hidden;
+}
+.my .menu-list li {
+    float: left;
+    padding: 0.5em 0;
+    text-align: center;
+    width: 33.3%;
+}
+.my .menu-list li a {
+    display: block;
+    text-decoration: none;
+    width: 100%;
+}
+.my .menu-list li a img {
+    display: block;
+    height: 1.4em;
+    margin: 0 auto;
+}
+.my .menu-list li p {
+    color: #6a6a6a;
+    font-size: 0.75em;
+    line-height: 1.5em;
+    text-align: center;
+}
 
 /****** 用户登录页 ***********/
 .user-login .loginmore {margin-top: 20px;}

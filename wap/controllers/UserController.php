@@ -38,7 +38,7 @@ class UserController extends BaseController
                     [
                         'actions' => ['signup', 'login'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['?'],
                     ],
                     [
                         'actions' => ['logout', 'view'],
