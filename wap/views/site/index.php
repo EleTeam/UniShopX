@@ -65,122 +65,61 @@ AppAsset::register($this);
 <!-- Views-->
     <div class="views tabs toolbar-fixed">
         <!-- Tab 1 - View 1, active by default -->
-        <div id="tab1" class="view tab active">
+        <div id="tab-home" class="view tab active">
             <div class="navbar">
                 <div class="navbar-inner">
-                    <div class="center sliding">月光茶人</div>
+                    <div class="center">月光茶人</div>
                 </div>
             </div>
             <div class="pages navbar-through">
-                <div data-page="home-1" class="page">
-                    <div class="page-content" id="tab-home-content">
-                        <div class="content-block">
-                            <p>This is view 1</p>
-                        </div>
+                <div class="page" data-page="site">
+                    <div class="page-content">
+                        <!-- ajax load -->
                     </div>
                 </div>
             </div>
         </div>
         <!-- Tab 2 - View 2 -->
-        <div id="tab2" class="view tab">
+        <div id="tab-category" class="view tab">
             <div class="navbar">
                 <div class="navbar-inner">
-                    <div class="center sliding">View 2</div>
+                    <div class="center">分类</div>
                 </div>
             </div>
             <div class="pages navbar-through">
-                <div data-page="home-2" class="page">
+                <div class="page" data-page="category">
                     <div class="page-content">
-                        <div class="content-block">
-                            <p>This is view 2</p>
-                        </div>
+                        <!-- ajax load -->
                     </div>
                 </div>
             </div>
         </div>
         <!-- Tab 3 - View 3 -->
-        <div id="tab3" class="view tab">
+        <div id="tab-cart" class="view tab">
             <div class="navbar">
                 <div class="navbar-inner">
-                    <div class="center sliding">View 3</div>
+                    <div class="center">购物车</div>
                 </div>
             </div>
             <div class="pages navbar-through">
-                <div class="page" data-page="home-3">
+                <div class="page" data-page="cart">
                     <div class="page-content">
-                        <div class="content-block">
-                            <p>This is view 3</p>
-                        </div>
+                        <!-- ajax load -->
                     </div>
                 </div>
             </div>
         </div>
         <!-- Tab 4 - View 4 -->
-        <div id="tab4" class="view tab">
+        <div id="tab-my" class="view tab">
             <div class="navbar">
                 <div class="navbar-inner">
-                    <div class="center sliding">我的</div>
+                    <div class="center">我的</div>
                 </div>
             </div>
             <div class="pages navbar-through">
-                <div class="page" data-page="home-4">
+                <div class="page" data-page="my">
                     <div class="page-content">
-                        <!-- 头部登陆 -->
-                        <a href="<?=Url::toRoute('user/login')?>" class="open-preloader">
-                            <div class="login">
-                                <img src="../image/personal_bkg.jpg" alt="" class="loginbg">
-                                <img src="../image/profile_default.png" alt="" class="personal_logo">
-                                <div class="userinfo">
-                                    <div id="userLoginName" class="title">点击去登录</div>
-                                    <div id="userLevel" class="subtitle">余额: 0.00 元</div>
-                                </div>
-                                <img src="../image/personal_icon_arrow.png" alt="" class="person_arrow">
-                            </div>
-                        </a>
-                        <div class="list-block">
-                            <!-- First group-->
-                            <div class="list-group">
-                                <ul>
-                                    <li class="list-group-title">First group</li>
-                                    <li class="item-content">
-                                        <div class="item-media"><i class="icon icon-f7"></i></div>
-                                        <div class="item-inner">
-                                            <div class="item-title">Item title</div>
-                                            <div class="item-after">Label</div>
-                                        </div>
-                                    </li>
-                                    <li class="item-content">
-                                        <div class="item-media"><i class="icon icon-f7"></i></div>
-                                        <div class="item-inner">
-                                            <div class="item-title">Item with badge</div>
-                                            <div class="item-after"><span class="badge">5</span></div>
-                                        </div>
-                                    </li>
-                                    ...
-                                </ul>
-                            </div>
-
-                            <!-- Second group-->
-                            <div class="list-group">
-                                <ul>
-                                    <li class="list-group-title">Second Group</li>
-                                    <li class="item-content">
-                                        <div class="item-media"><i class="icon icon-f7"></i></div>
-                                        <div class="item-inner">
-                                            <div class="item-title">Item title</div>
-                                            <div class="item-after">Label</div>
-                                        </div>
-                                    </li>
-                                    <li class="item-content">
-                                        <div class="item-media"><i class="icon icon-f7"></i></div>
-                                        <div class="item-inner">
-                                            <div class="item-title">Item with badge</div>
-                                            <div class="item-after"><span class="badge">5</span></div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <!-- ajax load -->
                     </div>
                 </div>
             </div>
@@ -188,19 +127,19 @@ AppAsset::register($this);
         <!-- Tab bar with tab links -->
         <div class="toolbar tabbar tabbar-labels">
             <div class="toolbar-inner">
-                <a href="#tab1" class="tab-link active">
+                <a class="tab-link active" href="#tab-home" id="tab-home-icon" data-url="<?=Url::toRoute('/site/home')?>">
                     <i class="icon tabbar-demo-icon-1"></i>
                     <span class="tabbar-label">首页</span>
                 </a>
-                <a href="#tab2" class="tab-link">
+                <a class="tab-link" href="#tab-category" id="tab-category-icon" data-url="<?=Url::toRoute('/category')?>">
                     <i class="icon tabbar-demo-icon-2"></i>
                     <span class="tabbar-label">分类</span>
                 </a>
-                <a  href="#tab3" class="tab-link">
+                <a class="tab-link" href="#tab-cart" id="tab-cart-icon" data-url="<?=Url::toRoute('/cart')?>">
                     <i class="icon tabbar-demo-icon-3"><span class="badge bg-red">5</span></i>
                     <span class="tabbar-label">购物车</span>
                 </a>
-                <a href="#tab4" class="tab-link">
+                <a class="tab-link" href="#tab-my" id="tab-my-icon" data-url="<?=Url::toRoute('/my')?>">
                     <i class="icon tabbar-demo-icon-4"></i>
                     <span class="tabbar-label">我的</span>
                 </a>

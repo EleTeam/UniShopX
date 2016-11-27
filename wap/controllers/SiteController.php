@@ -13,6 +13,7 @@ namespace wap\controllers;
 
 use common\models\Banner;
 use common\models\CmsArticle;
+use common\models\ProductCategory;
 use Yii;
 
 /**
@@ -44,29 +45,17 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-//        $this->layout = 'main';
+        return $this->render('index');
+    }
 
+    public function actionHome()
+    {
         $banners = Banner::findBanners();
 
         $query = CmsArticle::find()->where('status=:status', [':status'=>CmsArticle::STATUS_ACTIVE])
             ->offset(0)->limit(self::LIST_INIT_ROW);
         $articles = $query->all();
-//        die($query->createCommand()->getRawSql());
-
-//        $articleArrays = [];
-//        $i = 0;
-//        foreach($articles as $article){
-//            $articleArray = $article->toArray();
-//            $is_show_image = false;
-//            if(($i % 2 == 1) && $article->image){
-//                $is_show_image = true;
-//            }
-//            $articleArray['is_show_image'] = $is_show_image;
-//            $articleArrays[] = $articleArray;
-//            $i++;
-//        }
-
-        return $this->render('index', [
+        return $this->render('home', [
             'banners' => $banners,
             'articles' => $articles,
         ]);
@@ -79,19 +68,6 @@ class SiteController extends BaseController
         $articles = $query->all();
 
         return $this->render('indexList', [
-            'articles' => $articles,
-        ]);
-    }
-
-    public function actionHomeContent()
-    {
-        $banners = Banner::findBanners();
-
-        $query = CmsArticle::find()->where('status=:status', [':status'=>CmsArticle::STATUS_ACTIVE])
-            ->offset(0)->limit(self::LIST_INIT_ROW);
-        $articles = $query->all();
-        return $this->render('homeContent', [
-            'banners' => $banners,
             'articles' => $articles,
         ]);
     }

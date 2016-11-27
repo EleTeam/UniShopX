@@ -27,8 +27,6 @@ class CartController extends BaseController
      */
     public function actionIndex()
     {
-        $this->layout = 'main';
-
 //        $cartItemsArr = [];
 //        $cart_num = 0;
 //        $total_price = 0;

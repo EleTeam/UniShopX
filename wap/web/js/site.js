@@ -15,86 +15,93 @@ var myApp = new Framework7({
 // Export selectors engine
 var $$ = Dom7;
 
+
 // 必须初始化视图才能加载数据, 使用导航条穿透布局必须使用{dynamicNavbar:true}
-var viewTab1 = myApp.addView('#tab1', {dynamicNavbar:true});
-var viewTab2 = myApp.addView('#tab2', {dynamicNavbar:true});
-var viewTab3 = myApp.addView('#tab3', {dynamicNavbar:true});
-var viewTab4 = myApp.addView('#tab4', {dynamicNavbar:true, dynamicPageUrl:true});
+var tabHomeView     = myApp.addView('#tab-home', {dynamicNavbar:true});
+var tabCategoryView = myApp.addView('#tab-category', {dynamicNavbar:true});
+var tabCartView     = myApp.addView('#tab-cart', {dynamicNavbar:true});
+var tabMyView       = myApp.addView('#tab-my', {dynamicNavbar:true});
 
-//viewTab1.router.loadPage('/user/login');
+//点击工具栏重新加载页面
+$$('#tab-home-icon').on('click', function(){
+    var url = $$(this).attr('data-url');
+    tabHomeView.router.load({url:url, animatePages:false, ignoreCache:true, reload:true});
+});
+$$('#tab-home-icon').trigger('click');
 
-// 指示器模态框, 点击链接时, 等待页面返回
-$$('.open-preloader').on('click', function(){
-    //myApp.showIndicator();
-    //如果有data-url则跳转页面
-    //if($$(this).attr('data-url')){
-    //    $$.ajax({
-    //        url: $$(this).attr('data-url'),
-    //        method: 'GET',
-    //        success: function(html){
-    //            if(result.status){
-    //                console.log(1);
-    //                var page = $$(this).attr('data-reload-page');
-    //                mainView.router.reloadPage(page);
-    //                console.log(2);
-    //            }else{
-    //                var toast = myApp.toast(result.message, '', {});
-    //                toast.show(true);
-    //            }
-    //        }
-    //    });
-    //}
-    //setTimeout(function () {
-    //    myApp.hideIndicator();
-    //}, 2000);
-
+$$('#tab-category-icon').on('click', function(){
+    var url = $$(this).attr('data-url');
+    tabCategoryView.router.load({url:url, animatePages:false, ignoreCache:true, reload:true});
 });
 
-//首页-幻灯片
-var mySwiper = new Swiper('.swiper-container', {
-    preloadImages: false,
-    lazyLoading: true,
-    pagination: '.swiper-pagination'
+$$('#tab-cart-icon').on('click', function(){
+    var url = $$(this).attr('data-url');
+    tabCartView.router.load({url:url, animatePages:false, ignoreCache:true, reload:true});
 });
 
-//首页-无限滚动(上拉刷新)
-var homeLoading = false;
-// Last loaded index
-var homePage = 2;
-// Attach 'infinite' event handler
-$$('.infinite-scroll').on('infinite', function(){
-    // Exit, if loading in progress
-    if (homeLoading)
-        return;
+$$('#tab-my-icon').on('click', function(){
+    var url = $$(this).attr('data-url');
+    tabMyView.router.load({url:url, animatePages:false, ignoreCache:true, reload:true});
+});
 
-    // Set loading flag
-    homeLoading = true;
-    var url = '/site/index-list?page=' + homePage;
+//myApp.onPageInit('site-home', function(page) {
+//    myApp.showIndicator();
+//    $$.ajax({
+//        url: '/site/home',
+//        method: 'GET',
+//        success: function (html) {
+//            $$('#tab-home-content').html(html);
+//            myApp.hideIndicator();
+//        }
+//    });
+//});
+//$$('#tab-home-icon').trigger('pageInit');
 
-    $$.ajax({
-        url: url,
-        method: 'GET',
-        success: function(html){
-            $$('.list-block ul').append(html);
-            homePage ++;
-            homeLoading = false;
-        }
+
+//首页
+myApp.onPageInit('home', function(page){
+    //幻灯片
+    var mySwiper = new Swiper('.swiper-container', {
+        preloadImages: false,
+        lazyLoading: true,
+        pagination: '.swiper-pagination'
     });
-});
+
+    //首页-无限滚动(上拉刷新)
+    var homeLoading = false;
+    // Last loaded index
+    var homePage = 2;
+    // Attach 'infinite' event handler
+    $$('.infinite-scroll').on('infinite', function(){
+        // Exit, if loading in progress
+        if (homeLoading)
+            return;
+
+        // Set loading flag
+        homeLoading = true;
+        var url = '/site/index-list?page=' + homePage;
 
         $$.ajax({
-            url: '/site/home-content',
+            url: url,
             method: 'GET',
             success: function(html){
-                $$('#tab-home-content').html(html);
+                $$('.list-block ul').append(html);
+                homePage ++;
+                homeLoading = false;
             }
         });
+    });
+});
 
 //用户登录
 myApp.onPageInit('user-login', function(page){
     $$('.user-login .login-btn').on('click', function(){
         var loginUrl = $$('.user-login .login-form').attr('action');
         var data = myApp.formToJSON($$('.user-login .login-form'));
+        var reloadPage = $$(this).attr('data-reload-page');
+        myApp.showIndicator();
+        //tabMyView.router.reloadPage($$(this).attr('data-reload-page'));
+        //$$('#tab-my-icon').trigger('click');
         $$.ajax({
             url: loginUrl,
             method: 'POST',
@@ -102,10 +109,10 @@ myApp.onPageInit('user-login', function(page){
             dataType: 'json',
             success: function(result){
                 if(result.status){
-                    console.log(1);
-                    var page = $$(this).attr('data-reload-page');
-                    mainView.router.reloadPage(page);
-                    console.log(2);
+                    //tabMyView.router.reloadPage(reloadPage);
+                    //$$('#tab-my-icon').trigger('click');
+                    tabMyView.router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
+                    myApp.hideIndicator();
                 }else{
                     var toast = myApp.toast(result.message, '', {});
                     toast.show(true);

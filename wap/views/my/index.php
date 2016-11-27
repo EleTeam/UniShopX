@@ -15,18 +15,8 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $user common\models\User */
 ?>
-<style type="text/css">
-    /* 头部登陆 */
-    .login {background-image: url('../image/personal_bkg.jpg');background-repeat: no-repeat; background-size: contain;position: relative;height:100px;}
-    .loginbg {/*position: absolute;*/ width: 100%;}
-    .login .personal_logo {position: absolute; top:30px; width: 70px; left: 70px;}
-    .person_arrow {position: absolute;height: 20px; right: 10px; top:40px;}
-    .login .userinfo {position: absolute; top:30px; margin-left: 150px;}
-    .login .userinfo .title {font-size: 20px; color: #fff;}
-    .login .userinfo .subtitle {font-size: 14px; color: #fff;border: 1px solid #fff;display: inline-block;padding: 3px;border-radius: 4px;margin-top: 5px;}
-</style>
-<div data-page="category-index" class="page">
-    <div class="page-content">
+<div class="page" data-page="my">
+    <div class="page-content my">
         <!-- 头部登陆 -->
         <a href="<?=Url::toRoute('user/login')?>">
             <div class="login">

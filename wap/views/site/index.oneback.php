@@ -103,7 +103,8 @@ AppAsset::register($this);
                         }
                     </style>
 
-                    <div class="list-block cards-list"><ul>
+                    <div class="list-block cards-list">
+                        <ul>
                             <?php foreach($articles as $article):?>
                                 <li class="card">
                                     <a href="<?=Url::toRoute('/article/view?id=').$article->id?>" data-ignore-cache="true">
@@ -114,7 +115,8 @@ AppAsset::register($this);
                                     </a>
                                 </li>
                             <?php endforeach;?>
-                        </ul></div>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- Bottom Toolbar-->

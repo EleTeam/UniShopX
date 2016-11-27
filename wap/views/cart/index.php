@@ -14,7 +14,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $banners */
 ?>
-<div data-page="article-view" class="page">
+<div data-page="cart" class="page">
     <div class="page-content">
         购物车
     </div>

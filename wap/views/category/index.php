@@ -16,7 +16,7 @@ $this->title = Yii::t('app', 'Products');
 /* @var $this yii\web\View */
 /* @var $categories */
 ?>
-<div data-page="category-index" class="page">
+<div data-page="category" class="page">
     <div class="page-content">
         <?php foreach($categories as $category): ?>
             <?php foreach($category->products as $product): ?>
