@@ -82,4 +82,17 @@ class SiteController extends BaseController
             'articles' => $articles,
         ]);
     }
+
+    public function actionHomeContent()
+    {
+        $banners = Banner::findBanners();
+
+        $query = CmsArticle::find()->where('status=:status', [':status'=>CmsArticle::STATUS_ACTIVE])
+            ->offset(0)->limit(self::LIST_INIT_ROW);
+        $articles = $query->all();
+        return $this->render('homeContent', [
+            'banners' => $banners,
+            'articles' => $articles,
+        ]);
+    }
 }

@@ -1,14 +1,54 @@
 // Initialize your app
-var app = new Framework7();
+var myApp = new Framework7({
+    // If it is webapp, we can enable hash navigation:
+    pushState: true,
+
+    // Hide and show indicator during ajax requests
+    onAjaxStart: function (xhr) {
+        myApp.showIndicator();
+    },
+    onAjaxComplete: function (xhr) {
+        myApp.hideIndicator();
+    }
+});
 
 // Export selectors engine
 var $$ = Dom7;
 
 // 必须初始化视图才能加载数据, 使用导航条穿透布局必须使用{dynamicNavbar:true}
-var viewTab1 = app.addView('#tab1', {dynamicNavbar:true});
-var viewTab2 = app.addView('#tab2', {dynamicNavbar:true});
-var viewTab3 = app.addView('#tab3', {dynamicNavbar:true});
-var viewTab4 = app.addView('#tab4', {dynamicNavbar:true, dynamicPageUrl:true});
+var viewTab1 = myApp.addView('#tab1', {dynamicNavbar:true});
+var viewTab2 = myApp.addView('#tab2', {dynamicNavbar:true});
+var viewTab3 = myApp.addView('#tab3', {dynamicNavbar:true});
+var viewTab4 = myApp.addView('#tab4', {dynamicNavbar:true, dynamicPageUrl:true});
+
+//viewTab1.router.loadPage('/user/login');
+
+// 指示器模态框, 点击链接时, 等待页面返回
+$$('.open-preloader').on('click', function(){
+    //myApp.showIndicator();
+    //如果有data-url则跳转页面
+    //if($$(this).attr('data-url')){
+    //    $$.ajax({
+    //        url: $$(this).attr('data-url'),
+    //        method: 'GET',
+    //        success: function(html){
+    //            if(result.status){
+    //                console.log(1);
+    //                var page = $$(this).attr('data-reload-page');
+    //                mainView.router.reloadPage(page);
+    //                console.log(2);
+    //            }else{
+    //                var toast = myApp.toast(result.message, '', {});
+    //                toast.show(true);
+    //            }
+    //        }
+    //    });
+    //}
+    //setTimeout(function () {
+    //    myApp.hideIndicator();
+    //}, 2000);
+
+});
 
 //首页-幻灯片
 var mySwiper = new Swiper('.swiper-container', {
@@ -42,11 +82,19 @@ $$('.infinite-scroll').on('infinite', function(){
     });
 });
 
+        $$.ajax({
+            url: '/site/home-content',
+            method: 'GET',
+            success: function(html){
+                $$('#tab-home-content').html(html);
+            }
+        });
+
 //用户登录
-app.onPageInit('user-login', function(page){
+myApp.onPageInit('user-login', function(page){
     $$('.user-login .login-btn').on('click', function(){
         var loginUrl = $$('.user-login .login-form').attr('action');
-        var data = app.formToJSON($$('.user-login .login-form'));
+        var data = myApp.formToJSON($$('.user-login .login-form'));
         $$.ajax({
             url: loginUrl,
             method: 'POST',
@@ -59,7 +107,7 @@ app.onPageInit('user-login', function(page){
                     mainView.router.reloadPage(page);
                     console.log(2);
                 }else{
-                    var toast = app.toast(result.message, '', {});
+                    var toast = myApp.toast(result.message, '', {});
                     toast.show(true);
                 }
             }
@@ -68,10 +116,10 @@ app.onPageInit('user-login', function(page){
 });
 
 //用户注册
-app.onPageInit('user-signup', function(page) {
+myApp.onPageInit('user-signup', function(page) {
     $$('.user-signup .signup-btn').on('click', function(){
         var signupUrl = $$('.user-signup .signup-form').attr('action');
-        var data = app.formToJSON($$('.user-signup .signup-form'));
+        var data = myApp.formToJSON($$('.user-signup .signup-form'));
         $$.ajax({
             url: signupUrl,
             method: 'POST',
@@ -82,7 +130,7 @@ app.onPageInit('user-signup', function(page) {
                     var page = $$(this).attr('data-reload-page');
                     mainView.router.reloadPage(page);
                 }else{
-                    var toast = app.toast(result.message, '', {});
+                    var toast = myApp.toast(result.message, '', {});
                     toast.show(true);
                 }
             }
@@ -96,7 +144,7 @@ app.onPageInit('user-signup', function(page) {
 
 /////////////////////
 // Callbacks to run specific code for specific pages, for example for About page:
-app.onPageInit('about', function (page) {
+myApp.onPageInit('about', function (page) {
     // run createContentPage func after link was clicked
     $$('.create-page').on('click', function () {
         createContentPage();

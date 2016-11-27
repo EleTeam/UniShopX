@@ -68,12 +68,12 @@ AppAsset::register($this);
         <div id="tab1" class="view tab active">
             <div class="navbar">
                 <div class="navbar-inner">
-                    <div class="center sliding">View 1</div>
+                    <div class="center sliding">月光茶人</div>
                 </div>
             </div>
             <div class="pages navbar-through">
                 <div data-page="home-1" class="page">
-                    <div class="page-content">
+                    <div class="page-content" id="tab-home-content">
                         <div class="content-block">
                             <p>This is view 1</p>
                         </div>
@@ -126,7 +126,7 @@ AppAsset::register($this);
                 <div class="page" data-page="home-4">
                     <div class="page-content">
                         <!-- 头部登陆 -->
-                        <a href="<?=Url::toRoute('user/login')?>">
+                        <a href="<?=Url::toRoute('user/login')?>" class="open-preloader">
                             <div class="login">
                                 <img src="../image/personal_bkg.jpg" alt="" class="loginbg">
                                 <img src="../image/profile_default.png" alt="" class="personal_logo">
