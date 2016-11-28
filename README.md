@@ -19,7 +19,9 @@
     后台项目：Nginx + PHP-FPM，UI框架用 Framework7
     
 #### 分布式部署
-    Gearman处理一些可异步执行的任务，如发送短信等。Gearman是一个具有php扩展的分布式异步处理框架，能处理大批量异步任务。
+    Gearman处理一些可异步执行的任务（异步队列)，如发送短信等。
+        Gearman是一个具有php扩展的分布式异步处理框架，能处理大批量异步任务。
+        Gearman安装和使用：http://blog.csdn.net/e421083458/article/details/21283113
 
 #### 安装环境要求:
     php-5.6.x
