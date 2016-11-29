@@ -71,7 +71,7 @@ AppAsset::register($this);
                     <div class="center">月光茶人</div>
                 </div>
             </div>
-            <div class="pages navbar-through">
+            <div class="pages navbar-through toolbar-through">
                 <div class="page" data-page="home">
                     <div class="page-content">
                         <!-- ajax load -->
@@ -86,7 +86,7 @@ AppAsset::register($this);
                     <div class="center">分类</div>
                 </div>
             </div>
-            <div class="pages navbar-through">
+            <div class="pages navbar-through toolbar-through">
                 <div class="page" data-page="category">
                     <div class="page-content">
                         <!-- ajax load -->
@@ -101,7 +101,7 @@ AppAsset::register($this);
                     <div class="center">购物车</div>
                 </div>
             </div>
-            <div class="pages navbar-through">
+            <div class="pages navbar-through toolbar-through">
                 <div class="page" data-page="cart">
                     <div class="page-content">
                         <!-- ajax load -->
@@ -116,7 +116,7 @@ AppAsset::register($this);
                     <div class="center">我的</div>
                 </div>
             </div>
-            <div class="pages navbar-through">
+            <div class="pages navbar-through toolbar-through">
                 <div class="page" data-page="my">
                     <div class="page-content">
                         <!-- ajax load -->

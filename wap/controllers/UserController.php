@@ -28,33 +28,33 @@ class UserController extends BaseController
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-//                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup', 'login'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout', 'view'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+////                'only' => ['logout', 'signup'],
+//                'rules' => [
+//                    [
+//                        'actions' => ['signup', 'login'],
+//                        'allow' => true,
+//                        'roles' => ['?'],
+//                    ],
+//                    [
+//                        'actions' => ['logout', 'view'],
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                    ],
+//                ],
+//            ],
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'logout' => ['post'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * 用户登录
@@ -112,5 +112,17 @@ class UserController extends BaseController
     {
         $user = $this->getUser();
         return $this->render('view', ['user' => $user]);
+    }
+
+    /**
+     * api退出, 前期退出不更新access-token, 任何平台都可以登录用户的账号,便于调试,而且不会导致用户登录的token失效
+     * 后期如果要实现单点登录时,则清空用户的token即可
+     * @return bool
+     */
+    public function actionLogout()
+    {
+        //$app_cart_cookie_id = Cart::genAppCartCookieId(); //重新生成保存在前端, 当没登陆时用新的购物车
+        Yii::$app->user->logout();
+        return $this->jsonSuccess(null, '退出成功');
     }
 }

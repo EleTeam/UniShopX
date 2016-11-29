@@ -16,6 +16,11 @@ $this->title = Yii::t('app', 'Products');
 /* @var $this yii\web\View */
 /* @var $categories */
 ?>
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="center sliding">分类</div>
+    </div>
+</div>
 <div data-page="category" class="page">
     <div class="page-content">
         <?php foreach($categories as $category): ?>

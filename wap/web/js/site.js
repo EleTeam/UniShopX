@@ -44,18 +44,9 @@ $$('#tab-my-icon').on('click', function(){
     tabMyView.router.load({url:url, animatePages:false, ignoreCache:true, reload:true});
 });
 
-//myApp.onPageInit('site-home', function(page) {
-//    myApp.showIndicator();
-//    $$.ajax({
-//        url: '/site/home',
-//        method: 'GET',
-//        success: function (html) {
-//            $$('#tab-home-content').html(html);
-//            myApp.hideIndicator();
-//        }
-//    });
-//});
-//$$('#tab-home-icon').trigger('pageInit');
+/**********  公共函数 *************/
+//返回首页
+
 
 
 //首页
@@ -108,11 +99,11 @@ myApp.onPageInit('user-login', function(page){
             data: data,
             dataType: 'json',
             success: function(result){
+                myApp.hideIndicator();
                 if(result.status){
                     //tabMyView.router.reloadPage(reloadPage);
                     //$$('#tab-my-icon').trigger('click');
                     tabMyView.router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
-                    myApp.hideIndicator();
                 }else{
                     var toast = myApp.toast(result.message, '', {});
                     toast.show(true);
@@ -127,19 +118,62 @@ myApp.onPageInit('user-signup', function(page) {
     $$('.user-signup .signup-btn').on('click', function(){
         var signupUrl = $$('.user-signup .signup-form').attr('action');
         var data = myApp.formToJSON($$('.user-signup .signup-form'));
+        var reloadPage = $$(this).attr('data-reload-page');
+        myApp.showIndicator();
         $$.ajax({
             url: signupUrl,
             method: 'POST',
             data: data,
             dataType: 'json',
             success: function(result){
+                myApp.hideIndicator();
                 if(result.status){
-                    var page = $$(this).attr('data-reload-page');
-                    mainView.router.reloadPage(page);
+                    tabMyView.router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
                 }else{
                     var toast = myApp.toast(result.message, '', {});
                     toast.show(true);
                 }
+            }
+        });
+    });
+});
+
+//设置页
+myApp.onPageInit('my-setting', function(){
+    $$('.my-setting .logout-btn').on('click', function(){
+        var logoutUrl = $$('.my-setting .logout-form').attr('action');
+        var data = myApp.formToJSON($$('.my-setting .logout-form'));
+        var reloadPage = $$(this).attr('data-reload-page');
+        myApp.showIndicator();
+        $$.ajax({
+            url: logoutUrl,
+            method: 'POST',
+            dataType: 'json',
+            data: data,
+            success: function(result){
+                myApp.hideIndicator();
+                if(result.status){
+                    tabMyView.router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
+                }else{
+                    var toast = myApp.toast(result.message, '', {});
+                    toast.show(true);
+                }
+            }
+        });
+    });
+});
+
+//用户信息
+myApp.onPageInit('user-view', function(){
+    $$('.user-view .back-btn').on('click', function(){
+        var reloadPage = $$(this).attr('data-reload-page');
+        myApp.showIndicator();
+        $$.ajax({
+            url: '/user/view',
+            method: 'GET',
+            success: function(result){
+                myApp.hideIndicator();
+                tabMyView.router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});//{pageName:'my', animatePages:false, ignoreCache:true, reload:true, force:true});
             }
         });
     });

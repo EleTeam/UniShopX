@@ -15,6 +15,12 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $user common\models\User */
 ?>
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="center sliding">我的</div>
+    </div>
+</div>
 <div class="page" data-page="my">
     <div class="page-content my">
         <!-- 头部登陆 -->
@@ -127,11 +133,13 @@ use yii\helpers\Url;
                 <img src="../image/arrow.png" alt="" class="item_arrow">
             </div>
             <div class="h1"></div>
-            <div class="item">
-                <img src="../image/my_setting_user_icon_normal.png" alt="" class="item_ico">
-                <span>设置</span>
-                <img src="../image/arrow.png" alt="" class="item_arrow">
-            </div>
+            <a href="<?=Url::toRoute('/my/setting')?>">
+                <div class="item">
+                    <img src="../image/my_setting_user_icon_normal.png" alt="" class="item_ico">
+                    <span>设置</span>
+                    <img src="../image/arrow.png" alt="" class="item_arrow">
+                </div>
+            </a>
             <div class="h70"></div>
         </div>
     </div>

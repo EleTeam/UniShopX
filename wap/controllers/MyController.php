@@ -41,4 +41,9 @@ class MyController extends BaseController
             'user' => $user,
         ]);
     }
+
+    public function actionSetting()
+    {
+        return $this->render('setting');
+    }
 }

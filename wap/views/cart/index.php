@@ -14,6 +14,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $banners */
 ?>
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="center sliding">购物车</div>
+    </div>
+</div>
 <div data-page="cart" class="page">
     <div class="page-content">
         购物车

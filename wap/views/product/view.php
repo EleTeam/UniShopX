@@ -11,15 +11,27 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Product */
-
-$this->title = $model->name;
+/**
+ * @var $this yii\web\View
+ * @var $product common\models\Product
+ */
 ?>
-<div class="product-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>返回</span>
+            </a>
+        </div>
+        <div class="center sliding">商品详情</div>
+    </div>
+</div>
+<div class="page no-tabbar" data-page="product-view">
+    <div class="page-content product-view">
+        <div><?=$product->name?></div>
+    </div>
 </div>
 
 

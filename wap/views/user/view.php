@@ -29,8 +29,9 @@ use yii\helpers\Url;
     </div>
 </div>
 <div class="page no-tabbar" data-page="user-view">
-    <div class="page-content user-login">
+    <div class="page-content user-view">
         <div>用户ID: <?=$user->id?></div>
         <div>手机号: <?=$user->mobile?></div>
+        <div class="back-btn" data-reload-page="<?=Url::toRoute('/my')?>">返回</div>
     </div>
 </div>

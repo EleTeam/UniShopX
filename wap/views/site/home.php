@@ -18,6 +18,11 @@ use yii\helpers\Url;
  * @var $article common\models\CmsArticle
  */
 ?>
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="center sliding">月光茶人</div>
+    </div>
+</div>
 <div class="page" data-page="home">
     <div class="page-content infinite-scroll">
         <!-- Swiper Slider -->
