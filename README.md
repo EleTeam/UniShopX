@@ -86,6 +86,12 @@
 #### 导入数据库文件:
     文件存放在: /dbbaks/etshop_?.sql, 项目在紧急开发中，所以该文件会不断更新，如果你的项目出现问题了，请重新导入最新的sql文件。
 
+#### 数据库的设计与部署
+    Mysql分区分片？多数据库。
+    采用传统的读写分离方式，一主两从，主库只写，从库只读。
+    不采用二主的方式，因为会把程序搞得太负责。
+    参考文档：http://geek.csdn.net/news/detail/52070
+    
 #### 线上的访问地址:
     前台: http://eleteam.ygcr8.com
     wap: http://eleteamwap.ygcr8.com
