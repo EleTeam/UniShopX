@@ -34,24 +34,6 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <style type="text/css">
-        .swiper-container {
-            height: 180px;
-        }
-        .swiper-slide {
-            background: #fff;
-            position: relative;
-        }
-        .swiper-slide img {
-            position: absolute;
-            left:50%;
-            top:50%;
-            max-width: 100%;
-            max-height: 100%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
-    </style>
 </head>
 <body>
 <?php $this->beginBody() ?>

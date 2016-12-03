@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>纯css打造网上商城左侧垂直商品分类菜单_网页代码站(www.webdm.cn)</title>
+    <style>
+        body{font-size:14px; font-family:"\5B8B\4F53",san-serif;line-height:21px;text-align:left;}
+        body,div,ul,li,h1,h2,h3{padding:0;margin:0;}
+        ul, li{list-style:none;}
+        .clear{clear:both;}
+        .sidebar {background: #3B4053;border:1px solid #e6ebf1;width:190px;padding:5px;margin:30px 10px;}
+        .sidebar h2{color:#fff;font-size:14px;line-height:21px;text-align:center;padding:2px 0 7px;}
+        #menu {width:190px;background: #e6ebf1;padding:8px 0;}
+        #menu li{float:left;width:166px;display:block;padding-left:24px;background: #e6ebf1;position:relative;line-height:21px;border:none;}
+        #menu li:hover {background: #3B4053;}
+        #menu li a {font-family:"\5B8B\4F53",san-serif;font-size:14px;color:#3B4053;display:block;outline:0;text-decoration:none;padding:5px 0;}
+        #menu li:hover a {color:#fff;}
+        .dropdown_4columns{	margin:6px auto;float:left;position:absolute;left:-999em;text-align:left;border-left:6px solid #3B4053; border-top:1px solid #3B4053;border-bottom:1px solid #3B4053;border-right:1px solid #3B4053;width:510px;background: #e6ebf1;padding:5px 0 10px;}
+        #menu li:hover .dropdown_4columns{left:190px;top:-6px;}
+        .col_1 {width:120px;display:inline;float: left;position: relative;margin:0;}
+        .col_4 {width:510px;display:inline;float: left;position: relative;margin:0;}
+        #menu h3 {font-size:14px;font-weight:bold;color:#3B4053;margin:4px 0;padding-left:20px;font-family:"\5B8B\4F53",san-serif;line-height:21px;font-size:12px;text-align:center;}
+        #menu li:hover div a {font-size:12px;color:#003366;}
+        #menu li:hover div a:hover {color:#e47911;}
+        #menu li ul {list-style:none;padding:0;margin:0;}
+        #menu li ul li {font-size:12px;line-height:21px;position:relative;padding:0 0 0 6px;margin:0;text-align:left;width:120px; border-left:#ccc 1px solid;}
+        #menu li ul li a{padding:0 0 0 6px;margin:0;}
+        #menu li ul li:hover {background:none;padding:0 0 0 6px;margin:0;}
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <h2>商品目录</h2>
+    <ul id="menu">
+        <li><a href="/">时尚女包</a>
+            <div class="dropdown_4columns">
+                <div class="col_1">
+                    <h3>热门类目</h3>
+                    <ul>
+                        <li><a href="/">城市风情系列</a></li>
+                        <li><a href="/">羽绒潮包包</a></li>
+                        <li><a href="/">菱格纹包包</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>价格区间</h3>
+                    <ul>
+                        <li><a href="/">100-300元</a></li>
+                        <li><a href="/">300-500元</a></li>
+                        <li><a href="/">500-1000元</a></li>
+                        <li><a href="/">1000元以上</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>促销活动</h3>
+                    <ul>
+                        <li><a href="/">春节5折促销</a></li>
+                        <li><a href="/">清仓促销一折起</a></li>
+                        <li><a href="/">品牌降价促销</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>推荐品牌</h3>
+                    <ul>
+                        <li><a href="#">派克兰帝</a></li>
+                        <li><a href="#">Bessie贝茜</a></li>
+                        <li><a href="#">Adidas</a></li>
+                        <li><a href="#">欧伦堡</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li><!-- End 4 columns Item -->
+        <li><a href="/">精品男包</a>
+            <div class="dropdown_4columns">
+                <div class="col_1">
+                    <h3>热门类目</h3>
+                    <ul>
+                        <li><a href="/">城市风情系列</a></li>
+                        <li><a href="/">经典高档丝巾包</a></li>
+                        <li><a href="/">卡门微笑系列</a></li>
+                        <li><a href="/">羽绒潮包包</a></li>
+                        <li><a href="/">菱格纹包包</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>价格区间</h3>
+                    <ul>
+                        <li><a href="/">100-300元</a></li>
+                        <li><a href="/">300-500元</a></li>
+                        <li><a href="/">500-1000元</a></li>
+                        <li><a href="/">1000元以上</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>促销活动</h3>
+                    <ul>
+                        <li><a href="/">城市风情系列促销</a></li>
+                        <li><a href="/">春节5折促销</a></li>
+                        <li><a href="/">羽绒潮包优惠活动</a></li>
+                        <li><a href="/">品牌降价促销</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>推荐品牌</h3>
+                    <ul>
+                        <li><a href="#">派克兰帝</a></li>
+                        <li><a href="#">Bessie贝茜</a></li>
+                        <li><a href="#">Adidas</a></li>
+                        <li><a href="#">BeLLE百丽包</a></li>
+                        <li><a href="#">欧伦堡</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li><!-- End 4 columns Item -->
+        <li><a href="#">商务旅行包</a>
+            <div class="dropdown_4columns">
+                <div class="col_1">
+                    <h3>热门类目</h3>
+                    <ul>
+                        <li><a href="/">城市风情系列</a></li>
+                        <li><a href="/">经典高档丝巾包</a></li>
+                        <li><a href="/">卡门微笑系列</a></li>
+                        <li><a href="/">羽绒潮包包</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>价格区间</h3>
+                    <ul>
+                        <li><a href="/">100-300元</a></li>
+                        <li><a href="/">300-500元</a></li>
+                        <li><a href="/">500-1000元</a></li>
+                        <li><a href="/">1000元以上</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>促销活动</h3>
+                    <ul>
+                        <li><a href="/">城市风情系列促销</a></li>
+                        <li><a href="/">春节5折促销</a></li>
+                        <li><a href="/">清仓促销一折起</a></li>
+                        <li><a href="/">羽绒潮包优惠活动</a></li>
+                        <li><a href="/">品牌降价促销</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>推荐品牌</h3>
+                    <ul>
+                        <li><a href="#">派克兰帝</a></li>
+                        <li><a href="#">Bessie贝茜</a></li>
+                        <li><a href="#">Adidas</a></li>
+                        <li><a href="#">BeLLE百丽包</a></li>
+                        <li><a href="#">欧伦堡</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li><!-- End 4 columns Item -->
+        <li><a href="#">高档丝巾包</a>
+            <div class="dropdown_4columns">
+                <div class="col_1">
+                    <h3>热门类目</h3>
+                    <ul>
+                        <li><a href="/">城市风情系列</a></li>
+                        <li><a href="/">经典高档丝巾包</a></li>
+                        <li><a href="/">卡门微笑系列</a></li>
+                        <li><a href="/">羽绒潮包包</a></li>
+                        <li><a href="/">菱格纹包包</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>价格区间</h3>
+                    <ul>
+                        <li><a href="/">100-300元</a></li>
+                        <li><a href="/">300-500元</a></li>
+                        <li><a href="/">500-1000元</a></li>
+                        <li><a href="/">1000元以上</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>促销活动</h3>
+                    <ul>
+                        <li><a href="/">城市风情系列促销</a></li>
+                        <li><a href="/">春节5折促销</a></li>
+                        <li><a href="/">清仓促销一折起</a></li>
+                        <li><a href="/">羽绒潮包优惠活动</a></li>
+                        <li><a href="/">品牌降价促销</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>推荐品牌</h3>
+                    <ul>
+                        <li><a href="#">派克兰帝</a></li>
+                        <li><a href="#">Bessie贝茜</a></li>
+                        <li><a href="#">Adidas</a></li>
+                        <li><a href="#">BeLLE百丽包</a></li>
+                        <li><a href="#">欧伦堡</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li><!-- End 4 columns Item -->
+        <li><a href="#">菱格纹包包</a>
+            <div class="dropdown_4columns">
+                <div class="col_1">
+                    <h3>热门类目</h3>
+                    <ul>
+                        <li><a href="/">城市风情系列</a></li>
+                        <li><a href="/">经典高档丝巾包</a></li>
+                        <li><a href="/">卡门微笑系列</a></li>
+                        <li><a href="/">羽绒潮包包</a></li>
+                        <li><a href="/">菱格纹包包</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>价格区间</h3>
+                    <ul>
+                        <li><a href="/">100元以下</a></li>
+                        <li><a href="/">100-300元</a></li>
+                        <li><a href="/">300-500元</a></li>
+                        <li><a href="/">500-1000元</a></li>
+                        <li><a href="/">1000元以上</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>促销活动</h3>
+                    <ul>
+                        <li><a href="/">城市风情系列促销</a></li>
+                        <li><a href="/">春节5折促销</a></li>
+                        <li><a href="/">清仓促销一折起</a></li>
+                        <li><a href="/">羽绒潮包优惠活动</a></li>
+                        <li><a href="/">品牌降价促销</a></li>
+                    </ul>
+                </div>
+                <div class="col_1">
+                    <h3>推荐品牌</h3>
+                    <ul>
+                        <li><a href="#">派克兰帝</a></li>
+                        <li><a href="#">Bessie贝茜</a></li>
+                        <li><a href="#">Adidas</a></li>
+                        <li><a href="#">BeLLE百丽包</a></li>
+                        <li><a href="#">欧伦堡</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+    </ul>
+</div>
+<br>
+<p><a href="http://www.webdm.cn">网页代码站</a> - 最专业的网页代码下载网站 - 致力为中国站长提供有质量的网页代码！</p>
+</body>
+</html>

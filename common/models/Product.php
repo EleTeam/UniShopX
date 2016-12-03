@@ -51,7 +51,7 @@ use common\components\ETActiveRecord;
  * @property string $app_long_image3
  * @property string $app_long_image4
  * @property string $app_long_image5
- * @property string $type
+ * @property string $type 商品类型，一个商品属于一种类型，类型关联规格值
  * @property integer $status
  *
  * @property ProductCategory $category

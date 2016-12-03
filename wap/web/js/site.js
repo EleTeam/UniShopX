@@ -179,7 +179,15 @@ myApp.onPageInit('user-view', function(){
     });
 });
 
-
+//商品详情
+myApp.onPageInit('product-view', function(page){
+    //幻灯片
+    var mySwiper = new Swiper('.swiper-container', {
+        preloadImages: false,
+        lazyLoading: true,
+        pagination: '.swiper-pagination'
+    });
+});
 
 
 
