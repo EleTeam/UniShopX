@@ -64,15 +64,24 @@ i.tabbar-demo-icon-4 {
 .block .item_ico {float: left;width: 30px;padding: 10px 10px 10px 0;}
 .block .item_arrow {float: right;width: 16px;padding: 17px 15px 15px 0;}
 
+
+/****** 首页 ******/
+.home .card-content-inner {
+    text-align: center;
+}
+.card-content-inner img {
+    width: 100%;
+    max-height: 300px;
+}
 /* Swiper Slider */
-.swiper-container {
+.home .swiper-container {
     height: 180px;
 }
-.swiper-slide {
+.home .swiper-slide {
     background: #fff;
     position: relative;
 }
-.swiper-slide img {
+.home .swiper-slide img {
     position: absolute;
     left:50%;
     top:50%;
@@ -80,16 +89,6 @@ i.tabbar-demo-icon-4 {
     max-height: 100%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-}
-
-
-/****** 首页 ******/
-.card-content-inner {
-    text-align: center;
-}
-.card-content-inner img {
-    width: 100%;
-    max-height: 300px;
 }
 
 
@@ -183,12 +182,7 @@ i.tabbar-demo-icon-4 {
 .category .mainwrap {
     -moz-box-flex: 1;
     background-color: #fff;
-    height: 100%;
     overflow: hidden;
-}
-.category .foodlistwrap {
-    position: relative;
-    width: 100%;
 }
 .category .foodlist-label {
     background: #f7f7f7 none repeat scroll 0 0;

@@ -24,7 +24,7 @@ use yii\helpers\Url;
     </div>
 </div>
 <div class="page" data-page="home">
-    <div class="page-content infinite-scroll">
+    <div class="page-content home">
         <!-- Swiper Slider -->
         <div class="swiper-container">
             <div class="swiper-wrapper">

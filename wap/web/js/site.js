@@ -84,6 +84,16 @@ myApp.onPageInit('home', function(page){
     });
 });
 
+//分类首页
+myApp.onPageInit('category', function(page) {
+    // Attach 'infinite' event handler
+    // Init slider and store its instance in mySwiper variable
+    var mySwiper = myApp.swiper('.swiper-container', {
+        freeMode: true,
+        direction: 'vertical'
+    });
+});
+
 //用户登录
 myApp.onPageInit('user-login', function(page){
     $$('.user-login .login-btn').on('click', function(){
