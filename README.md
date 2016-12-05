@@ -17,6 +17,9 @@
         方案二：Nginx只返回静态html页面，在浏览器端用AJAX调用API层的接口。JS框架是 SUI Mobile。不用这种方案。
     图片项目：Nginx存放图片等静态文件
     后台项目：Nginx + PHP-FPM，UI框架用 Framework7
+
+#### 搜索服务
+    ElasticSearch分布式多用户的全文搜索引擎，是当前流行的企业级搜索引擎。
     
 #### 分布式部署
     Gearman处理一些可异步执行的任务（异步队列)，如发送短信等。
