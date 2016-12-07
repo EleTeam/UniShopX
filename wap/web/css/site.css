@@ -23,6 +23,29 @@ a {color: #3e3e3e;}
 .h3 {height: 3px;background: #f0f0f0;}
 .h1 {height: 1px;background: #f0f0f0;}
 
+.box {
+    display: flex;
+}
+.box-flex {
+    -moz-box-flex: 1;
+    flex: 1 1 0;
+}
+.font1, .font2, .font3, .font4, .font5, h1, h2, h3, h4, h5, p {
+    font-weight: 300;
+}
+.font5, h5 {
+    font-size: 1.4rem;
+    line-height: 22px;
+}
+.bage {
+    border: 1px solid #c89664;
+    border-radius: 100px;
+    color: #c89664;
+    display: inline-block;
+    line-height: 1;
+    padding: 2px 6px;
+}
+
 /* Tab bar icons */
 i.tabbar-demo-icon-1 {
     width: 30px;
@@ -432,47 +455,31 @@ i.tabbar-demo-icon-4 {
 
 
 /****** 商品详情 ***********/
-.product-view #main {padding-bottom:90px;}
-.product-view #nav .add-cart {
-    background-color: #fd6161;
+.product-view .font5, .product-view h5 {
+    font-size: 1.4rem;
+    line-height: 22px;
 }
+.product-view .font1, .product-view .font2, .product-view .font3, .product-view .font4, .product-view .font5,
+.product-view h1, .product-view h2, .product-view h3, .product-view h4, .product-view h5, .product-view p {
+    font-weight: 300;
+}
+.product-view a, .product-view a:active, .product-view a:hover, .product-view a:link, .product-view a:visited {
+    color: #332c2b;
+    font-size: 1.4rem;
+    text-decoration: none;
+}
+.product-view img {
+    vertical-align: middle;
+}
+.product-view #main {padding-bottom:90px;}
 .product-view #nav .collect{
     background: url(../image/collect.png) no-repeat center 4px;
 }
 .product-view #nav .collect.active, #nav li.active .collect{
     background: url(../image/collect-l.png) no-repeat center 4px;
 }
-.product-view #nav .cart i {
-    background-color: #f24b48;
-    border-radius: 100%;
-    bottom: 34px;
-    color: #fff;
-    font-size: 10px;
-    font-style: normal;
-    height: 15px;
-    line-height: 15px;
-    position: absolute;
-    width: 15px;
-    margin-left: 18px;
-}
-.product-view #nav .add-cart a {
-    font-size: 20px;
-    padding-top: 12px;
-    color: #fff;
-}
-.product-view #nav .cart{
-    width: 75px;
-}
-.product-view #nav .cart{
-    background: url(../image/cart.png) no-repeat center 4px;
-}
-.product-view #nav .cart.active, #nav li.active .cart{
-    background: url(../image/cart-l.png) no-repeat center 4px;
-}
-
 .product-view .hightitem {background-color: #fff;}
 .inwrap {padding-right: 15px;padding-left: 15px;}
-
 /* 2. 价格样式 */
 .product-view .priceitem .symbol {font-size: 16px; color: #FC5500;}
 .product-view .priceitem .price {font-size: 20px; color: #FC5500;}
@@ -482,7 +489,6 @@ i.tabbar-demo-icon-4 {
 .product-view .symbol {font-size: 16px; color: #FC5500;}
 .product-view .price {font-size: 20px; color: #FC5500;}
 .product-view .o-price {font-size:16px; color: #666;}
-
 /* 3. */
 .product-view .brief .title {height: 50px;line-height: 50px;font-size:20px;color: #000;}
 .product-view .brief .describe {color: #666;font-size:16px;line-height:23px; padding-bottom:18px;}
@@ -495,3 +501,57 @@ i.tabbar-demo-icon-4 {
 .product-view .item {background-color: #fff; border-bottom: 1px solid #e0e0e0;position: relative;}
 .product-view .item .name {width:40px; margin-top:10px; margin-left: 10px; margin-right: 9px;}
 .product-view .select-title {padding:10px 0 0 15px; font-size:18px; border-top: 1px solid #e0e0e0;}
+/* 底部工具栏 */
+.product-view .toolbar::before {
+    height: 0;
+}
+.product-view .toolbar a {
+    flex-shrink: 1;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.product-view .bage {
+    border: 1px solid #c89664;
+    border-radius: 100px;
+    color: #c89664;
+    display: inline-block;
+    line-height: 1;
+    padding: 2px 6px;
+}
+.product-view .shopping-bar .shopcart {
+    position: relative;
+    width: 58px;
+}
+.product-view .shopping-bar .shopcart img {
+    padding: 14px;
+    width: 22px;
+}
+.product-view .shopping-bar .shopcart .bage {
+    background-color: #1d2d61;
+    border: 0 none;
+    bottom: 10px;
+    color: #fff;
+    font-size: 0.5em;
+    position: absolute;
+    right: 3px;
+}
+.product-view .btn {
+    border: medium none;
+    display: block;
+    height: 38px;
+    line-height: 38px;
+    width: 100%;
+}
+.product-view .address-default, .product-view .btn, .product-view .text-center {
+    text-align: center;
+}
+.product-view .btn.btn-gold {
+    background-color: #c89664;
+    color: #fff;
+}
+.product-view .btn.btn-blue {
+    background-color: #052841;
+    color: #c89664;
+}

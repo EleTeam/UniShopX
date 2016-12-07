@@ -28,8 +28,8 @@ use yii\helpers\Html;
         <div class="center sliding">商品详情</div>
     </div>
 </div>
-<div class="page no-tabbar" data-page="product-view">
-    <div class="page-content product-view">
+<div class="page no-tabbar product-view" data-page="product-view">
+    <div class="page-content">
         <div id="main">
             <!-- Swiper Slider -->
             <div class="swiper-container">
@@ -84,20 +84,81 @@ use yii\helpers\Html;
                 <div class="describe"><?= $product->short_description ?></div>
             </div>
 
-            <!-- 规格 -->
-            <div class="select-title">规格</div>
-            <div class="tuandetail hightitem inwrap">
+            <div class="list-block uyac-list-block">
+                <ul>
+                    <li class="open-model">
+                        <a href="#" class="item-link item-content" name="detail-spec">
+                            <div class="item-inner" id="choose-spec-container">规格区</div>
+                        </a>
+                    </li>
+                    <li class="open-model">
+                        <a href="#" class="item-link item-content" name="detail-spec">
+                            <div class="item-inner" id="choose-spec-container">加料区</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 顶部工具栏 -->
+    <div class="toolbar">
+        <div class="toolbar-inner shopping-bar box">
+            <div class="shopcart">
+                <a href="html/cart.html">
+                    <img src="http://static.yoyash.com/m/img/icon/shoppingcart@3x.png">
+                    <span class="bage font5 cart-num">0</span>
+                </a>
+            </div>
+            <div class="box box-flex open-model">
+                <a href="#" class="btn btn-gold cart box-flex" flag="addtocart" name="detail-spec">加入购物车</a>
+                <a href="#" class="btn btn-blue box-flex" flag="submit" name="detail-spec">立即购买</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 规格区弹出层 -->
+    <div class="picker-modal uyac-picker-modal choose-size modal-in" name="detail-spec-model" style="display: none;">
+        <div class="product-tilte">
+            <img class="product-img" src="http://images.yoyash.com/Upload/yoyash/2016-08-19/1471569507kz645.jpg@400w_80q">
+            <h3 class="font-gold">¥<span id="pro-detail-price" name="pro-detail-price">83.00</span></h3>
+            <h5>库存<span id="pro-detail-stock">20</span>件</h5>
+            <a href="#" class="close-choose-size"><img src="http://static.yoyash.com/m/img/icon/ic_close_choose_size_page@3x.png"></a>
+            <input name="skuid" type="hidden">
+            <input name="specnames" type="hidden">
+            <input name="leastNum" value="1" type="hidden">
+        </div>
+        <div class="size-list">
+
+            <div class="size-item box spec-item">
+                <label class="title">规格</label>
+                <div class="box-flex">
+
+                    <label>
+                        <input name="19" value="8670" type="radio">
+                        <span data-id="8670" name="spec">2瓶装</span>
+                    </label>
+
+                    <label>
+                        <input name="19" value="8675" type="radio">
+                        <span data-id="8675" name="spec">1瓶装</span>
+                    </label>
+
+                </div>
             </div>
 
-            <!-- 加料 -->
+            <div class="size-item shop-count">
+                <label>数量</label>
+                <span name="plus">-</span>
+                <input readonly="readonly" value="1" name="amount" type="tel">
+                <span name="add">+</span>
+            </div>
+            <div class="limit-tips">*限购<span></span>件，超出以结算价为准</div>
         </div>
-
-        <div id="nav">
-            <ul>
-                <li data-productId="{{=it.product.id}}" data-hasCollected="true" class="active"><a class="collect">收藏</a></li>
-                <li><a id="cartIcon" class="cart"><i class="shake" id="cart-num">3</i>购物车</a></li>
-                <li class="add-cart"><a id="addToCart">加入购物车</a></li>
-            </ul>
+        <div class="comfire box">
+            <a href="#" id="cartSure" class="btn btn-blue box-flex" style="display: none;">确定</a>
+            <a href="#" class="btn btn-gold cart box-flex addtocart" flag="addtocart">加入购物车</a>
+            <a href="#" class="btn btn-blue box-flex submit" flag="submit">立即购买</a>
         </div>
     </div>
 </div>
