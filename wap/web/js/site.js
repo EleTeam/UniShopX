@@ -88,9 +88,23 @@ myApp.onPageInit('home', function(page){
 myApp.onPageInit('category', function(page) {
     // Attach 'infinite' event handler
     // Init slider and store its instance in mySwiper variable
+    var taglist = $$(".taglist");
     var mySwiper = myApp.swiper('.swiper-container', {
+        slidesPerView: "auto",
+        autoHeight: true,
         freeMode: true,
-        direction: 'vertical'
+        direction: 'vertical',
+        onSlideChangeStart: function (swiper) {
+            var index = swiper.activeIndex;
+            taglist.find('.j-tag').removeClass('focus');
+            taglist.find('.j-tag').eq(index).addClass("focus");
+        }
+    });
+    taglist.on('click', '.j-tag', function(){
+        taglist.find('.j-tag').removeClass('focus');
+        $$(this).addClass('focus');
+        var index = $$(this).index();
+        mySwiper.slideTo(index);
     });
 });
 

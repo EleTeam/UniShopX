@@ -44,13 +44,13 @@ $this->title = Yii::t('app', 'Products');
             </div><!-- /左栏 -->
             <!-- 右栏 -->
             <div id="mainwrap" class="mainwrap">
-                <div class="foodlistwrap">
-
+                <div class="foodlistwrap"
+                     style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
                     <!-- Swiper Slider -->
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
-                            <?php foreach ($categories as $key => $category): ?>
-                    <div class="swiper-slide">
+                    <?php foreach ($categories as $key => $category): ?>
+                            <div class="swiper-slide" style="height: auto">
                         <div id="foodlist100" class="j-foodlist foodlist" data-tagid="100">
                             <h3 class="foodlist-label"><?= $category->name ?></h3>
                             <ul>
@@ -95,10 +95,10 @@ $this->title = Yii::t('app', 'Products');
                                 <?php endforeach; ?>
                             </ul>
                         </div>
-                    </div>
+                                </div>
                     <?php endforeach; ?>
-                </div>
-                    </div>
+                            </div>
+                        </div>
                 </div>
             </div><!-- /右栏 -->
         </div>
