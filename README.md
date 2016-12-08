@@ -18,6 +18,24 @@
     图片项目：Nginx存放图片等静态文件
     后台项目：Nginx + PHP-FPM，UI框架用 Framework7
 
+#### Redis 安装与使用
+    Linux下安装Redis：
+        1.安装redis： yum install redis
+        2.安装php-redis扩展： yum install php-redis
+        3.启动redis，并设定开机自动启动： service redis start
+        4.开机自动启动redis： chkconfig redis on
+        5.查看进程： ps aux|grep redis
+        6.查看端口： netstat -apn | grep redis
+        7.命令测试： redis-cli， set key "123", get key
+    让外网可以访问Redis：
+        1.打开redis端口：iptables -I INPUT -p tcp --dport 6379 -j ACCEPT && service iptables save && service iptables restart
+        2.修改redis的配置文件，将所有bind信息全部屏蔽。
+          vi /etc/redis.conf
+              # bind 127.0.0.1
+        3.重启redis
+        4.安装redis图形界面客户端Redis Desktop Manager
+        5.用该客户端可以清晰看到redis数据
+    
 #### 搜索服务
     ElasticSearch分布式多用户的全文搜索引擎，是当前流行的企业级搜索引擎。
     
