@@ -7,14 +7,14 @@
  */
 
 $composerAutoload = [
-    __DIR__ . '/../vendor/autoload.php', // standalone with "composer install" run
-    __DIR__ . '/../../../autoload.php', // script is installed as a composer binary
+	__DIR__ . '/../vendor/autoload.php', // standalone with "composer install" run
+	__DIR__ . '/../../../autoload.php',  // script is installed as a composer binary
 ];
 foreach ($composerAutoload as $autoload) {
-    if (file_exists($autoload)) {
-        require($autoload);
-        break;
-    }
+	if (file_exists($autoload)) {
+		require($autoload);
+		break;
+	}
 }
 
 // Send all errors to stderr
@@ -23,7 +23,7 @@ ini_set('display_errors', 'stderr');
 $flavor = 'cebe\\markdown\\Markdown';
 $flavors = [
 	'gfm'   => ['cebe\\markdown\\GithubMarkdown', __DIR__ . '/../GithubMarkdown.php'],
-	'extra' => ['cebe\\markdown\\MarkdownExtra', __DIR__ . '/../MarkdownExtra.php'],
+	'extra' => ['cebe\\markdown\\MarkdownExtra',  __DIR__ . '/../MarkdownExtra.php'],
 ];
 
 $full = false;

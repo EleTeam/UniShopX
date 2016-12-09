@@ -158,7 +158,7 @@ class DbSession extends MultiFieldSession
     public function writeSession($id, $data)
     {
         // exception must be caught in session write handler
-        // http://us.php.net/manual/en/function.session-set-save-handler.php
+        // http://us.php.net/manual/en/function.session-set-save-handler.php#refsect1-function.session-set-save-handler-notes
         try {
             $query = new Query;
             $exists = $query->select(['id'])
@@ -181,8 +181,9 @@ class DbSession extends MultiFieldSession
             $exception = ErrorHandler::convertExceptionToString($e);
             // its too late to use Yii logging here
             error_log($exception);
-            echo $exception;
-
+            if (YII_DEBUG) {
+                echo $exception;
+            }
             return false;
         }
 

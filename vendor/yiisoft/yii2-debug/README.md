@@ -53,3 +53,25 @@ return [
 
 You will see a debugger toolbar showing at the bottom of every page of your application.
 You can click on the toolbar to see more detailed debug information.
+
+
+Open Files in IDE
+-----
+
+You can create a link to open files in your favorite IDE with this configuration:
+
+```php
+return [
+    'bootstrap' => ['debug'],
+    'modules' => [
+        'debug' => [
+            'class' => 'yii\debug\Module',
+            'traceLine' => '<a href="phpstorm://open?url={file}&line={line}">{file}:{line}</a>',
+        ],
+        // ...
+    ],
+    ...
+];
+```
+
+You must make some changes to your OS, see this example: https://github.com/aik099/PhpStormProtocol

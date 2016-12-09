@@ -19,7 +19,7 @@ interface MatcherInterface
      * Checks if the value passed matches base value.
      *
      * @param mixed $value value to be matched
-     * @return boolean if there is a match
+     * @return bool if there is a match
      */
     public function match($value);
 
@@ -33,7 +33,7 @@ interface MatcherInterface
     /**
      * Checks if base value is set
      *
-     * @return boolean if base value is set
+     * @return bool if base value is set
      */
     public function hasValue();
 }

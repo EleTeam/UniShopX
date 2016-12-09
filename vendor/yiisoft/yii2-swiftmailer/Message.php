@@ -7,6 +7,9 @@
 
 namespace yii\swiftmailer;
 
+use Yii;
+use yii\base\InvalidConfigException;
+use yii\helpers\ArrayHelper;
 use yii\mail\BaseMessage;
 
 /**
@@ -17,6 +20,13 @@ use yii\mail\BaseMessage;
  *
  * @method Mailer getMailer() returns mailer instance.
  *
+ * @property integer $priority Priority value as integer in range: `1..5`, where 1 is the highest priority and
+ * 5 is the lowest.
+ * @property string $readReceiptTo Receipt receive email addresses. Note that the type of this property
+ * differs in getter and setter. See [[getReadReceiptTo()]] and [[setReadReceiptTo()]] for details.
+ * @property string $returnPath The bounce email address.
+ * @property array|callable|\Swift_Signer $signature Signature specification. See [[addSignature()]] for
+ * details on how it should be specified. This property is write-only.
  * @property \Swift_Message $swiftMessage Swift message instance. This property is read-only.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
@@ -28,6 +38,10 @@ class Message extends BaseMessage
      * @var \Swift_Message Swift message instance.
      */
     private $_swiftMessage;
+    /**
+     * @var \Swift_Signer[] attached signers
+     */
+    private $signers = [];
 
 
     /**
@@ -301,6 +315,96 @@ class Message extends BaseMessage
     }
 
     /**
+     * Sets message signature
+     * @param array|callable|\Swift_Signer $signature signature specification.
+     * See [[addSignature()]] for details on how it should be specified.
+     * @return $this self reference.
+     * @since 2.0.6
+     */
+    public function setSignature($signature)
+    {
+        if (!empty($this->signers)) {
+            // clear previously set signers
+            $swiftMessage = $this->getSwiftMessage();
+            foreach ($this->signers as $signer) {
+                $swiftMessage->detachSigner($signer);
+            }
+            $this->signers = [];
+        }
+        return $this->addSignature($signature);
+    }
+
+    /**
+     * Adds message signature.
+     * @param array|callable|\Swift_Signer $signature signature specification, this can be:
+     *
+     * - [[\Swift_Signer]] instance
+     * - callable, which returns [[\Swift_Signer]] instance
+     * - configuration array for the signer creation
+     *
+     * @return $this self reference
+     * @throws InvalidConfigException on invalid signature configuration
+     * @since 2.0.6
+     */
+    public function addSignature($signature)
+    {
+        if ($signature instanceof \Swift_Signer) {
+            $signer = $signature;
+        } elseif (is_callable($signature)) {
+            $signer = call_user_func($signature);
+        } elseif (is_array($signature)) {
+            $signer = $this->createSwiftSigner($signature);
+        } else {
+            throw new InvalidConfigException('Signature should be instance of "Swift_Signer", callable or array configuration');
+        }
+
+        $this->getSwiftMessage()->attachSigner($signer);
+        $this->signers[] = $signer;
+
+        return $this;
+    }
+
+    /**
+     * Creates signer from its configuration
+     * @param array $signature signature configuration
+     * @return \Swift_Signer signer instance
+     * @throws InvalidConfigException on invalid configuration provided
+     * @since 2.0.6
+     */
+    protected function createSwiftSigner($signature)
+    {
+        if (!isset($signature['type'])) {
+            throw new InvalidConfigException('Signature configuration should contain "type" key');
+        }
+        switch (strtolower($signature['type'])) {
+            case 'dkim' :
+                $domain = ArrayHelper::getValue($signature, 'domain', null);
+                $selector = ArrayHelper::getValue($signature, 'selector', null);
+                if (isset($signature['key'])) {
+                    $privateKey = $signature['key'];
+                } elseif (isset($signature['file'])) {
+                    $privateKey = file_get_contents(Yii::getAlias($signature['file']));
+                } else {
+                    throw new InvalidConfigException("Either 'key' or 'file' signature option should be specified");
+                }
+                return new \Swift_Signers_DKIMSigner($privateKey, $domain, $selector);
+            case 'opendkim' :
+                $domain = ArrayHelper::getValue($signature, 'domain', null);
+                $selector = ArrayHelper::getValue($signature, 'selector', null);
+                if (isset($signature['key'])) {
+                    $privateKey = $signature['key'];
+                } elseif (isset($signature['file'])) {
+                    $privateKey = file_get_contents(Yii::getAlias($signature['file']));
+                } else {
+                    throw new InvalidConfigException("Either 'key' or 'file' signature option should be specified");
+                }
+                return new \Swift_Signers_OpenDKIMSigner($privateKey, $domain, $selector);
+            default:
+                throw new InvalidConfigException("Unrecognized signature type '{$signature['type']}'");
+        }
+    }
+
+    /**
      * @inheritdoc
      */
     public function toString()
@@ -315,5 +419,133 @@ class Message extends BaseMessage
     protected function createSwiftMessage()
     {
         return new \Swift_Message();
+    }
+
+    // Headers setup :
+
+    /**
+     * Adds custom header value to the message.
+     * Several invocations of this method with the same name will add multiple header values.
+     * @param string $name header name.
+     * @param string $value header value.
+     * @return $this self reference.
+     * @since 2.0.6
+     */
+    public function addHeader($name, $value)
+    {
+        $this->getSwiftMessage()->getHeaders()->addTextHeader($name, $value);
+        return $this;
+    }
+
+    /**
+     * Sets custom header value to the message.
+     * @param string $name header name.
+     * @param string|array $value header value or values.
+     * @return $this self reference.
+     * @since 2.0.6
+     */
+    public function setHeader($name, $value)
+    {
+        $headerSet = $this->getSwiftMessage()->getHeaders();
+
+        if ($headerSet->has($name)) {
+            $headerSet->remove($name);
+        }
+
+        foreach ((array)$value as $v) {
+            $headerSet->addTextHeader($name, $v);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns all values for the specified header.
+     * @param string $name header name.
+     * @return array header values list.
+     * @since 2.0.6
+     */
+    public function getHeader($name)
+    {
+        $headerSet = $this->getSwiftMessage()->getHeaders();
+        if (!$headerSet->has($name)) {
+            return [];
+        }
+
+        $headers = [];
+        foreach ($headerSet->getAll($name) as $header) {
+            $headers[] = $header->getValue();
+        }
+        return $headers;
+    }
+
+    // SwiftMessage shortcuts :
+
+    /**
+     * Set the return-path (the bounce address) of this message.
+     * @param string $address the bounce email address.
+     * @return $this self reference.
+     * @since 2.0.6
+     */
+    public function setReturnPath($address)
+    {
+        $this->getSwiftMessage()->setReturnPath($address);
+        return $this;
+    }
+
+    /**
+     * Returns the return-path (the bounce address) of this message.
+     * @return string the bounce email address.
+     * @since 2.0.6
+     */
+    public function getReturnPath()
+    {
+        return $this->getSwiftMessage()->getReturnPath();
+    }
+
+    /**
+     * Set the priority of this message.
+     * @param integer $priority priority value, should be an integer in range: `1..5`,
+     * where 1 is the highest priority and 5 is the lowest.
+     * @return $this self reference.
+     * @since 2.0.6
+     */
+    public function setPriority($priority)
+    {
+        $this->getSwiftMessage()->setPriority($priority);
+        return $this;
+    }
+
+    /**
+     * Returns the priority of this message.
+     * @return integer priority value as integer in range: `1..5`,
+     * where 1 is the highest priority and 5 is the lowest.
+     * @since 2.0.6
+     */
+    public function getPriority()
+    {
+        return $this->getSwiftMessage()->getPriority();
+    }
+
+    /**
+     * Sets the ask for a delivery receipt from the recipient to be sent to $addresses.
+     * @param string|array $addresses receipt receive email address(es).
+     * @return $this self reference.
+     * @since 2.0.6
+     */
+    public function setReadReceiptTo($addresses)
+    {
+        $this->getSwiftMessage()->setReadReceiptTo($addresses);
+        return $this;
+    }
+
+    /**
+     * Get the addresses to which a read-receipt will be sent.
+     * @return string receipt receive email addresses.
+     * @since 2.0.6
+     */
+    public function getReadReceiptTo()
+    {
+        return $this->getSwiftMessage()->getReadReceiptTo();
     }
 }

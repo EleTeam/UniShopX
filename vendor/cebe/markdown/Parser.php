@@ -144,13 +144,13 @@ abstract class Parser
 				return $blockType;
 			}
 		}
+		// consider the line a normal paragraph if no other block type matches
 		return 'paragraph';
 	}
 
 	/**
-	 * Parse block elements by calling `identifyLine()` to identify them
+	 * Parse block elements by calling `detectLineType()` to identify them
 	 * and call consume function afterwards.
-	 * The blocks are then rendered by the corresponding rendering methods.
 	 */
 	protected function parseBlocks($lines)
 	{
@@ -162,28 +162,13 @@ abstract class Parser
 
 		$blocks = [];
 
-		$blockTypes = $this->blockTypes();
-
 		// convert lines to blocks
 		for ($i = 0, $count = count($lines); $i < $count; $i++) {
 			$line = $lines[$i];
 			if ($line !== '' && rtrim($line) !== '') { // skip empty lines
-				// identify a blocks beginning
-				$identified = false;
-				foreach($blockTypes as $blockType) {
-					if ($this->{'identify' . $blockType}($line, $lines, $i)) {
-						// call consume method for the detected block type to consume further lines
-						list($block, $i) = $this->{'consume' . $blockType}($lines, $i);
-						if ($block !== false) {
-							$blocks[] = $block;
-						}
-						$identified = true;
-						break 1;
-					}
-				}
-				// consider the line a normal paragraph
-				if (!$identified) {
-					list($block, $i) = $this->consumeParagraph($lines, $i);
+				// identify a blocks beginning and parse the content
+				list($block, $i) = $this->parseBlock($lines, $i);
+				if ($block !== false) {
 					$blocks[] = $block;
 				}
 			}
@@ -192,6 +177,22 @@ abstract class Parser
 		$this->_depth--;
 
 		return $blocks;
+	}
+
+	/**
+	 * Parses the block at current line by identifying the block type and parsing the content
+	 * @param $lines
+	 * @param $current
+	 * @return array Array of two elements, the first element contains the block,
+	 * the second contains the next line index to be parsed.
+	 */
+	protected function parseBlock($lines, $current)
+	{
+		// identify block type for this line
+		$blockType = $this->detectLineType($lines, $current);
+
+		// call consume method for the detected block type to consume further lines
+		return $this->{'consume' . $blockType}($lines, $current);
 	}
 
 	protected function renderAbsy($blocks)
@@ -290,7 +291,7 @@ abstract class Parser
 	 * Check is done to avoid iterations in parseInline(), good for huge markdown files
 	 * @param string $text
 	 */
-	private function prepareMarkers($text)
+	protected function prepareMarkers($text)
 	{
 		$this->_inlineMarkers = [];
 		foreach ($this->inlineMarkers() as $marker => $method) {

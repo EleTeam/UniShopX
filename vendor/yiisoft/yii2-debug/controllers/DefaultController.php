@@ -82,7 +82,7 @@ class DefaultController extends Controller
         if (isset($this->module->panels[$panel])) {
             $activePanel = $this->module->panels[$panel];
         } else {
-            $activePanel = $this->module->panels['request'];
+            $activePanel = $this->module->panels[$this->module->defaultPanel];
         }
 
         return $this->render('view', [

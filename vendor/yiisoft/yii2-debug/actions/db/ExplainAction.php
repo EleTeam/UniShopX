@@ -13,6 +13,9 @@ use yii\web\HttpException;
 
 /**
  * ExplainAction provides EXPLAIN information for SQL queries
+ *
+ * @author Laszlo <github@lvlconsultancy.nl>
+ * @since 2.0.6
  */
 class ExplainAction extends Action
 {

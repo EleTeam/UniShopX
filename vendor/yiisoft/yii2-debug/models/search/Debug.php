@@ -123,8 +123,8 @@ class Debug extends Base
     /**
      * Checks if code is critical.
      *
-     * @param integer $code
-     * @return boolean
+     * @param int $code
+     * @return bool
      */
     public function isCodeCritical($code)
     {

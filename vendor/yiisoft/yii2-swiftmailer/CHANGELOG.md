@@ -1,6 +1,16 @@
 Yii Framework 2 swiftmailer extension Change Log
 ================================================
 
+2.0.6 September 09, 2016
+------------------------
+
+- Enh #6: Added ability to specify custom mail header at `yii\swiftmailer\Message` (klimov-paul)
+- Enh #23: Added `yii\swiftmailer\Message::setReturnPath()` shortcut method (klimov-paul)
+- Enh #27: Added ability to specify message signature (klimov-paul)
+- Enh #32: Added `yii\swiftmailer\Message::setReadReceiptTo()` shortcut method (klimov-paul)
+- Enh: Added `yii\swiftmailer\Message::setPriority()` shortcut method (klimov-paul)
+
+
 2.0.5 March 17, 2016
 --------------------
 

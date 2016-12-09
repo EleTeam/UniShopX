@@ -92,13 +92,20 @@ class Markdown extends Parser
 				break;
 			}
 
-			if ($line !== '' && ltrim($line) !== '' &&
-				!($line[0] === "\t" || $line[0] === " " && strncmp($line, '    ', 4) === 0) &&
-				!$this->identifyHeadline($line, $lines, $i))
-			{
-				$content[] = $line;
-			} else {
+			if ($line === '' || ltrim($line) === '' || $this->identifyHeadline($line, $lines, $i)) {
 				break;
+			} elseif ($line[0] === "\t" || $line[0] === " " && strncmp($line, '    ', 4) === 0) {
+				// possible beginning of a code block
+				// but check for continued inline HTML
+				// e.g. <img src="file.jpg"
+				//           alt="some alt aligned with src attribute" title="some text" />
+				if (preg_match('~<\w+([^>]+)$~s', implode("\n", $content))) {
+					$content[] = $line;
+				} else {
+					break;
+				}
+			} else {
+				$content[] = $line;
 			}
 		}
 		$block = [

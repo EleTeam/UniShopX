@@ -125,10 +125,10 @@ class Swift_Transport_MailTransport implements Swift_Transport
         $toHeader = $message->getHeaders()->get('To');
         $subjectHeader = $message->getHeaders()->get('Subject');
 
-        if (!$toHeader) {
+        if (0 === $count) {
             $this->_throwException(new Swift_TransportException('Cannot send message without a recipient'));
         }
-        $to = $toHeader->getFieldBody();
+        $to = $toHeader ? $toHeader->getFieldBody() : '';
         $subject = $subjectHeader ? $subjectHeader->getFieldBody() : '';
 
         $reversePath = $this->_getReversePath($message);
@@ -139,7 +139,9 @@ class Swift_Transport_MailTransport implements Swift_Transport
 
         $messageStr = $message->toString();
 
-        $message->getHeaders()->set($toHeader);
+        if ($toHeader) {
+            $message->getHeaders()->set($toHeader);
+        }
         $message->getHeaders()->set($subjectHeader);
 
         // Separate headers from body
@@ -247,7 +249,8 @@ class Swift_Transport_MailTransport implements Swift_Transport
     private function _formatExtraParams($extraParams, $reversePath)
     {
         if (false !== strpos($extraParams, '-f%s')) {
-            $extraParams = empty($reversePath) ? str_replace('-f%s', '', $extraParams) : sprintf($extraParams, escapeshellarg($reversePath));
+            // no need to escape $reversePath) as mail() already does it
+            $extraParams = empty($reversePath) ? str_replace('-f%s', '', $extraParams) : sprintf($extraParams, $reversePath);
         }
 
         return !empty($extraParams) ? $extraParams : null;

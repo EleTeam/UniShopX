@@ -11,20 +11,8 @@ namespace yii\rbac;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-interface ManagerInterface
+interface ManagerInterface extends CheckAccessInterface
 {
-    /**
-     * Checks if the user has the specified permission.
-     * @param string|integer $userId the user ID. This should be either an integer or a string representing
-     * the unique identifier of a user. See [[\yii\web\User::id]].
-     * @param string $permissionName the name of the permission to be checked against
-     * @param array $params name-value pairs that will be passed to the rules associated
-     * with the roles and permissions assigned to the user.
-     * @return boolean whether the user has the specified permission.
-     * @throws \yii\base\InvalidParamException if $permissionName does not refer to an existing permission
-     */
-    public function checkAccess($userId, $permissionName, $params = []);
-
     /**
      * Creates a new Role object.
      * Note that the newly created role is not added to the RBAC system yet.
@@ -87,6 +75,16 @@ interface ManagerInterface
      * @return Role[] all roles directly assigned to the user. The array is indexed by the role names.
      */
     public function getRolesByUser($userId);
+
+    /**
+     * Returns the roles that are adding to the role via [[addChild()]] by recursive.
+     * @param string $roleName name of parent Role.
+     * @return Role[] all roles directly adding to the role. The array is indexed by the role names.
+     * First element is a Role item that are getting by $roleName.
+     * @throws \yii\base\InvalidParamException if Role was not found that are getting by $roleName
+     * @since 2.0.10
+     */
+    public function getChildRoles($roleName);
 
     /**
      * Returns the named permission.

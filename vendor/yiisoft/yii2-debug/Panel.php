@@ -9,6 +9,7 @@ namespace yii\debug;
 
 use Yii;
 use yii\base\Component;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 /**
@@ -96,13 +97,42 @@ class Panel extends Component
     }
 
     /**
+     * @param null|array $additionalParams Optional additional parameters to add to the route
      * @return string URL pointing to panel detail view
      */
-    public function getUrl()
+    public function getUrl($additionalParams = null)
     {
-        return Url::toRoute(['/' . $this->module->id . '/default/view',
+        $route = [
+            '/' . $this->module->id . '/default/view',
             'panel' => $this->id,
             'tag' => $this->tag,
-        ]);
+        ];
+
+        if (is_array($additionalParams)){
+            $route = ArrayHelper::merge($route, $additionalParams);
+        }
+
+        return Url::toRoute($route);
+    }
+
+    /**
+     * Returns a trace line
+     * @param array $options The array with trace
+     * @return string the trace line
+     * @since 2.0.7
+     */
+    public function getTraceLine($options)
+    {
+        if (!isset($options['text'])) {
+            $options['text'] = "{$options['file']}:{$options['line']}";
+        }
+        $traceLine = $this->module->traceLine;
+        if ($traceLine === false) {
+            return $options['text'];
+        } else {
+            $options['file'] = str_replace('\\', '/', $options['file']);
+            $rawLink = $traceLine instanceof \Closure ? call_user_func($traceLine, $options, $this) : $traceLine;
+            return strtr($rawLink, ['{file}' => $options['file'], '{line}' => $options['line'], '{text}' => $options['text']]);
+        }
     }
 }

@@ -24,6 +24,7 @@
         url,
         div,
         toolbarEl = findToolbar(),
+        toolbarAnimatingClass = 'yii-debug-toolbar_animating',
         barSelector = '.yii-debug-toolbar__bar',
         viewSelector = '.yii-debug-toolbar__view',
         blockSelector = '.yii-debug-toolbar__block',
@@ -33,11 +34,15 @@
         CACHE_KEY = 'yii-debug-toolbar',
         ACTIVE_STATE = 'active',
 
+        animationTime = 300,
+
         activeClass = 'yii-debug-toolbar_active',
         iframeActiveClass = 'yii-debug-toolbar_iframe_active',
+        iframeAnimatingClass = 'yii-debug-toolbar_iframe_animating',
         titleClass = 'yii-debug-toolbar__title',
         blockClass = 'yii-debug-toolbar__block',
-        blockActiveClass = 'yii-debug-toolbar__block_active';
+        blockActiveClass = 'yii-debug-toolbar__block_active',
+        requestStack = [];
 
     if (toolbarEl) {
         url = toolbarEl.getAttribute('data-url');
@@ -47,7 +52,7 @@
                 div = document.createElement('div');
                 div.innerHTML = xhr.responseText;
 
-                toolbarEl.parentNode.replaceChild(div, toolbarEl);
+                toolbarEl.parentNode && toolbarEl.parentNode.replaceChild(div, toolbarEl);
 
                 showToolbar(findToolbar());
             },
@@ -71,17 +76,25 @@
                 return toolbarEl.classList.contains(iframeActiveClass);
             },
             showIframe = function (href) {
+                toolbarEl.classList.add(iframeAnimatingClass);
                 toolbarEl.classList.add(iframeActiveClass);
 
                 iframeEl.src = externalEl.href = href;
                 viewEl.style.height = iframeHeight();
+                setTimeout(function() {
+                    toolbarEl.classList.remove(iframeAnimatingClass);
+                }, animationTime);
             },
             hideIframe = function () {
+                toolbarEl.classList.add(iframeAnimatingClass);
                 toolbarEl.classList.remove(iframeActiveClass);
                 removeActiveBlocksCls();
 
                 externalEl.href = '#';
                 viewEl.style.height = '';
+                setTimeout(function() {
+                    toolbarEl.classList.remove(iframeAnimatingClass);
+                }, animationTime);
             },
             removeActiveBlocksCls = function () {
                 [].forEach.call(blockEls, function (el) {
@@ -89,11 +102,15 @@
                 });
             },
             toggleToolbarClass = function (className) {
+                toolbarEl.classList.add(toolbarAnimatingClass);
                 if (toolbarEl.classList.contains(className)) {
                     toolbarEl.classList.remove(className);
                 } else {
                     toolbarEl.classList.add(className);
                 }
+                setTimeout(function () {
+                    toolbarEl.classList.remove(toolbarAnimatingClass);
+                }, animationTime);
             },
             toggleStorageState = function (key, value) {
                 if (window.localStorage) {
@@ -136,7 +153,9 @@
             var target = e.target,
                 block = findAncestor(target, blockClass);
 
-            if (block && !block.classList.contains(titleClass)) {
+            if (block && !block.classList.contains(titleClass)
+                && e.which !== 2 && !e.ctrlKey // not mouse wheel and not ctrl+click
+            ) {
                 while (target !== this) {
                     if (target.href) {
                         removeActiveBlocksCls();
@@ -157,4 +176,123 @@
         while ((el = el.parentElement) && !el.classList.contains(cls));
         return el;
     }
+
+    function renderAjaxRequests() {
+        var requestCounter = document.getElementsByClassName('yii-debug-toolbar__ajax_counter');
+        if (!requestCounter.length) {
+            return;
+        }
+        var ajaxToolbarPanel = document.querySelector('.yii-debug-toolbar__ajax');
+        var tbodies = document.getElementsByClassName('yii-debug-toolbar__ajax_requests');
+        var state = 'ok';
+        if (tbodies.length) {
+            var tbody = tbodies[0];
+            var rows = document.createDocumentFragment();
+            if (requestStack.length) {
+                var firstItem = requestStack.length > 20 ? requestStack.length - 20 : 0;
+                for (var i = firstItem; i < requestStack.length; i++) {
+                    var request = requestStack[i];
+                    var row = document.createElement('tr');
+                    rows.appendChild(row);
+
+                    var methodCell = document.createElement('td');
+                    methodCell.innerHTML = request.method;
+                    row.appendChild(methodCell);
+
+                    var statusCodeCell = document.createElement('td');
+                    var statusCode = document.createElement('span');
+                    if (request.statusCode < 300) {
+                        statusCode.setAttribute('class', 'yii-debug-toolbar__ajax_request_status yii-debug-toolbar__label_success');
+                    } else if (request.statusCode < 400) {
+                        statusCode.setAttribute('class', 'yii-debug-toolbar__ajax_request_status yii-debug-toolbar__label_warning');
+                    } else {
+                        statusCode.setAttribute('class', 'yii-debug-toolbar__ajax_request_status yii-debug-toolbar__label_error');
+                    }
+                    statusCode.textContent = request.statusCode || '-';
+                    statusCodeCell.appendChild(statusCode);
+                    row.appendChild(statusCodeCell);
+
+                    var pathCell = document.createElement('td');
+                    pathCell.className = 'yii-debug-toolbar__ajax_request_url';
+                    pathCell.innerHTML = request.url;
+                    pathCell.setAttribute('title', request.url);
+                    row.appendChild(pathCell);
+
+                    var durationCell = document.createElement('td');
+                    durationCell.className = 'yii-debug-toolbar__ajax_request_duration';
+                    if (request.duration) {
+                        durationCell.innerText = request.duration + " ms";
+                    } else {
+                        durationCell.innerText = '-';
+                    }
+                    row.appendChild(durationCell);
+                    row.appendChild(document.createTextNode(' '));
+
+                    var profilerCell = document.createElement('td');
+                    if (request.profilerUrl) {
+                        var profilerLink = document.createElement('a');
+                        profilerLink.setAttribute('href', request.profilerUrl);
+                        profilerLink.innerText = request.profile;
+                        profilerCell.appendChild(profilerLink);
+                    } else {
+                        profilerCell.innerText = 'n/a';
+                    }
+                    row.appendChild(profilerCell);
+
+                    if (request.error) {
+                        if (state !== "loading" && i > requestStack.length - 4) {
+                            state = 'error';
+                        }
+                    } else if (request.loading) {
+                        state = 'loading'
+                    }
+                    row.className = 'yii-debug-toolbar__ajax_request';
+                }
+                while (tbody.firstChild) {
+                    tbody.removeChild(tbody.firstChild);
+                }
+                tbody.appendChild(rows);
+            }
+            ajaxToolbarPanel.style.display = 'block';
+        }
+        requestCounter[0].innerText = requestStack.length;
+        var className = 'yii-debug-toolbar__label yii-debug-toolbar__ajax_counter';
+        if (state == 'ok') {
+            className += ' yii-debug-toolbar__label_success';
+        } else if (state == 'error') {
+            className += ' yii-debug-toolbar__label_error';
+        }
+        requestCounter[0].className = className;
+    };
+
+    var proxied = XMLHttpRequest.prototype.open;
+
+    XMLHttpRequest.prototype.open = function (method, url, async, user, pass) {
+        var self = this;
+        /* prevent logging AJAX calls to static and inline files, like templates */
+        if (url.substr(0, 1) === '/' && !url.match(new RegExp("{{ excluded_ajax_paths }}"))) {
+            var stackElement = {
+                loading: true,
+                error: false,
+                url: url,
+                method: method,
+                start: new Date()
+            };
+            requestStack.push(stackElement);
+            this.addEventListener("readystatechange", function () {
+                if (self.readyState == 4) {
+                    stackElement.duration = self.getResponseHeader("X-Debug-Duration") || new Date() - stackElement.start;
+                    stackElement.loading = false;
+                    stackElement.statusCode = self.status;
+                    stackElement.error = self.status < 200 || self.status >= 400;
+                    stackElement.profile = self.getResponseHeader("X-Debug-Tag");
+                    stackElement.profilerUrl = self.getResponseHeader("X-Debug-Link");
+                    renderAjaxRequests();
+                }
+            }, false);
+            renderAjaxRequests();
+        }
+        proxied.apply(this, Array.prototype.slice.call(arguments));
+    };
+
 })();

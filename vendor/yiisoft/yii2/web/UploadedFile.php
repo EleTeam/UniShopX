@@ -40,7 +40,7 @@ class UploadedFile extends Object
     public $tempName;
     /**
      * @var string the MIME-type of the uploaded file (such as "image/gif").
-     * Since this MIME type is not checked on the server side, do not take this value for granted.
+     * Since this MIME type is not checked on the server-side, do not take this value for granted.
      * Instead, use [[\yii\helpers\FileHelper::getMimeType()]] to determine the exact MIME type.
      */
     public $type;
@@ -74,7 +74,7 @@ class UploadedFile extends Object
      * @param \yii\base\Model $model the data model
      * @param string $attribute the attribute name. The attribute name may contain array indexes.
      * For example, '[1]file' for tabular file uploading; and 'file[1]' for an element in a file array.
-     * @return null|UploadedFile the instance of the uploaded file.
+     * @return UploadedFile the instance of the uploaded file.
      * Null is returned if no file is uploaded for the specified model attribute.
      * @see getInstanceByName()
      */
@@ -108,7 +108,7 @@ class UploadedFile extends Object
     public static function getInstanceByName($name)
     {
         $files = self::loadFiles();
-        return isset($files[$name]) ? $files[$name] : null;
+        return isset($files[$name]) ? new static($files[$name]) : null;
     }
 
     /**
@@ -124,12 +124,12 @@ class UploadedFile extends Object
     {
         $files = self::loadFiles();
         if (isset($files[$name])) {
-            return [$files[$name]];
+            return [new static($files[$name])];
         }
         $results = [];
         foreach ($files as $key => $file) {
             if (strpos($key, "{$name}[") === 0) {
-                $results[] = $file;
+                $results[] = new static($file);
             }
         }
         return $results;
@@ -172,7 +172,8 @@ class UploadedFile extends Object
     public function getBaseName()
     {
         // https://github.com/yiisoft/yii2/issues/11012
-        return mb_substr(pathinfo('_' . $this->name, PATHINFO_FILENAME), 1, null, '8bit');
+        $pathInfo = pathinfo('_' . $this->name, PATHINFO_FILENAME);
+        return mb_substr($pathInfo, 1, mb_strlen($pathInfo, '8bit'), '8bit');
     }
 
     /**
@@ -224,14 +225,14 @@ class UploadedFile extends Object
             foreach ($names as $i => $name) {
                 self::loadFilesRecursive($key . '[' . $i . ']', $name, $tempNames[$i], $types[$i], $sizes[$i], $errors[$i]);
             }
-        } elseif ($errors !== UPLOAD_ERR_NO_FILE) {
-            self::$_files[$key] = new static([
+        } elseif ((int)$errors !== UPLOAD_ERR_NO_FILE) {
+            self::$_files[$key] = [
                 'name' => $names,
                 'tempName' => $tempNames,
                 'type' => $types,
                 'size' => $sizes,
                 'error' => $errors,
-            ]);
+            ];
         }
     }
 }

@@ -14,14 +14,35 @@ $url = $firstPanel->getUrl();
     <div class="yii-debug-toolbar__bar">
         <div class="yii-debug-toolbar__block yii-debug-toolbar__title">
             <a href="<?= Url::to(['index']) ?>">
-                <img width="29" height="30" alt="" src="<?= \yii\debug\Module::getYiiLogo() ?>">
+                <img width="30" height="30" alt="" src="<?= \yii\debug\Module::getYiiLogo() ?>">
             </a>
+        </div>
+
+        <div class="yii-debug-toolbar__block yii-debug-toolbar__ajax" style="display: none">
+            AJAX <span class="yii-debug-toolbar__label yii-debug-toolbar__ajax_counter">0</span>
+            <div class="yii-debug-toolbar__ajax_info">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Status</th>
+                        <th>URL</th>
+                        <th>Time</th>
+                        <th>Profile</th>
+                    </tr>
+                    </thead>
+                    <tbody class="yii-debug-toolbar__ajax_requests"></tbody>
+                </table>
+            </div>
         </div>
 
         <?php foreach ($panels as $panel): ?>
             <?= $panel->getSummary() ?>
         <?php endforeach; ?>
 
+        <div class="yii-debug-toolbar__block_last">
+
+        </div>
         <a class="yii-debug-toolbar__external" href="#" target="_blank">
             <span class="yii-debug-toolbar__external-icon"></span>
         </a>

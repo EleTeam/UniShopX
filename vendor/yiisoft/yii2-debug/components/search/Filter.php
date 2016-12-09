@@ -60,7 +60,7 @@ class Filter extends Component
      * Checks if the given data satisfies filters.
      *
      * @param array $row data
-     * @return boolean if data passed filtering
+     * @return bool if data passed filtering
      */
     private function passesFilter(array $row)
     {

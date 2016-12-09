@@ -16,7 +16,7 @@ use yii\di\Instance;
 /**
  * FragmentCache is used by [[\yii\base\View]] to provide caching of page fragments.
  *
- * @property string|boolean $cachedContent The cached content. False is returned if valid content is not found
+ * @property string|false $cachedContent The cached content. False is returned if valid content is not found
  * in the cache. This property is read-only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -130,7 +130,7 @@ class FragmentCache extends Widget
 
     /**
      * Returns the cached content if available.
-     * @return string|boolean the cached content. False is returned if valid content is not found in the cache.
+     * @return string|false the cached content. False is returned if valid content is not found in the cache.
      */
     public function getCachedContent()
     {

@@ -1,6 +1,20 @@
 Changelog
 =========
 
+5.4.4 (2016-11-23)
+------------------
+
+ * reverted escaping command-line args to mail (PHP mail() function already does it)
+
+5.4.3 (2016-07-08)
+------------------
+
+ * fixed SimpleHeaderSet::has()/get() when the 0 index is removed
+ * removed the need to have mcrypt installed
+ * fixed broken MIME header encoding with quotes/colons and non-ascii chars
+ * allowed mail transport send for messages without To header
+ * fixed PHP 7 support
+
 5.4.2 (2016-05-01)
 ------------------
 
@@ -14,7 +28,7 @@ Changelog
  * added return-path header to the ignoredHeaders list of DKIMSigner
  * fixed crlf for subject using mail
  * fixed add soft line break only when necessary
- * fixed escaping command-line args to Sendmail
+ * fixed escaping command-line args to mail
 
 5.4.1 (2015-06-06)
 ------------------

@@ -24,7 +24,7 @@ class Base extends Model
      *
      * @param Filter $filter filter instance
      * @param string $attribute attribute to filter
-     * @param boolean $partial if partial match should be used
+     * @param bool $partial if partial match should be used
      */
     public function addCondition(Filter $filter, $attribute, $partial = false)
     {

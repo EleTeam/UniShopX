@@ -9,14 +9,12 @@
     font: 11px Verdana, Arial, sans-serif;
     text-align: left;
     width: 96px;
-    height: 42px;
     transition: width .3s ease;
     z-index: 1000000;
 }
 
 .yii-debug-toolbar_active {
     width: 100%;
-    height: auto;
 }
 
 .yii-debug-toolbar_position_top {
@@ -36,8 +34,8 @@
     padding: 0;
     font: 11px Verdana, Arial, sans-serif;
     text-align: left;
-    height: 40px;
     overflow: hidden;
+    box-sizing: content-box;
 
     background: rgb(255, 255, 255);
     background: -moz-linear-gradient(top, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%); /* FF3.6-15 */
@@ -51,6 +49,13 @@
     direction: ltr;
 }
 
+.yii-debug-toolbar.yii-debug-toolbar_active:not(.yii-debug-toolbar_animating) .yii-debug-toolbar__bar {
+    overflow: visible;
+}
+.yii-debug-toolbar:not(.yii-debug-toolbar_active) .yii-debug-toolbar__bar {
+    height:40px;
+}
+
 .yii-debug-toolbar__bar:after {
     content: '';
     display: table;
@@ -61,7 +66,6 @@
     height: 0;
     overflow: hidden;
     background: white;
-    transition: height .3s ease;
 }
 
 .yii-debug-toolbar__view iframe {
@@ -77,6 +81,10 @@
     height: 100%;
 }
 
+.yii-debug-toolbar_iframe_animating .yii-debug-toolbar__view {
+    transition: height .3s ease;
+}
+
 .yii-debug-toolbar__block {
     float: left;
     margin: 0;
@@ -86,7 +94,8 @@
     white-space: nowrap;
 }
 
-.yii-debug-toolbar__block_active {
+.yii-debug-toolbar__block_active,
+.yii-debug-toolbar__ajax:hover {
     background: rgb(247, 247, 247); /* Old browsers */
     background: -moz-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* FF3.6-15 */
     background: -webkit-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -131,7 +140,8 @@ a.yii-debug-toolbar__label:focus {
     cursor: pointer;
 }
 
-.yii-debug-toolbar__label_important {
+.yii-debug-toolbar__label_important,
+.yii-debug-toolbar__label_error {
     background-color: #b94a48;
 }
 
@@ -182,6 +192,12 @@ a.yii-debug-toolbar__label:focus {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#e0e0e0', GradientType=0); /* IE6-9 */
 }
 
+.yii-debug-toolbar__block_last{ /* creates space for .yii-debug-toolbar__toggle, .yii-debug-toolbar__external */
+    width: 80px;
+    height: 40px;
+    float: left;
+}
+
 .yii-debug-toolbar__toggle,
 .yii-debug-toolbar__external {
     cursor: pointer;
@@ -221,7 +237,7 @@ a.yii-debug-toolbar__label:focus {
 
 .yii-debug-toolbar__toggle {
     right: 10px;
-    top: 4px;
+    bottom: 4px;
 }
 
 .yii-debug-toolbar__toggle-icon {
@@ -231,11 +247,13 @@ a.yii-debug-toolbar__label:focus {
     background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgdmlld0JveD0iMCAwIDUwIDUwIj48cGF0aCBmaWxsPSIjNDQ0IiBkPSJNMTUuNTYzIDQwLjgzNmEuOTk3Ljk5NyAwIDAgMCAxLjQxNCAwbDE1LTE1YTEgMSAwIDAgMCAwLTEuNDE0bC0xNS0xNWExIDEgMCAwIDAtMS40MTQgMS40MTRMMjkuODU2IDI1LjEzIDE1LjU2MyAzOS40MmExIDEgMCAwIDAgMCAxLjQxNHoiLz48L3N2Zz4=');
     transition: -webkit-transform .3s ease-out;
     transition: transform .3s ease-out;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .yii-debug-toolbar_active .yii-debug-toolbar__toggle-icon {
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
 }
 
 .yii-debug-toolbar_iframe_active .yii-debug-toolbar__toggle-icon {
@@ -246,7 +264,7 @@ a.yii-debug-toolbar__label:focus {
 .yii-debug-toolbar__external {
     display: none;
     right: 50px;
-    top: 4px;
+    bottom: 4px;
 }
 
 .yii-debug-toolbar_iframe_active .yii-debug-toolbar__external {
@@ -258,4 +276,63 @@ a.yii-debug-toolbar__label:focus {
     width: 14px;
     height: 14px;
     background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgdmlld0JveD0iMCAwIDUwIDUwIj48cGF0aCBmaWxsPSIjNDQ0IiBkPSJNMzkuNjQyIDkuNzIyYTEuMDEgMS4wMSAwIDAgMC0uMzgyLS4wNzdIMjguMTAzYTEgMSAwIDAgMCAwIDJoOC43NDNMMjEuNyAyNi43OWExIDEgMCAwIDAgMS40MTQgMS40MTVMMzguMjYgMTMuMDZ2OC43NDNhMSAxIDAgMCAwIDIgMFYxMC42NDZhMS4wMDUgMS4wMDUgMCAwIDAtLjYxOC0uOTI0eiIvPjxwYXRoIGQ9Ik0zOS4yNiAyNy45ODVhMSAxIDAgMCAwLTEgMXYxMC42NmgtMjh2LTI4aDEwLjY4M2ExIDEgMCAwIDAgMC0ySDkuMjZhMSAxIDAgMCAwLTEgMXYzMGExIDEgMCAwIDAgMSAxaDMwYTEgMSAwIDAgMCAxLTF2LTExLjY2YTEgMSAwIDAgMC0xLTF6Ii8+PC9zdmc+');
+}
+
+.yii-debug-toolbar__ajax {
+    position: relative;
+}
+
+.yii-debug-toolbar__ajax:hover .yii-debug-toolbar__ajax_info,
+.yii-debug-toolbar__ajax:focus .yii-debug-toolbar__ajax_info {
+    visibility: visible;
+}
+.yii-debug-toolbar__ajax_info {
+    visibility: hidden;
+    transition: visibility .2s linear;
+    background-color: white;
+    box-shadow: inset 0 -10px 10px -10px #e1e1e1;
+    position: absolute;
+    bottom: 40px;
+    left: -1px;
+    padding: 10px;
+    max-width: 480px;
+    max-height: 480px;
+    word-wrap: break-word;
+    overflow: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.11);
+    z-index: 1000001;
+}
+.yii-debug-toolbar__ajax a {
+    color: #337ab7;
+}
+.yii-debug-toolbar__ajax table {
+    width: 100%;
+    table-layout: auto;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.yii-debug-toolbar__ajax table td {
+    padding: 4px;
+    font-size: 12px;
+    line-height: normal;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.yii-debug-toolbar__ajax table th {
+    padding: 4px;
+    font-size: 11px;
+    line-height: normal;
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+}
+.yii-debug-toolbar__ajax_request_status {
+    color: white;
+    padding: 2px 5px;
+}
+.yii-debug-toolbar__ajax_request_url {
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

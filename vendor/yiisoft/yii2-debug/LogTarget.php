@@ -109,7 +109,7 @@ class LogTarget extends Target
      * And if requested, it will also export the filtering result to specific medium (e.g. email).
      * @param array $messages log messages to be processed. See [[\yii\log\Logger::messages]] for the structure
      * of each message.
-     * @param boolean $final whether this method is called at the end of the current application
+     * @param bool $final whether this method is called at the end of the current application
      */
     public function collect($messages, $final)
     {
@@ -140,6 +140,10 @@ class LogTarget extends Target
      */
     protected function collectSummary()
     {
+        if (Yii::$app === null) {
+            return '';
+        }
+
         $request = Yii::$app->getRequest();
         $response = Yii::$app->getResponse();
         $summary = [
@@ -163,7 +167,7 @@ class LogTarget extends Target
     /**
      * Returns total sql count executed in current request. If database panel is not configured
      * returns 0.
-     * @return integer
+     * @return int
      */
     protected function getSqlTotalCount()
     {

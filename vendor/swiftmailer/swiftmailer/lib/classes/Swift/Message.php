@@ -92,7 +92,7 @@ class Swift_Message extends Swift_Mime_SimpleMessage
     }
 
     /**
-     * Attach a new signature handler to the message.
+     * Detach a signature handler from a message.
      *
      * @param Swift_Signer $signer
      *
@@ -281,11 +281,11 @@ class Swift_Message extends Swift_Mime_SimpleMessage
     {
         parent::__clone();
         foreach ($this->bodySigners as $key => $bodySigner) {
-            $this->bodySigners[$key] = clone($bodySigner);
+            $this->bodySigners[$key] = clone $bodySigner;
         }
 
         foreach ($this->headerSigners as $key => $headerSigner) {
-            $this->headerSigners[$key] = clone($headerSigner);
+            $this->headerSigners[$key] = clone $headerSigner;
         }
     }
 }

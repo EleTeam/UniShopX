@@ -34,6 +34,20 @@ class DbPanel extends Panel
      * @var string the name of the database component to use for executing (explain) queries
      */
     public $db = 'db';
+    /**
+     * @var array the default ordering of the database queries. In the format of
+     * [ property => sort direction ], for example: [ 'duration' => SORT_DESC ]
+     * @since 2.0.7
+     */
+    public $defaultOrder = [
+        'seq' => SORT_ASC
+    ];
+    /**
+     * @var array the default filter to apply to the database queries. In the format
+     * of [ property => value ], for example: [ 'type' => 'SELECT' ]
+     * @since 2.0.7
+     */
+    public $defaultFilter = [];
 
     /**
      * @var array db queries info extracted to array as models, to use with data provider.
@@ -95,7 +109,13 @@ class DbPanel extends Panel
     public function getDetail()
     {
         $searchModel = new Db();
-        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $this->getModels());
+
+        if (!$searchModel->load(Yii::$app->request->getQueryParams())) {
+            $searchModel->load($this->defaultFilter, '');
+        }
+
+        $dataProvider = $searchModel->search($this->getModels());
+        $dataProvider->getSort()->defaultOrder = $this->defaultOrder;
 
         return Yii::$app->view->render('panels/db/detail', [
             'panel' => $this,
@@ -143,7 +163,7 @@ class DbPanel extends Panel
      * Returns total query time.
      *
      * @param array $timings
-     * @return integer total time
+     * @return int total time
      */
     protected function getTotalQueryTime($timings)
     {
@@ -199,8 +219,8 @@ class DbPanel extends Panel
     /**
      * Check if given queries count is critical according settings.
      *
-     * @param integer $count queries count
-     * @return boolean
+     * @param int $count queries count
+     * @return bool
      */
     public function isQueryCountCritical($count)
     {
@@ -226,7 +246,7 @@ class DbPanel extends Panel
     }
 
     /**
-     * @return boolean Whether the DB component has support for EXPLAIN queries
+     * @return bool Whether the DB component has support for EXPLAIN queries
      * @since 2.0.5
      */
     protected function hasExplain()
@@ -250,7 +270,7 @@ class DbPanel extends Panel
      * Check if given query type can be explained.
      *
      * @param string $type query type
-     * @return boolean
+     * @return bool
      *
      * @since 2.0.5
      */
