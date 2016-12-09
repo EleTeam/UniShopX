@@ -14,11 +14,16 @@ namespace common\components;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+//use yii\redis\ActiveRecord;
 
 /**
  * 基类模型
  *  自动设置模型字段, 每个表必须存在这些字段: created_at, updated_at
  *  打印sql: echo $query->createCommand()->getRawSql();
+ *
+ *  注意：
+ *      如果用redis，只要不能用orderBy排序，否则会报错：orderBy is currently not supported by redis ActiveRecord.
+ *      如下语句会报错：User::find()->where('status = :status', [':status'=>Banner::STATUS_ACTIVE])->orderBy('position asc')->all();
  */
 class ETActiveRecord extends ActiveRecord
 {
