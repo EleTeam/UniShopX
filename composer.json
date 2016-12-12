@@ -21,7 +21,8 @@
         "yiidoc/yii2-redactor": "*",
         "xj/yii2-uploadify-widget": "~2.0.0",
         "mdmsoft/yii2-admin": "~2.0",
-        "yiisoft/yii2-redis": "^2.0"
+        "yiisoft/yii2-redis": "^2.0",
+	"sweelix/yii2-redis-rbac": "*"
     },
     "require-dev": {
         "codeception/codeception": "*",
