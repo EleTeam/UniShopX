@@ -11,7 +11,7 @@
 
 namespace wap\controllers;
 
-use common\models\Banner;
+use common\redis\RBanner;
 use common\models\CmsArticle;
 use common\models\ProductCategory;
 use Yii;
@@ -50,7 +50,7 @@ class SiteController extends BaseController
 
     public function actionHome()
     {
-        $banners = Banner::findBanners();
+        $banners = RBanner::findBanners();
 
         $query = CmsArticle::find()->where('status=:status', [':status'=>CmsArticle::STATUS_ACTIVE])
             ->offset(0)->limit(self::LIST_INIT_ROW);

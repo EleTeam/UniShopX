@@ -14,7 +14,9 @@ use yii\helpers\Url;
 
 /**
  * @var $this yii\web\View
- * @var $articles
+ * @var $banners array
+ * @var $banner common\redis\RBanner;
+ * @var $articles array
  * @var $article common\models\CmsArticle
  */
 ?>
