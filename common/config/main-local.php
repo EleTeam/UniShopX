@@ -24,7 +24,8 @@ if(strpos($_SERVER['HTTP_HOST'], 'local.') === 0){
     }else{
         $dbConfig = [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=192.168.1.111;dbname=etshop', //用内网Mac电脑的数据库
+            //'dsn' => 'mysql:host=192.168.1.111;dbname=etshop', //用内网Mac电脑的数据库
+            'dsn' => 'mysql:host=localhost;dbname=etshop', //用本机电脑的数据库
             'username' => 'root',
             'password' => '123456',
             'charset' => 'utf8',

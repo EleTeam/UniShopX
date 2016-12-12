@@ -45,7 +45,7 @@ class RBanner extends ActiveRecord
     {
         //@todo <= >=这样的条件查询怎么写？
         $where = ['status' => self::STATUS_ACTIVE];
-        $rBanners = self::find()->where($where)->andWhere(['eq','started_at',time()])->all();
+        $rBanners = self::find()->where($where)->all();
 
         if(empty($rBanners)) {
             //从数据库中查询
