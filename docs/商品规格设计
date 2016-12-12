@@ -1,0 +1,9 @@
+# 商品库： uyagroup_product
+     表备注                    表名                    主键              逻辑外键
+    基本信息                dl_pro_product            id                f_businessid(1:n)
+    商品拥有的规格、描述    dl_pro_product_intro      f_productid       f_productid(1:1)
+    商品拥有的规格表        dl_pro_productspec        id                f_productid(1:n)
+    商品规格                dl_pro_spec
+    商品规格值表            dl_pro_spec_value
+    商品类型                dl_pro_module             id
+    商品类型与规格对应表    dl_pro_module_spec        id                module_id(1:n), spec_id(1:n)

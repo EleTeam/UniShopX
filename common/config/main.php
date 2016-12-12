@@ -12,8 +12,17 @@
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => '120.24.54.172',
+            'port' => 6379,
+            'database' => 0,
+        ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\redis\Cache',
+        ],
+        'session' => [
+            'class' => 'yii\redis\Session',
         ],
     ],
 ];
