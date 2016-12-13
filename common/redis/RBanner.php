@@ -38,6 +38,9 @@ class RBanner extends ActiveRecord
 
     /**
      * 获取所有进行中的广告
+     *  @todo
+     *  注意：如果redis启动后，写入一个banner对象先于获取banner列表，此时列表只有一个对象
+     *  解决办法：每次redis启动都导入所有有效的banner对象
      *
      * @return self[]
      */
