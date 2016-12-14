@@ -14,14 +14,13 @@ namespace backend\controllers;
 use Yii;
 use common\models\Demo;
 use common\models\DemoSearch;
-use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * DemoController implements the CRUD actions for Demo model.
  */
-class DemoController extends ETWebController
+class DemoController extends BaseController
 {
     /**
      * @inheritdoc

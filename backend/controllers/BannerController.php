@@ -14,14 +14,13 @@ namespace backend\controllers;
 use Yii;
 use common\models\Banner;
 use common\models\BannerSearch;
-use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * BannerController implements the CRUD actions for Banner model.
  */
-class BannerController extends ETWebController
+class BannerController extends BaseController
 {
     /**
      * @inheritdoc

@@ -15,14 +15,13 @@ use common\models\Category;
 use Yii;
 use common\models\Product;
 use common\models\ProductSearch;
-use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * 移植控制器
  */
-class MigrationController extends ETWebController
+class MigrationController extends BaseController
 {
     public function actionIndex()
     {

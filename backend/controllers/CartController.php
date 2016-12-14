@@ -14,14 +14,13 @@ namespace backend\controllers;
 use Yii;
 use common\models\Cart;
 use common\models\CartSearch;
-use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * CartController implements the CRUD actions for Cart model.
  */
-class CartController extends ETWebController
+class CartController extends BaseController
 {
     /**
      * @inheritdoc

@@ -14,14 +14,13 @@ namespace backend\controllers;
 use Yii;
 use common\models\Preorder;
 use common\models\PreorderSearch;
-use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * PreorderController implements the CRUD actions for Preorder model.
  */
-class PreorderController extends ETWebController
+class PreorderController extends BaseController
 {
     /**
      * @inheritdoc

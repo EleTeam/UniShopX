@@ -14,14 +14,13 @@ namespace backend\controllers;
 use Yii;
 use common\models\CmsArticle;
 use common\models\CmsArticleSearch;
-use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * CmsArticleController implements the CRUD actions for CmsArticle model.
  */
-class CmsArticleController extends ETWebController
+class CmsArticleController extends BaseController
 {
     /**
      * @inheritdoc

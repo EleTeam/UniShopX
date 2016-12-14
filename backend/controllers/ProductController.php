@@ -11,7 +11,6 @@
 
 namespace backend\controllers;
 
-use common\components\ETWebController;
 use Yii;
 use common\models\Product;
 use common\models\ProductSearch;
@@ -22,7 +21,7 @@ use yii\filters\VerbFilter;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
-class ProductController extends ETWebController
+class ProductController extends BaseController
 {
     /**
      * @inheritdoc

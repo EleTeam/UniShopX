@@ -14,14 +14,13 @@ namespace backend\controllers;
 use Yii;
 use common\models\Area;
 use common\models\AreaSearch;
-use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * AreaController implements the CRUD actions for Area model.
  */
-class AreaController extends ETWebController
+class AreaController extends BaseController
 {
     /**
      * @inheritdoc

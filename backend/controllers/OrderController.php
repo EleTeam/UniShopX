@@ -14,14 +14,13 @@ namespace backend\controllers;
 use Yii;
 use common\models\Order;
 use common\models\OrderSearch;
-use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrderController extends ETWebController
+class OrderController extends BaseController
 {
     /**
      * @inheritdoc

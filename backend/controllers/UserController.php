@@ -11,7 +11,6 @@
 
 namespace backend\controllers;
 
-use common\components\ETWebController;
 use Yii;
 use common\models\User;
 use common\models\UserSearch;
@@ -21,7 +20,7 @@ use yii\web\NotFoundHttpException;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends ETWebController
+class UserController extends BaseController
 {
     /**
      * Logs in a user.
@@ -30,7 +29,6 @@ class UserController extends ETWebController
      */
     public function actionLogin()
     {
-        $this->layout = 'login';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }

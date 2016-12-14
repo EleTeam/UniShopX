@@ -14,14 +14,13 @@ namespace backend\controllers;
 use Yii;
 use common\models\ProductCategory;
 use common\models\ProductCategorySearch;
-use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * CategoryController implements the CRUD actions for ProductCategory model.
  */
-class CategoryController extends ETWebController
+class CategoryController extends BaseController
 {
     /**
      * @inheritdoc

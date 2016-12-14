@@ -11,13 +11,12 @@
 
 namespace backend\controllers;
 
-use common\components\ETWebController;
 use Yii;
 
 /**
  * Site controller
  */
-class SiteController extends ETWebController
+class SiteController extends BaseController
 {
     /**
      * @inheritdoc
@@ -35,5 +34,10 @@ class SiteController extends ETWebController
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionWelcome()
+    {
+        return $this->render('welcome');
     }
 }
