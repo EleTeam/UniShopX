@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<!-- <html manifest="cache/app.manifest" ng-app=""> -->
+<html class="pixel-ratio-2 retina watch-active-state"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <!--针对微信缓存-->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Expires" content="Tue,01 Jan 1980 1:00:00 GMT">
+    <!--end-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="雅活荟2.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="MobileOptimized" content="320">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-page-mode" content="app">
+    <meta content="”black”" name="”apple-mobile-web-app-status-bar-style”">
+    <meta name="”apple-itunes-app”" content="”app-id=com.u1city.socialshop”">
+    <meta content="雅活荟是一款为追求优雅、精致、高品质生活的用户提供专属、别致的服务和新鲜前沿资讯、活动的移动高端生活购物平台APP,为出行,居家,交友,购物提供优质、周到、细致的服务。它是雅活者的云生活家园和人脉圈,是以追求品质生活的影响力人群、极致、优雅、精英为核心，由现在和未来的社会各界优人雅士共同组成。通过汇聚线上、线下创造并提供一个优雅、生活方式分享与成长平台.雅活荟,为雅活而聚,全球精选高品质资源尽在你手,
+    雅活荟平台为您提供全球精选商品,美妆、护肤、母婴用品、家居、本地生活、服饰、鞋帽、食品、保健、箱包、洋酒、私人飞机、汽车、轻奢、尊享奢华、国际大牌、全球尖货,吃、穿、住、行、娱，应有尽有，高端优雅人士的精明选择，来雅平台，给你想要的生活.雅活荟是深圳雅活荟网络科技有限公司倾力打造的首家专注于
+    “传播优雅文化,提升优雅品位,引领优雅生活”.雅活荟依托移动互联网的科技呈现,提供高品质、精选的产品和服务,通过文化的引领,引领优雅生活.客服热线:4009896888" name="description">
+    <meta content="分享平台,购物网站,购物,返利,酒,洋酒,轩尼诗,威士忌,葡萄酒,服饰,服装,美食,海外代购,美丽说,蘑菇街,特价,购物优惠,云购全球,全球购,全球代购,全球代购正品网站,代购,跨境电商,电子商务平台,海外直邮,雅,荟,雅活荟,雅品汇,雅活荟官网,雅活荟官方网站,深圳雅活荟,雅活荟活动, 雅活荟APP,雅资讯,雅平台,优雅,艺术,美食,品味,时尚,轻奢品牌,奢饰品,饰品,高品质生活,人生,雅活荟科技有限公司,全球精选生活平台,酵素" name="keywords">
+    <link rel="apple-touch-icon-precomposed" href="http://static.yoyash.com/m/img/icon/logo.png">
+    <link rel="stylesheet" href="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/framework7.css">
+    <link rel="stylesheet" href="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/common.css">
+    <link rel="stylesheet" href="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/my-app.css"> 
+    <!-- <link rel="stylesheet" href="css/my-app.css" /> -->
+    <link rel="stylesheet" href="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/my-activity.css">
+    <title>雅活荟-全球精选生活平台</title>
+    <script src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/hm.js"></script><script>
+        //添加跟踪代码v
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?fdc4e0b815445d5a56a03ef63727a3e3";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<style charset="utf-8" type="text/css" class="firebugResetStyles">/* See license.txt for terms of usage */
+/** reset styling **/
+.firebugResetStyles {
+    z-index: 2147483646 !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: block !important;
+    border: 0 none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    outline: 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    position: fixed !important;
+    transform: rotate(0deg) !important;
+    transform-origin: 50% 50% !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent none !important;
+    pointer-events: none !important;
+    white-space: normal !important;
+}
+style.firebugResetStyles {
+    display: none !important;
+}
+
+.firebugBlockBackgroundColor {
+    background-color: transparent !important;
+}
+
+.firebugResetStyles:before, .firebugResetStyles:after {
+    content: "" !important;
+}
+/**actual styling to be modified by firebug theme**/
+.firebugCanvas {
+    display: none !important;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.firebugLayoutBox {
+    width: auto !important;
+    position: static !important;
+}
+
+.firebugLayoutBoxOffset {
+    opacity: 0.8 !important;
+    position: fixed !important;
+}
+
+.firebugLayoutLine {
+    opacity: 0.4 !important;
+    background-color: #000000 !important;
+}
+
+.firebugLayoutLineLeft, .firebugLayoutLineRight {
+    width: 1px !important;
+    height: 100% !important;
+}
+
+.firebugLayoutLineTop, .firebugLayoutLineBottom {
+    width: 100% !important;
+    height: 1px !important;
+}
+
+.firebugLayoutLineTop {
+    margin-top: -1px !important;
+    border-top: 1px solid #999999 !important;
+}
+
+.firebugLayoutLineRight {
+    border-right: 1px solid #999999 !important;
+}
+
+.firebugLayoutLineBottom {
+    border-bottom: 1px solid #999999 !important;
+}
+
+.firebugLayoutLineLeft {
+    margin-left: -1px !important;
+    border-left: 1px solid #999999 !important;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.firebugLayoutBoxParent {
+    border-top: 0 none !important;
+    border-right: 1px dashed #E00 !important;
+    border-bottom: 1px dashed #E00 !important;
+    border-left: 0 none !important;
+    position: fixed !important;
+    width: auto !important;
+}
+
+.firebugRuler{
+    position: absolute !important;
+}
+
+.firebugRulerH {
+    top: -15px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 14px !important;
+    background: url("data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%13%88%00%00%00%0E%08%02%00%00%00L%25a%0A%00%00%00%04gAMA%00%00%D6%D8%D4OX2%00%00%00%19tEXtSoftware%00Adobe%20ImageReadyq%C9e%3C%00%00%04%F8IDATx%DA%EC%DD%D1n%E2%3A%00E%D1%80%F8%FF%EF%E2%AF2%95%D0D4%0E%C1%14%B0%8Fa-%E9%3E%CC%9C%87n%B9%81%A6W0%1C%A6i%9A%E7y%0As8%1CT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AATE9%FE%FCw%3E%9F%AF%2B%2F%BA%97%FDT%1D~K(%5C%9D%D5%EA%1B%5C%86%B5%A9%BDU%B5y%80%ED%AB*%03%FAV9%AB%E1%CEj%E7%82%EF%FB%18%BC%AEJ8%AB%FA'%D2%BEU9%D7U%ECc0%E1%A2r%5DynwVi%CFW%7F%BB%17%7Dy%EACU%CD%0E%F0%FA%3BX%FEbV%FEM%9B%2B%AD%BE%AA%E5%95v%AB%AA%E3E5%DCu%15rV9%07%B5%7F%B5w%FCm%BA%BE%AA%FBY%3D%14%F0%EE%C7%60%0EU%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5JU%88%D3%F5%1F%AE%DF%3B%1B%F2%3E%DAUCNa%F92%D02%AC%7Dm%F9%3A%D4%F2%8B6%AE*%BF%5C%C2Ym~9g5%D0Y%95%17%7C%C8c%B0%7C%18%26%9CU%CD%13i%F7%AA%90%B3Z%7D%95%B4%C7%60%E6E%B5%BC%05%B4%FBY%95U%9E%DB%FD%1C%FC%E0%9F%83%7F%BE%17%7DkjMU%E3%03%AC%7CWj%DF%83%9An%BCG%AE%F1%95%96yQ%0Dq%5Dy%00%3Et%B5'%FC6%5DS%95pV%95%01%81%FF'%07%00%00%00%00%00%00%00%00%00%F8x%C7%F0%BE%9COp%5D%C9%7C%AD%E7%E6%EBV%FB%1E%E0(%07%E5%AC%C6%3A%ABi%9C%8F%C6%0E9%AB%C0'%D2%8E%9F%F99%D0E%B5%99%14%F5%0D%CD%7F%24%C6%DEH%B8%E9rV%DFs%DB%D0%F7%00k%FE%1D%84%84%83J%B8%E3%BA%FB%EF%20%84%1C%D7%AD%B0%8E%D7U%C8Y%05%1E%D4t%EF%AD%95Q%BF8w%BF%E9%0A%BF%EB%03%00%00%00%00%00%00%00%00%00%B8vJ%8E%BB%F5%B1u%8Cx%80%E1o%5E%CA9%AB%CB%CB%8E%03%DF%1D%B7T%25%9C%D5(%EFJM8%AB%CC'%D2%B2*%A4s%E7c6%FB%3E%FA%A2%1E%80~%0E%3E%DA%10x%5D%95Uig%15u%15%ED%7C%14%B6%87%A1%3B%FCo8%A8%D8o%D3%ADO%01%EDx%83%1A~%1B%9FpP%A3%DC%C6'%9C%95gK%00%00%00%00%00%00%00%00%00%20%D9%C9%11%D0%C0%40%AF%3F%EE%EE%92%94%D6%16X%B5%BCMH%15%2F%BF%D4%A7%C87%F1%8E%F2%81%AE%AAvzr%DA2%ABV%17%7C%E63%83%E7I%DC%C6%0Bs%1B%EF6%1E%00%00%00%00%00%00%00%00%00%80cr%9CW%FF%7F%C6%01%0E%F1%CE%A5%84%B3%CA%BC%E0%CB%AA%84%CE%F9%BF)%EC%13%08WU%AE%AB%B1%AE%2BO%EC%8E%CBYe%FE%8CN%ABr%5Dy%60~%CFA%0D%F4%AE%D4%BE%C75%CA%EDVB%EA(%B7%F1%09g%E5%D9%12%00%00%00%00%00%00%00%00%00H%F6%EB%13S%E7y%5E%5E%FB%98%F0%22%D1%B2'%A7%F0%92%B1%BC%24z3%AC%7Dm%60%D5%92%B4%7CEUO%5E%F0%AA*%3BU%B9%AE%3E%A0j%94%07%A0%C7%A0%AB%FD%B5%3F%A0%F7%03T%3Dy%D7%F7%D6%D4%C0%AAU%D2%E6%DFt%3F%A8%CC%AA%F2%86%B9%D7%F5%1F%18%E6%01%F8%CC%D5%9E%F0%F3z%88%AA%90%EF%20%00%00%00%00%00%00%00%00%00%C0%A6%D3%EA%CFi%AFb%2C%7BB%0A%2B%C3%1A%D7%06V%D5%07%A8r%5D%3D%D9%A6%CAu%F5%25%CF%A2%99%97zNX%60%95%AB%5DUZ%D5%FBR%03%AB%1C%D4k%9F%3F%BB%5C%FF%81a%AE%AB'%7F%F3%EA%FE%F3z%94%AA%D8%DF%5B%01%00%00%00%00%00%00%00%00%00%8E%FB%F3%F2%B1%1B%8DWU%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*UiU%C7%BBe%E7%F3%B9%CB%AAJ%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5*%AAj%FD%C6%D4%5Eo%90%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5%86%AF%1B%9F%98%DA%EBm%BBV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%AD%D6%E4%F58%01%00%00%00%00%00%00%00%00%00%00%00%00%00%40%85%7F%02%0C%008%C2%D0H%16j%8FX%00%00%00%00IEND%AEB%60%82") repeat-x !important;
+    border-top: 1px solid #BBBBBB !important;
+    border-right: 1px dashed #BBBBBB !important;
+    border-bottom: 1px solid #000000 !important;
+}
+
+.firebugRulerV {
+    top: 0 !important;
+    left: -15px !important;
+    width: 14px !important;
+    height: 100% !important;
+    background: url("data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%0E%00%00%13%88%08%02%00%00%00%0E%F5%CB%10%00%00%00%04gAMA%00%00%D6%D8%D4OX2%00%00%00%19tEXtSoftware%00Adobe%20ImageReadyq%C9e%3C%00%00%06~IDATx%DA%EC%DD%D1v%A20%14%40Qt%F1%FF%FF%E4%97%D9%07%3BT%19%92%DC%40(%90%EEy%9A5%CB%B6%E8%F6%9Ac%A4%CC0%84%FF%DC%9E%CF%E7%E3%F1%88%DE4%F8%5D%C7%9F%2F%BA%DD%5E%7FI%7D%F18%DDn%BA%C5%FB%DF%97%BFk%F2%10%FF%FD%B4%F2M%A7%FB%FD%FD%B3%22%07p%8F%3F%AE%E3%F4S%8A%8F%40%EEq%9D%BE8D%F0%0EY%A1Uq%B7%EA%1F%81%88V%E8X%3F%B4%CEy%B7h%D1%A2E%EBohU%FC%D9%AF2fO%8BBeD%BE%F7X%0C%97%A4%D6b7%2Ck%A5%12%E3%9B%60v%B7r%C7%1AI%8C%BD%2B%23r%00c0%B2v%9B%AD%CA%26%0C%1Ek%05A%FD%93%D0%2B%A1u%8B%16-%95q%5Ce%DCSO%8E%E4M%23%8B%F7%C2%FE%40%BB%BD%8C%FC%8A%B5V%EBu%40%F9%3B%A72%FA%AE%8C%D4%01%CC%B5%DA%13%9CB%AB%E2I%18%24%B0n%A9%0CZ*Ce%9C%A22%8E%D8NJ%1E%EB%FF%8F%AE%CAP%19*%C3%BAEKe%AC%D1%AAX%8C*%DEH%8F%C5W%A1e%AD%D4%B7%5C%5B%19%C5%DB%0D%EF%9F%19%1D%7B%5E%86%BD%0C%95%A12%AC%5B*%83%96%CAP%19%F62T%86%CAP%19*%83%96%CA%B8Xe%BC%FE)T%19%A1%17xg%7F%DA%CBP%19*%C3%BA%A52T%86%CAP%19%F62T%86%CA%B0n%A9%0CZ%1DV%C6%3D%F3%FCH%DE%B4%B8~%7F%5CZc%F1%D6%1F%AF%84%F9%0F6%E6%EBVt9%0E~%BEr%AF%23%B0%97%A12T%86%CAP%19%B4T%86%CA%B8Re%D8%CBP%19*%C3%BA%A52huX%19%AE%CA%E5%BC%0C%7B%19*CeX%B7h%A9%0C%95%E1%BC%0C%7B%19*CeX%B7T%06%AD%CB%5E%95%2B%BF.%8F%C5%97%D5%E4%7B%EE%82%D6%FB%CF-%9C%FD%B9%CF%3By%7B%19%F62T%86%CA%B0n%D1R%19*%A3%D3%CA%B0%97%A12T%86uKe%D0%EA%B02*%3F1%99%5DB%2B%A4%B5%F8%3A%7C%BA%2B%8Co%7D%5C%EDe%A8%0C%95a%DDR%19%B4T%C66%82fA%B2%ED%DA%9FC%FC%17GZ%06%C9%E1%B3%E5%2C%1A%9FoiB%EB%96%CA%A0%D5qe4%7B%7D%FD%85%F7%5B%ED_%E0s%07%F0k%951%ECr%0D%B5C%D7-g%D1%A8%0C%EB%96%CA%A0%A52T%C6)*%C3%5E%86%CAP%19%D6-%95A%EB*%95q%F8%BB%E3%F9%AB%F6%E21%ACZ%B7%22%B7%9B%3F%02%85%CB%A2%5B%B7%BA%5E%B7%9C%97%E1%BC%0C%EB%16-%95%A12z%AC%0C%BFc%A22T%86uKe%D0%EA%B02V%DD%AD%8A%2B%8CWhe%5E%AF%CF%F5%3B%26%CE%CBh%5C%19%CE%CB%B0%F3%A4%095%A1%CAP%19*Ce%A8%0C%3BO*Ce%A8%0C%95%A12%3A%AD%8C%0A%82%7B%F0v%1F%2FD%A9%5B%9F%EE%EA%26%AF%03%CA%DF9%7B%19*Ce%A8%0C%95%A12T%86%CA%B8Ze%D8%CBP%19*Ce%A8%0C%95%D1ae%EC%F7%89I%E1%B4%D7M%D7P%8BjU%5C%BB%3E%F2%20%D8%CBP%19*Ce%A8%0C%95%A12T%C6%D5*%C3%5E%86%CAP%19*Ce%B4O%07%7B%F0W%7Bw%1C%7C%1A%8C%B3%3B%D1%EE%AA%5C%D6-%EBV%83%80%5E%D0%CA%10%5CU%2BD%E07YU%86%CAP%19*%E3%9A%95%91%D9%A0%C8%AD%5B%EDv%9E%82%FFKOee%E4%8FUe%A8%0C%95%A12T%C6%1F%A9%8C%C8%3D%5B%A5%15%FD%14%22r%E7B%9F%17l%F8%BF%ED%EAf%2B%7F%CF%ECe%D8%CBP%19*Ce%A8%0C%95%E1%93~%7B%19%F62T%86%CAP%19*Ce%A8%0C%E7%13%DA%CBP%19*Ce%A8%0CZf%8B%16-Z%B4h%D1R%19f%8B%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1%A2%A52%CC%16-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2EKe%98-Z%B4h%D1%A2EKe%D02%5B%B4h%D1%A2EKe%D02%5B%B4h%D1%A2E%8B%96%CA0%5B%B4h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%16-%95a%B6h%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-Z*%C3l%D1%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z%B4T%86%D9%A2E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4h%A9%0C%B3E%8B%16-Z%B4h%A9%0CZf%8B%16-Z%B4h%A9%0CZf%8B%16-Z%B4h%D1R%19f%8B%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1%A2%A52%CC%16-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2EKe%98-Z%B4h%D1%A2EKe%D02%5B%B4h%D1%A2EKe%D02%5B%B4h%D1%A2E%8B%96%CA0%5B%B4h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%16-%95a%B6h%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-Z*%C3l%D1%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z%B4T%86%D9%A2E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4h%A9%0C%B3E%8B%16-Z%B4h%A9%0CZf%8B%16-Z%B4h%A9%0CZf%8B%16-Z%B4h%D1R%19f%8B%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1R%19%B4%CC%16-Z%B4h%D1%A2%A52%CC%16-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2%A52h%99-Z%B4h%D1%A2EKe%98-Z%B4h%D1%A2EKe%D02%5B%B4h%D1%A2EKe%D02%5B%B4h%D1%A2E%8B%96%CA0%5B%B4h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%96%CA%A0e%B6h%D1%A2E%8B%16-%95a%B6h%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-%95A%CBl%D1%A2E%8B%16-Z*%C3l%D1%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z*%83%96%D9%A2E%8B%16-Z%B4T%86%D9%A2E%8B%16-Z%B4T%06-%B3E%8B%16-Z%B4%AE%A4%F5%25%C0%00%DE%BF%5C'%0F%DA%B8q%00%00%00%00IEND%AEB%60%82") repeat-y !important;
+    border-left: 1px solid #BBBBBB !important;
+    border-right: 1px solid #000000 !important;
+    border-bottom: 1px dashed #BBBBBB !important;
+}
+
+.overflowRulerX > .firebugRulerV {
+    left: 0 !important;
+}
+
+.overflowRulerY > .firebugRulerH {
+    top: 0 !important;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+.fbProxyElement {
+    position: fixed !important;
+    pointer-events: auto !important;
+}
+</style></head>
+
+<body oncontextmenu="self.event.returnValue=false" onselectstart="return false" class="with-picker-modal">
+    <input id="shareContent" name="shareContent" value="" type="hidden">
+    <div class="statusbar-overlay"></div>
+    <!--<div class="panel-overlay"></div>-->
+    <div class="views">
+        <div class="view view-main" data-page="product-detail">
+            <div class="navbar theme-black navbar-hidden">
+                <div class="navbar-inner navbar-on-left">
+                    <div class="center sliding" style="left: 312px;"></div>
+                </div>
+            <div class="navbar-inner navbar-on-center">
+        <!-- <div class="left">
+            <a href="#" class="link icon-only back">
+                <i class="icon icon-back-right"></i>
+            </a>
+        </div>
+        <div class="center"></div>
+        <div class="right">
+            <a href="#" class="btn-link-collect"></a>
+        </div> -->
+    </div></div>
+            <div class="pages navbar-through toolbar-through">
+            <div data-page="index" class="page page-on-left">
+                    <div class="page-content">
+                        <div class="list-block text-align-center"></div>
+                    </div>
+                </div>
+            <div class="page no-navbar toolbar-through navbar-through page-on-center" data-page="product-detail" id="product-detail"><div class="page-content">
+    
+    <img class="_3dDress" src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/product_3d_fitting2x.png" data-href="http://120.76.43.92:8088/3d/wx.html?sex=woman&amp;id=69">
+    
+    <div class="product-carousel">
+        <div class="swiper-container swiper-container-horizontal">
+            <div class="swiper-wrapper">
+                
+                <div class="swiper-slide swiper-slide-active" style="width: 640px;">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/201603291551363215.jpg" name="head-img" onerror="javascript:this.src='http://static.yoyash.com/m/img/default/default_main_graph.png';" class="apper-pic">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/default_main_graph.png" class="hidden_pic">
+                </div>
+                
+                <div class="swiper-slide swiper-slide-next" style="width: 640px;">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/201603291551364348.jpg" name="head-img" onerror="javascript:this.src='http://static.yoyash.com/m/img/default/default_main_graph.png';" class="apper-pic">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/default_main_graph.png" class="hidden_pic">
+                </div>
+                
+                <div class="swiper-slide" style="width: 640px;">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/201603311401572215.jpg" name="head-img" onerror="javascript:this.src='http://static.yoyash.com/m/img/default/default_main_graph.png';" class="apper-pic">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/default_main_graph.png" class="hidden_pic">
+                </div>
+                
+                <div class="swiper-slide" style="width: 640px;">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/201603311401573845.jpg" name="head-img" onerror="javascript:this.src='http://static.yoyash.com/m/img/default/default_main_graph.png';" class="apper-pic">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/default_main_graph.png" class="hidden_pic">
+                </div>
+                
+                <div class="swiper-slide" style="width: 640px;">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/201603311401575291.jpg" name="head-img" onerror="javascript:this.src='http://static.yoyash.com/m/img/default/default_main_graph.png';" class="apper-pic">
+                    <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/default_main_graph.png" class="hidden_pic">
+                </div>
+                
+                
+            </div>
+            <div class="swiper-pagination swiper-pagination-circle"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+        </div>
+        <div class="product-detail-oper">
+            <a href="#" class="btn-link-back link" id="backBtn"></a>
+            
+                <a href="#" class="btn-link-collect"></a>
+            
+        </div>
+        
+    </div>
+    <div class="product-dt-title-info bg-white text-center">
+        <h4>SPAKEYS 十八己 破茧系列 3/4杯花朵刺绣优雅桑蚕丝女士文胸套装186003T</h4>
+        <h4 class="font-gold">
+            <span class="font4">¥</span><span name="pro-detail-price">1576.00</span>
+            
+                
+            
+        </h4>
+        <h5 class="f-color"><s>¥1658.00</s></h5>
+    </div>
+    <div class="list-block uyac-list-block">
+        <ul>
+            <li class="open-model">
+                <a href="#" class="item-link item-content" name="detail-explain">
+                    <div class="item-inner">
+                        
+                            <span><i class="icon icon-service_note"></i>发货区域</span>
+                        
+                        
+                            <span><i class="icon icon-service_note"></i>七天包退换</span>
+                        
+                        
+                            <span><i class="icon icon-service_note"></i>正品保证</span>
+                        
+                    </div>
+                </a>
+            </li>
+            <li class="open-model">
+                <a href="#" class="item-link item-content" name="detail-coupon">
+                    <div class="item-inner">领取优惠券</div>
+                </a>
+            </li>
+            <li class="open-model">
+                <a href="#" class="item-link item-content" name="detail-spec">
+                    <div class="item-inner" id="choose-spec-container">选择产品规格</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="product-review bg-white">
+        
+            <h4 class="text-center font5">
+                商品评论<span class="uyac-bage font5">54</span>
+            </h4>
+        
+        
+            <div class="product-review-one">
+                <img class="u-pic-circular" src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/default_head_Portrait2x.png" onerror="javascript:this.src='http://static.yoyash.com/m/img/default/default_head_Portrait@2x.png';">
+                <h5 class="product-review-name f-color"></h5>
+                <h6 class="product-review-time f-color">2016-04-22 18:09:44</h6>
+                <div class="star">
+                    
+                        <i class="icon icon-star-evaluate-in"></i>
+                        <i class="icon icon-star-evaluate-in"></i>
+                        <i class="icon icon-star-evaluate-in"></i>
+                        <i class="icon icon-star-evaluate-in"></i>
+                        <i class="icon icon-star-evaluate-in"></i>
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+                </div>
+            </div>
+            <p class="product-review-two font5">感觉挺好的，很舒服也不变形，下次再来</p>
+            <div class="row no-gutter product-review-three justify-start">
+                
+            </div>
+        
+        
+            <h4 class="text-center font-gold see-more-reviews font5"><a href="http://m.yahuohui.com/html/all-review.html?id=69">查看所有评论</a></h4>
+        
+    </div>
+    <div class="pd-store-min bg-white" id="75">
+        <a href="http://m.yahuohui.com/html/store-main.html?storeid=75">
+            <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/2015100705164714802.jpg" onerror="javascript:this.src='http://static.yoyash.com/m/img/icon/default_head_Portrait@2x.png';">
+            <i class="icon-arrow-right icon"></i>
+            <p class="title font4">SPAKEYS 十八己   </p>
+            <p class="servie font6">
+                商品描述<span>5</span>
+                服务态度<span>5</span>
+                物流服务<span>5</span>
+            </p>
+        </a>
+    </div>
+    <figure class="product-detail-fig"><p><span style="font-size:14px;"><strong><strong style="font-size: 14px; white-space: normal;"><strong>温馨提示：在不影响二次销售的情况下支持7天无理由退换货（内裤属于个人私密卫生用品，非质量问题不支持退换货，望您谅解!），非质量问题的退换货由顾客自行承担来回运费，质量问题由平台承担。</strong></strong></strong></span></p><p><br></p><p><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160409135452_7652.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173855_0839.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173855_2294.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173855_3407.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173855_4882.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173855_6249.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173855_7206.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173855_8261.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173855_9355.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173856_0663.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173856_2070.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160423095113_4987.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160418153206_0683.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20160324173856_6757.jpg" alt="" class="img"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20150502163350_9879.png" alt=""><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20150502163401_8076.jpg" alt=""><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/20150502163410_6566.jpg" alt=""> </p><p><br></p><p><br></p></figure>
+    <!-- <h5 class="font-gray-status text-center">~数据加载完毕~</h5> -->
+</div>
+<div class="toolbar">
+    <div class="toolbar-inner shopping-bar box">
+        <div class="shopcart">
+            <a href="http://m.yahuohui.com/html/cart.html">
+                <img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/shoppingcart3x.png">
+                <span class="uyac-bage font5 cart-num">0</span>
+            </a>
+        </div>
+        <div class="box box-flex open-model">
+            
+                <a href="#" class="btn btn-gold cart box-flex" flag="addtocart" name="detail-spec">加入购物车</a>
+                <a href="#" class="btn btn-blue box-flex" flag="submit" name="detail-spec">立即购买</a>
+            
+            
+            
+            
+        </div>
+    </div>
+</div>
+<div class="picker-modal uyac-picker-modal choose-size modal-in" name="detail-spec-model" style="display: block;">
+    <div class="product-tilte">
+        <img class="product-img" src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/201603291551363215.jpg">
+        <h3 class="font-gold">¥<span id="pro-detail-price" name="pro-detail-price">1576.00</span></h3>
+        <h5>库存<span id="pro-detail-stock">19282</span>件</h5>
+        <a href="#" class="close-choose-size"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/ic_close_choose_size_page3x.png"></a>
+        <input name="skuid" type="hidden">
+        <input name="specnames" type="hidden">
+        <input name="leastNum" value="1" type="hidden">
+    </div>
+    <div class="size-list">
+        
+            <div class="size-item box spec-item">
+                <label class="title">尺码</label>
+                <div class="box-flex">
+                    
+                        <label>
+                            <input name="12" value="2601" type="radio">
+                            <span data-id="2601" name="spec">A70+M(160/85)</span>
+                        </label>
+                    
+                        <label>
+                            <input name="12" value="2602" type="radio">
+                            <span data-id="2602" name="spec">A75+M(160/85)</span>
+                        </label>
+                    
+                        <label>
+                            <input name="12" value="2603" type="radio">
+                            <span data-id="2603" name="spec">A80+L(165/90)</span>
+                        </label>
+                    
+                        <label>
+                            <input name="12" value="2605" type="radio">
+                            <span data-id="2605" name="spec">B70+M(160/85)</span>
+                        </label>
+                    
+                        <label>
+                            <input name="12" value="2606" type="radio">
+                            <span data-id="2606" name="spec">B75+M(160/85)</span>
+                        </label>
+                    
+                        <label>
+                            <input name="12" value="2607" type="radio">
+                            <span data-id="2607" name="spec">B80+L(165/90)</span>
+                        </label>
+                    
+                        <label>
+                            <input name="12" value="2608" type="radio">
+                            <span data-id="2608" name="spec">B85+XL(170/95)</span>
+                        </label>
+                    
+                        <label>
+                            <input name="12" value="2609" type="radio">
+                            <span data-id="2609" name="spec">C70+M(160/85)</span>
+                        </label>
+                    
+                        <label>
+                            <input name="12" value="2610" type="radio">
+                            <span data-id="2610" name="spec">C75+M(160/85)</span>
+                        </label>
+                    
+                        <label>
+                            <input name="12" value="2611" type="radio">
+                            <span data-id="2611" name="spec">C80+L(165/90)</span>
+                        </label>
+                    
+                </div>
+            </div>
+        
+        <div class="size-item shop-count">
+            <label>数量</label>
+            <span name="plus">-</span>
+            <input readonly="readonly" value="1" name="amount" type="tel">
+            <span name="add">+</span>
+        </div>
+        <div class="limit-tips">*限购<span></span>件，超出以结算价为准</div>
+    </div>
+    <div class="comfire box">
+        <a href="#" id="cartSure" class="btn btn-blue box-flex" style="display: none;">确定</a>
+        <a href="#" class="btn btn-gold cart box-flex addtocart" flag="addtocart">加入购物车</a>
+        <a href="#" class="btn btn-blue box-flex submit" flag="submit">立即购买</a>
+    </div>
+</div>
+<div class="picker-modal uyac-picker-modal service-ep" name="detail-explain-model">
+    <h4 class="picker-title text-center">服务说明</h4>
+    <div>
+        
+            <div>
+                <h5 class="font-gold">发货区域</h5>
+                <h5>广东省揭阳市</h5>
+            </div>
+        
+        
+            <div>
+                <h5 class="font-gold">七天包退换</h5>
+                <h5>支持7天无理由退换货</h5>
+            </div>
+        
+        
+        <div>
+            <h5 class="font-gold">正品保证</h5>
+            <h5>雅活荟正品保证</h5>
+        </div>
+        
+    </div>
+    <div class="comfire">
+        <a href="#" class="btn btn-blue close-service-ep">确定</a>
+    </div>
+</div>
+<div class="picker-modal uyac-picker-modal get-coupon uyac-picker-modal-height" name="detail-coupon-model">
+    <h4 class="picker-title text-center">优惠券</h4>
+    <div class="coupon-list">
+        
+     </div>
+    <div class="comfire">
+        <a href="#" class="btn btn-blue close-get-coupon">确定</a>
+    </div>
+</div>
+<div class="modal-overlay modal-overlay-visible"></div></div><a href="#" class="floatButton div-fixed" id="floatButtonMore"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/ic_more_menu_homepage.png"></a><div class="floatLogo box" style="display: none;"><div class="logo text-center"><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/logo.png"></div><div class="box-flex"><div class="row"><div class="col-60"><div>雅活荟</div><div class="floatLogo-font">开启全新生活体验</div></div><div class="col-40"><span name="downloadApp" id="downloadApp">立即下载</span></div></div></div><div class=""><img src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/ic_close.png" class="floatLogo-icolse"></div></div></div>
+        </div>
+    </div>
+
+    <!--搜索 选择tab-->
+    <div id="all-search" class="popover popover-links" style="width: 100px">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <div class="list-block">
+                <ul>
+                    <li><a href="#" name="3" class="list-button item-link active">雅品</a></li>
+                    <li><a href="#" name="4" class="list-button item-link">雅活</a></li>
+                    <li><a href="#" name="2" class="list-button item-link">雅讯</a></li>
+                    <li><a href="#" name="1" class="list-button item-link">网红达人</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="pick-overlay"></div>
+
+    <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260754644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260754644' type='text/javascript'%3E%3C/script%3E"));
+    </script><span id="cnzz_stat_icon_1260754644"><a href="http://www.cnzz.com/stat/website.php?web_id=1260754644" target="_blank" title="站长统计">站长统计</a></span><script src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/z_stat.php" type="text/javascript"></script><script src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/core.php" charset="utf-8" type="text/javascript"></script>
+
+<script type="text/javascript" src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/framework7.js"></script>
+<script src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/jweixin-1.js"></script>
+<script type="text/javascript" src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/sea.js"></script>
+<script type="text/javascript" src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/seajs-text.js"></script>
+<script type="text/javascript" src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/config.js"></script>
+<script type="text/javascript" src="%E9%9B%85%E6%B4%BB%E8%8D%9F-%E5%85%A8%E7%90%83%E7%B2%BE%E9%80%89%E7%94%9F%E6%B4%BB%E5%B9%B3%E5%8F%B0-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85_files/md5.js"></script>
+<script type="text/javascript">
+    seajs.use("init", function(init) {
+        init.init();
+    });
+
+</script>
+
+</body></html>
