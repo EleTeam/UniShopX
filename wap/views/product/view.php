@@ -84,16 +84,16 @@ use yii\helpers\Html;
                 <div class="describe"><?= $product->short_description ?></div>
             </div>
 
-            <div class="list-block uyac-list-block">
+            <div class="list-block">
                 <ul>
                     <li class="open-model">
-                        <a href="#" class="item-link item-content" name="detail-spec">
+                        <a href="#" class="item-link item-content open-spec-modal" name="detail-spec">
                             <div class="item-inner" id="choose-spec-container">规格区</div>
                         </a>
                     </li>
                     <li class="open-model">
                         <a href="#" class="item-link item-content" name="detail-spec">
-                            <div class="item-inner" id="choose-spec-container">加料区</div>
+                            <div class="item-inner">加料区</div>
                         </a>
                     </li>
                 </ul>
@@ -118,34 +118,33 @@ use yii\helpers\Html;
     </div>
 
     <!-- 规格区弹出层 -->
-    <div class="picker-modal uyac-picker-modal choose-size modal-in" name="detail-spec-model" style="display: none;">
-        <div class="product-tilte">
-            <img class="product-img" src="http://images.yoyash.com/Upload/yoyash/2016-08-19/1471569507kz645.jpg@400w_80q">
+    <div class="picker-modal choose-size modal-in spec-modal">
+        <div class="product-title">
+            <img class="product-img" src="<?=$product->image_small?>">
             <h3 class="font-gold">¥<span id="pro-detail-price" name="pro-detail-price">83.00</span></h3>
             <h5>库存<span id="pro-detail-stock">20</span>件</h5>
-            <a href="#" class="close-choose-size"><img src="http://static.yoyash.com/m/img/icon/ic_close_choose_size_page@3x.png"></a>
+            <a href="#" class="close-choose-size close-spec-modal"><img src="../image/ic_close_btn.png"></a>
             <input name="skuid" type="hidden">
             <input name="specnames" type="hidden">
             <input name="leastNum" value="1" type="hidden">
         </div>
         <div class="size-list">
+            <?php foreach($product->productSkus as $productSku): ?>
+                <div class="size-item box spec-item">
+                    <label class="title">规格</label>
+                    <div class="box-flex">
+                        <label>
+                            <input name="19" value="8670" type="radio">
+                            <span data-id="8670" name="spec">2瓶装</span>
+                        </label>
 
-            <div class="size-item box spec-item">
-                <label class="title">规格</label>
-                <div class="box-flex">
-
-                    <label>
-                        <input name="19" value="8670" type="radio">
-                        <span data-id="8670" name="spec">2瓶装</span>
-                    </label>
-
-                    <label>
-                        <input name="19" value="8675" type="radio">
-                        <span data-id="8675" name="spec">1瓶装</span>
-                    </label>
-
+                        <label>
+                            <input name="19" value="8675" type="radio">
+                            <span data-id="8675" name="spec">1瓶装</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
+            <?php endforeach; ?>
 
             <div class="size-item shop-count">
                 <label>数量</label>

@@ -56,6 +56,7 @@ use common\components\ETActiveRecord;
  *
  * @property ProductCategory $category
  * @property ProductAttr[] $productAttrs
+ * @property ProductSku[] $productSkus
  * @property ProductAttrItem[] $items
  */
 class Product extends ETActiveRecord
@@ -144,6 +145,14 @@ class Product extends ETActiveRecord
     public function getProductAttrs()
     {
         return $this->hasMany(ProductAttr::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductSkus()
+    {
+        return $this->hasMany(ProductSku::className(), ['product_id' => 'id']);
     }
 
     /**

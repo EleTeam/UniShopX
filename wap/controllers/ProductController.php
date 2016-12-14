@@ -28,7 +28,7 @@ class ProductController extends BaseController
      */
     public function actionView($id)
     {
-        $expand = ['category', 'productAttrs'];
+        $expand = ['category', 'productAttrs', 'productSkus'];
         $product = Product::find()->where('id=:id', [':id'=>$id])->with($expand)->one();
         return $this->render('view', [
             'product' => $product,

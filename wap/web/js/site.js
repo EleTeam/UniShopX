@@ -211,6 +211,15 @@ myApp.onPageInit('product-view', function(page){
         lazyLoading: true,
         pagination: '.swiper-pagination'
     });
+    //打开规格层
+    $$('.open-spec-modal').on('click', function(){
+        //$$('.product-view').append('<div class="modal-overlay modal-overlay-visible"></div>');
+        myApp.pickerModal('.spec-modal');
+    });
+    //关闭规格层
+    $$('.close-spec-modal').on('click', function(){
+        myApp.closeModal();
+    });
 });
 
 
