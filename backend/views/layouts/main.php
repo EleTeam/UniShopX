@@ -53,6 +53,7 @@ AppAsset::register($this);
 </div>
 <script type="text/javascript" src="../huiadmin/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="../huiadmin/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="../huiadmin/lib/layer/2.1/layer.js"></script>
 </body>
 <?php $this->endBody() ?>
 </html>

@@ -80,10 +80,16 @@ class ProductController extends BaseController
     public function actionCreateStep1()
     {
         $category = new ProductCategory();
-        $categories = $category->find()->where('status=:status', [':status'=>$category::STATUS_ACTIVE]);
+        $categories = $category->find()
+            ->where('status=:status and id!=:root_level_id', [':status'=>$category::STATUS_ACTIVE, ':root_level_id'=>$category::ROOT_LEVEL_ID])
+            ->orderBy('sort')
+            ->all();
 
         $productType = new ProductType();
-        $productTypes = $productType->find()->where('status=:status', [':status'=>$productType::STATUS_ACTIVE]);
+        $productTypes = $productType->find()
+            ->where('status=:status', [':status'=>$productType::STATUS_ACTIVE])
+            ->orderBy('sort')
+            ->all();
 
         return $this->render('create_step1', [
             'categories' => $categories,
