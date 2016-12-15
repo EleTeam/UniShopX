@@ -524,7 +524,7 @@ AppAsset::register($this);
     </div>
     <!-- /.content-wrapper -->
 
-    <?php include_once '_footer.php'?>
+    <?php include_once '_footer.adminlte.php'?>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">

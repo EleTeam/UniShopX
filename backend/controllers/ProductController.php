@@ -11,6 +11,8 @@
 
 namespace backend\controllers;
 
+use common\models\ProductCategory;
+use common\models\ProductType;
 use Yii;
 use common\models\Product;
 use common\models\ProductSearch;
@@ -44,12 +46,17 @@ class ProductController extends BaseController
      */
     public function actionIndex()
     {
+        $this->layout = false;
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $category = new ProductCategory();
+        $categories = $category->find()->where('status=:status', [':status'=>$category::STATUS_ACTIVE])->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'categories' => $categories,
         ]);
     }
 
@@ -70,14 +77,33 @@ class ProductController extends BaseController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreateStep1()
+    {
+        $category = new ProductCategory();
+        $categories = $category->find()->where('status=:status', [':status'=>$category::STATUS_ACTIVE]);
+
+        $productType = new ProductType();
+        $productTypes = $productType->find()->where('status=:status', [':status'=>$productType::STATUS_ACTIVE]);
+
+        return $this->render('create_step1', [
+            'categories' => $categories,
+            'productTypes' => $productTypes,
+        ]);
+    }
+
+    /**
+     * Creates a new Product model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreateStep2()
     {
         $model = new Product();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
+            return $this->render('create_step2', [
                 'model' => $model,
             ]);
         }

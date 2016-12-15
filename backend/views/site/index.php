@@ -1,3 +1,19 @@
+<?php
+/**
+ * Shop-PHP-Yii2
+ *
+ * @author Tony Wong
+ * @date 2015-06-22
+ * @email 908601756@qq.com
+ * @copyright Copyright © 2015年 EleTeam
+ * @license The MIT License (MIT)
+ */
+
+use yii\helpers\Html;
+use yii\helpers\Url;
+
+/* @var $this yii\web\View */
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -20,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="../huiadmin/static/h-ui.admin/skin/default/skin.css" id="skin" />
     <link rel="stylesheet" type="text/css" href="../huiadmin/static/h-ui.admin/css/style.css" />
     <!--[if IE 6]>
-    <script type="text/javascript" src="../huiadmin/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script type="text/javascript" src="../huiadmin/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
     <title>Shop-PHP-Yii2</title>
@@ -30,14 +46,14 @@
 <body>
 <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
-        <div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">H-ui.admin</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> <span class="logo navbar-slogan f-l mr-10 hidden-xs">v2.5</span> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+        <div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">Shop-PHP-Yii2</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/"></a> <span class="logo navbar-slogan f-l mr-10 hidden-xs">v1.0.0</span> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
             <nav class="nav navbar-nav">
                 <ul class="cl">
                     <li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
+                            <li><a href="javascript:;" onclick="product_add('添加资讯','product-add.html')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
                             <li><a href="javascript:;" onclick="article_add('添加资讯','article-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
                             <li><a href="javascript:;" onclick="picture_add('添加资讯','picture-add.html')"><i class="Hui-iconfont">&#xe613;</i> 图片</a></li>
-                            <li><a href="javascript:;" onclick="product_add('添加资讯','product-add.html')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
                             <li><a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
                         </ul>
                     </li>
@@ -46,7 +62,7 @@
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
                     <li>超级管理员</li>
-                    <li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+                    <li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A"><?=Yii::$app->user->identity->username?> <i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="#">个人信息</a></li>
                             <li><a href="#">切换账户</a></li>
@@ -72,6 +88,16 @@
 <aside class="Hui-aside">
     <input runat="server" id="divScrollValue" type="hidden" value="" />
     <div class="menu_dropdown bk_2">
+        <dl id="menu-product">
+            <dt><i class="Hui-iconfont">&#xe620;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="<?=Url::toRoute('/product')?>" data-title="产品管理" href="javascript:void(0)">产品管理</a></li>
+                    <li><a data-href="product-category.html" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
+                    <li><a data-href="product-brand.html" data-title="品牌管理" href="javascript:void(0)">品牌管理</a></li>
+                </ul>
+            </dd>
+        </dl>
         <dl id="menu-article">
             <dt><i class="Hui-iconfont">&#xe616;</i> 资讯管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
@@ -85,16 +111,6 @@
             <dd>
                 <ul>
                     <li><a data-href="picture-list.html" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
-                </ul>
-            </dd>
-        </dl>
-        <dl id="menu-product">
-            <dt><i class="Hui-iconfont">&#xe620;</i> 产品管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-            <dd>
-                <ul>
-                    <li><a data-href="product-brand.html" data-title="品牌管理" href="javascript:void(0)">品牌管理</a></li>
-                    <li><a data-href="product-category.html" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
-                    <li><a data-href="product-list.html" data-title="产品管理" href="javascript:void(0)">产品管理</a></li>
                 </ul>
             </dd>
         </dl>
@@ -164,7 +180,7 @@
     <div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
         <div class="Hui-tabNav-wp">
             <ul id="min_title_list" class="acrossTab cl">
-                <li class="active"><span title="我的桌面" data-href="welcome.html">我的桌面</span><em></em></li>
+                <li class="active"><span title="我的桌面" data-href="<?=Url::toRoute('site/welcome')?>">我的桌面</span><em></em></li>
             </ul>
         </div>
         <div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a></div>
@@ -172,7 +188,7 @@
     <div id="iframe_box" class="Hui-article">
         <div class="show_iframe">
             <div style="display:none" class="loading"></div>
-            <iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+            <iframe scrolling="yes" frameborder="0" src="<?=Url::toRoute('site/welcome')?>"></iframe>
         </div>
     </div>
 </section>
