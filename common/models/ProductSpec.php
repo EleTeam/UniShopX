@@ -24,6 +24,8 @@ use common\components\ETActiveRecord;
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $status
+ *
+ * @property ProductSpecValue[] $productSpecValues
  */
 class ProductSpec extends ETActiveRecord
 {
@@ -60,5 +62,13 @@ class ProductSpec extends ETActiveRecord
             'updated_by' => Yii::t('app', 'Updated By'),
             'status' => Yii::t('app', 'Status'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductSpecValues()
+    {
+        return $this->hasMany(ProductSpecValue::className(), ['spec_id' => 'id']);
     }
 }

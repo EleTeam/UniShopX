@@ -10,50 +10,53 @@
  */
 
 use yii\helpers\Html;
+use backend\assets\AppAsset;
+use common\models\ProductCategory;
+use common\models\ProductType;
 
-
-/* @var $this yii\web\View */
-/* @var $model common\models\Product */
+/**
+ * @var $this yii\web\View
+ * @var $category ProductCategory
+ * @var $categories ProductCategory[]
+ * @var $productType ProductType
+ */
 
 $this->title = Yii::t('app', 'Create Product');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-?>
-<!--_meta 作为公共模版分离出去-->
-<!DOCTYPE HTML>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <LINK rel="Bookmark" href="/favicon.ico" >
-    <LINK rel="Shortcut Icon" href="/favicon.ico" />
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="lib/html5.js"></script>
-    <script type="text/javascript" src="lib/respond.min.js"></script>
-    <script type="text/javascript" src="lib/PIE_IE678.js"></script>
-    <![endif]-->
-    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.7/iconfont.css" />
-    <link rel="stylesheet" type="text/css" href="lib/icheck/icheck.css" />
-    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
-    <!--[if IE 6]>
-    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
-    <script>DD_belatedPNG.fix('*');</script>
-    <![endif]-->
-    <!--/meta 作为公共模版分离出去-->
 
-    <link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
+AppAsset::register($this);
+$this->registerCssFile("@web/huiadmin/lib/webuploader/0.1.5/webuploader.css");
+$this->registerJsFile("@web/huiadmin/lib/webuploader/0.1.5/webuploader.min.js");
+$this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/ueditor.config.js");
+$this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/ueditor.all.min.js");
+$this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
+$this->registerJsFile("@web/js/product-view.js");
+?>
 <div class="page-container">
     <form action="" method="post" class="form form-horizontal" id="form-article-add">
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品标题：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品分类：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box">
+                    <select name="Product[category_id]" class="select">
+                        <option value="<?=$category->id?>"><?=$category->name?></option>
+                    </select>
+				</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品类型：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box">
+                    <select name="Product[product_type_id]" class="select">
+                        <option value="<?=$productType->id?>"><?=$productType->name?></option>
+                    </select>
+				</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品标题：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input type="text" class="input-text" value="" placeholder="" id="" name="">
             </div>
@@ -64,59 +67,65 @@ $this->params['breadcrumbs'][] = $this->title;
                 <input type="text" class="input-text" value="" placeholder="" id="" name="">
             </div>
         </div>
+
+        <!-- 规格区-选择规格值 -->
+        <?php /* foreach($productType->productTypeSpecs as $productTypeSpec): ?>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类栏目：</label>
-            <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="" class="select">
-                    <option value="0">一级分类</option>
-                    <option value="1">一级分类</option>
-                    <option value="11">├二级分类</option>
-                    <option value="12">├二级分类</option>
-                    <option value="13">├二级分类</option>
-                </select>
-				</span> </div>
+            <label class="form-label col-xs-4 col-sm-2">规格-<?=$productTypeSpec->productSpec->name?>：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <?php foreach($productTypeSpec->productSpec->productSpecValues as $specValue): ?>
+                <div class="check-box">
+                    <input type="checkbox" id="checkbox-<?=$specValue->id?>">
+                    <label for="checkbox-<?=$specValue->id?>"><?=$specValue->name?></label>
+                </div>
+                <?php endforeach; ?>
+            </div>
         </div>
+        <?php endforeach; */?>
+        <?php foreach($productType->productTypeSpecs as $specIndex => $productTypeSpec): ?>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>规格-<?=$productTypeSpec->productSpec->name?>：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div nctype="spec_group_dl" nc_type="spec_group_dl_<?=$specIndex?>" class="button-group button-group-small radio" <?if($specIndex==0):?>spec_img="t"<?endif;?> >
+                    <ul class="spec">
+                        <?php foreach($productTypeSpec->productSpec->productSpecValues as $specValue): ?>
+                        <li>
+                            <span nctype="input_checkbox">
+                                <input style="30px;display:inline" type="checkbox" name="sp_val[<?=$specIndex?>][<?=$specValue->id?>]" nc_type="<?=$specValue->id?>" value="<?=$specValue->name?>">
+                            </span>
+                            <span nctype="pv_name"><?=$specValue->name?></span>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+
+        <!-- 规格区-填写sku信息 -->
+        <div id="spec-box" style="display:none;">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>SKU配置: </label>
+            <div class="formControls col-xs-8 col-sm-9 button-group button-group-small radio">
+                    <table class="table table-hover table_header tab_style_base table_view">
+                        <thead nc_type="spec_thead">
+                            <tr>
+                                <?php foreach($productType->productTypeSpecs as $productTypeSpec): ?>
+                                <th style="width:50px;" nctype="spec_name_<?=$productTypeSpec->productSpec->id?>"><?=$productTypeSpec->productSpec->name?></th>
+                                <?php endforeach; ?>
+                                <th style="width:50px;">价格</th>
+                                <th style="width:50px;">库存</th>
+                                <th style="width:50px;">SKU</th>
+                            </tr>
+                        </thead>
+                        <tbody nc_type="spec_table"></tbody>
+                    </table>
+            </div>
+        </div>
+
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">排序值：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input type="text" class="input-text" value="0" placeholder="" id="" name="">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">允许评论：</label>
-            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-                <div class="check-box">
-                    <input type="checkbox" id="checkbox-1">
-                    <label for="checkbox-1">&nbsp;</label>
-                </div>
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">产品规格：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="输入长度" value="" class="input-text" style=" width:25%">
-                MM
-                <input type="text" name="" id="" placeholder="输入宽度" value="" class="input-text" style=" width:25%">
-                MM
-                <input type="text" name="" id="" placeholder="输入高度" value="" class="input-text" style=" width:25%">
-                MM </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">产地：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="" value="" class="input-text">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">材质：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="" value="" class="input-text">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">所属供应商：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="" value="" class="input-text">
             </div>
         </div>
         <div class="row cl">
@@ -234,709 +243,197 @@ $this->params['breadcrumbs'][] = $this->title;
     </form>
 </div>
 
-<!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="lib/layer/2.1/layer.js"></script>
-<script type="text/javascript" src="lib/icheck/jquery.icheck.min.js"></script>
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.min.js"></script>
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
-<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.min.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.js"></script>
-<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
-<script type="text/javascript" src="static/h-ui.admin/js/comment.js"></script>
-<!--/_footer /作为公共模版分离出去-->
-
-<!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="lib/webuploader/0.1.5/webuploader.min.js"></script>
-<script type="text/javascript" src="lib/ueditor/1.4.3/ueditor.config.js"></script>
-<script type="text/javascript" src="lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
-<script type="text/javascript" src="lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
-    $(function(){
-        $('.skin-minimal input').iCheck({
-            checkboxClass: 'icheckbox-blue',
-            radioClass: 'iradio-blue',
-            increaseArea: '20%'
-        });
-
-        $list = $("#fileList"),
-            $btn = $("#btn-star"),
-            state = "pending",
-            uploader;
-
-        var uploader = WebUploader.create({
-            auto: true,
-            swf: 'lib/webuploader/0.1.5/Uploader.swf',
-
-            // 文件接收服务端。
-            server: 'http://lib.h-ui.net/webuploader/0.1.5/server/fileupload.php',
-
-            // 选择文件的按钮。可选。
-            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-            pick: '#filePicker',
-
-            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-            resize: false,
-            // 只允许选择图片文件。
-            accept: {
-                title: 'Images',
-                extensions: 'gif,jpg,jpeg,bmp,png',
-                mimeTypes: 'image/*'
-            }
-        });
-        uploader.on( 'fileQueued', function( file ) {
-            var $li = $(
-                    '<div id="' + file.id + '" class="item">' +
-                    '<div class="pic-box"><img></div>'+
-                    '<div class="info">' + file.name + '</div>' +
-                    '<p class="state">等待上传...</p>'+
-                    '</div>'
-                ),
-                $img = $li.find('img');
-            $list.append( $li );
-
-            // 创建缩略图
-            // 如果为非图片文件，可以不用调用此方法。
-            // thumbnailWidth x thumbnailHeight 为 100 x 100
-            uploader.makeThumb( file, function( error, src ) {
-                if ( error ) {
-                    $img.replaceWith('<span>不能预览</span>');
-                    return;
-                }
-
-                $img.attr( 'src', src );
-            }, thumbnailWidth, thumbnailHeight );
-        });
-        // 文件上传过程中创建进度条实时显示。
-        uploader.on( 'uploadProgress', function( file, percentage ) {
-            var $li = $( '#'+file.id ),
-                $percent = $li.find('.progress-box .sr-only');
-
-            // 避免重复创建
-            if ( !$percent.length ) {
-                $percent = $('<div class="progress-box"><span class="progress-bar radius"><span class="sr-only" style="width:0%"></span></span></div>').appendTo( $li ).find('.sr-only');
-            }
-            $li.find(".state").text("上传中");
-            $percent.css( 'width', percentage * 100 + '%' );
-        });
-
-        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-        uploader.on( 'uploadSuccess', function( file ) {
-            $( '#'+file.id ).addClass('upload-state-success').find(".state").text("已上传");
-        });
-
-        // 文件上传失败，显示上传出错。
-        uploader.on( 'uploadError', function( file ) {
-            $( '#'+file.id ).addClass('upload-state-error').find(".state").text("上传出错");
-        });
-
-        // 完成上传完了，成功或者失败，先删除进度条。
-        uploader.on( 'uploadComplete', function( file ) {
-            $( '#'+file.id ).find('.progress-box').fadeOut();
-        });
-        uploader.on('all', function (type) {
-            if (type === 'startUpload') {
-                state = 'uploading';
-            } else if (type === 'stopUpload') {
-                state = 'paused';
-            } else if (type === 'uploadFinished') {
-                state = 'done';
-            }
-
-            if (state === 'uploading') {
-                $btn.text('暂停上传');
-            } else {
-                $btn.text('开始上传');
-            }
-        });
-
-        $btn.on('click', function () {
-            if (state === 'uploading') {
-                uploader.stop();
-            } else {
-                uploader.upload();
-            }
-        });
-
+    //响应点击选择规格值
+    $('div[nctype="spec_group_dl"]').on('click', 'span[nctype="input_checkbox"] > input[type="checkbox"]',function(){
+        into_array();
+        goods_stock_set();
     });
 
-    (function( $ ){
-        // 当domReady的时候开始初始化
-        $(function() {
-            var $wrap = $('.uploader-list-container'),
-
-            // 图片容器
-                $queue = $( '<ul class="filelist"></ul>' )
-                    .appendTo( $wrap.find( '.queueList' ) ),
-
-            // 状态栏，包括进度和控制按钮
-                $statusBar = $wrap.find( '.statusBar' ),
-
-            // 文件总体选择信息。
-                $info = $statusBar.find( '.info' ),
-
-            // 上传按钮
-                $upload = $wrap.find( '.uploadBtn' ),
-
-            // 没选择文件之前的内容。
-                $placeHolder = $wrap.find( '.placeholder' ),
-
-                $progress = $statusBar.find( '.progress' ).hide(),
-
-            // 添加的文件数量
-                fileCount = 0,
-
-            // 添加的文件总大小
-                fileSize = 0,
-
-            // 优化retina, 在retina下这个值是2
-                ratio = window.devicePixelRatio || 1,
-
-            // 缩略图大小
-                thumbnailWidth = 110 * ratio,
-                thumbnailHeight = 110 * ratio,
-
-            // 可能有pedding, ready, uploading, confirm, done.
-                state = 'pedding',
-
-            // 所有文件的进度信息，key为file id
-                percentages = {},
-            // 判断浏览器是否支持图片的base64
-                isSupportBase64 = ( function() {
-                    var data = new Image();
-                    var support = true;
-                    data.onload = data.onerror = function() {
-                        if( this.width != 1 || this.height != 1 ) {
-                            support = false;
-                        }
-                    }
-                    data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                    return support;
-                } )(),
-
-            // 检测是否已经安装flash，检测flash的版本
-                flashVersion = ( function() {
-                    var version;
-
-                    try {
-                        version = navigator.plugins[ 'Shockwave Flash' ];
-                        version = version.description;
-                    } catch ( ex ) {
-                        try {
-                            version = new ActiveXObject('ShockwaveFlash.ShockwaveFlash')
-                                .GetVariable('$version');
-                        } catch ( ex2 ) {
-                            version = '0.0';
-                        }
-                    }
-                    version = version.match( /\d+/g );
-                    return parseFloat( version[ 0 ] + '.' + version[ 1 ], 10 );
-                } )(),
-
-                supportTransition = (function(){
-                    var s = document.createElement('p').style,
-                        r = 'transition' in s ||
-                            'WebkitTransition' in s ||
-                            'MozTransition' in s ||
-                            'msTransition' in s ||
-                            'OTransition' in s;
-                    s = null;
-                    return r;
-                })(),
-
-            // WebUploader实例
-                uploader;
-
-            if ( !WebUploader.Uploader.support('flash') && WebUploader.browser.ie ) {
-
-                // flash 安装了但是版本过低。
-                if (flashVersion) {
-                    (function(container) {
-                        window['expressinstallcallback'] = function( state ) {
-                            switch(state) {
-                                case 'Download.Cancelled':
-                                    alert('您取消了更新！')
-                                    break;
-
-                                case 'Download.Failed':
-                                    alert('安装失败')
-                                    break;
-
-                                default:
-                                    alert('安装已成功，请刷新！');
-                                    break;
-                            }
-                            delete window['expressinstallcallback'];
-                        };
-
-                        var swf = 'expressInstall.swf';
-                        // insert flash object
-                        var html = '<object type="application/' +
-                            'x-shockwave-flash" data="' +  swf + '" ';
-
-                        if (WebUploader.browser.ie) {
-                            html += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
-                        }
-
-                        html += 'width="100%" height="100%" style="outline:0">'  +
-                            '<param name="movie" value="' + swf + '" />' +
-                            '<param name="wmode" value="transparent" />' +
-                            '<param name="allowscriptaccess" value="always" />' +
-                            '</object>';
-
-                        container.html(html);
-
-                    })($wrap);
-
-                    // 压根就没有安转。
-                } else {
-                    $wrap.html('<a href="http://www.adobe.com/go/getflashplayer" target="_blank" border="0"><img alt="get flash player" src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>');
-                }
-
-                return;
-            } else if (!WebUploader.Uploader.support()) {
-                alert( 'Web Uploader 不支持您的浏览器！');
-                return;
+    //=========start 构造规格数组
+    // 按规格存储规格值数据, 如 spec_group_checked = ['',''];
+    var spec_group_checked = [<?php
+            $str = '';
+            foreach($productType->productTypeSpecs as $productTypeSpec){
+                $str .= "'',";
             }
+            $str = rtrim($str, ",");
+            echo $str;
+        ?>];
 
-            // 实例化
-            uploader = WebUploader.create({
-                pick: {
-                    id: '#filePicker-2',
-                    label: '点击选择图片'
-                },
-                formData: {
-                    uid: 123
-                },
-                dnd: '#dndArea',
-                paste: '#uploader',
-                swf: 'lib/webuploader/0.1.5/Uploader.swf',
-                chunked: false,
-                chunkSize: 512 * 1024,
-                server: 'http://lib.h-ui.net/webuploader/0.1.5/server/fileupload.php',
-                // runtimeOrder: 'flash',
+    var V = new Array();
 
-                // accept: {
-                //     title: 'Images',
-                //     extensions: 'gif,jpg,jpeg,bmp,png',
-                //     mimeTypes: 'image/*'
-                // },
+    //生成对应数量的规格数组
+    <?php foreach($productType->productTypeSpecs as $key=>$productTypeSpec): ?>
+    var spec_group_checked_<?=$key?> = new Array();
+    <?php endforeach; ?>
 
-                // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
-                disableGlobalDnd: true,
-                fileNumLimit: 300,
-                fileSizeLimit: 200 * 1024 * 1024,    // 200 M
-                fileSingleSizeLimit: 50 * 1024 * 1024    // 50 M
-            });
+    var count_sign = <?=count($productType->productTypeSpecs)?>;
+    var specarr = new Array();
 
-            // 拖拽时不接受 js, txt 文件。
-            uploader.on( 'dndAccept', function( items ) {
-                var denied = false,
-                    len = items.length,
-                    i = 0,
-                // 修改js类型
-                    unAllowed = 'text/plain;application/javascript ';
+    //生成规格名称 specarr[0]='颜色'; specarr[1]='尺码';
+    <?php foreach($productType->productTypeSpecs as $key=>$productTypeSpec): ?>
+    specarr[<?=$key?>] = '<?=$productTypeSpec->productSpec->name?>';
+    <?php endforeach; ?>
 
-                for ( ; i < len; i++ ) {
-                    // 如果在列表里面
-                    if ( ~unAllowed.indexOf( items[ i ].type ) ) {
-                        denied = true;
-                        break;
-                    }
-                }
-
-                return !denied;
-            });
-
-            uploader.on('dialogOpen', function() {
-                console.log('here');
-            });
-
-            // uploader.on('filesQueued', function() {
-            //     uploader.sort(function( a, b ) {
-            //         if ( a.name < b.name )
-            //           return -1;
-            //         if ( a.name > b.name )
-            //           return 1;
-            //         return 0;
-            //     });
-            // });
-
-            // 添加“添加文件”的按钮，
-            uploader.addButton({
-                id: '#filePicker2',
-                label: '继续添加'
-            });
-
-            uploader.on('ready', function() {
-                window.uploader = uploader;
-            });
-
-            // 当有文件添加进来时执行，负责view的创建
-            function addFile( file ) {
-                var $li = $( '<li id="' + file.id + '">' +
-                        '<p class="title">' + file.name + '</p>' +
-                        '<p class="imgWrap"></p>'+
-                        '<p class="progress"><span></span></p>' +
-                        '</li>' ),
-
-                    $btns = $('<div class="file-panel">' +
-                        '<span class="cancel">删除</span>' +
-                        '<span class="rotateRight">向右旋转</span>' +
-                        '<span class="rotateLeft">向左旋转</span></div>').appendTo( $li ),
-                    $prgress = $li.find('p.progress span'),
-                    $wrap = $li.find( 'p.imgWrap' ),
-                    $info = $('<p class="error"></p>'),
-
-                    showError = function( code ) {
-                        switch( code ) {
-                            case 'exceed_size':
-                                text = '文件大小超出';
-                                break;
-
-                            case 'interrupt':
-                                text = '上传暂停';
-                                break;
-
-                            default:
-                                text = '上传失败，请重试';
-                                break;
-                        }
-
-                        $info.text( text ).appendTo( $li );
-                    };
-
-                if ( file.getStatus() === 'invalid' ) {
-                    showError( file.statusText );
-                } else {
-                    // @todo lazyload
-                    $wrap.text( '预览中' );
-                    uploader.makeThumb( file, function( error, src ) {
-                        var img;
-
-                        if ( error ) {
-                            $wrap.text( '不能预览' );
-                            return;
-                        }
-
-                        if( isSupportBase64 ) {
-                            img = $('<img src="'+src+'">');
-                            $wrap.empty().append( img );
-                        } else {
-                            $.ajax('lib/webuploader/0.1.5/server/preview.php', {
-                                method: 'POST',
-                                data: src,
-                                dataType:'json'
-                            }).done(function( response ) {
-                                if (response.result) {
-                                    img = $('<img src="'+response.result+'">');
-                                    $wrap.empty().append( img );
-                                } else {
-                                    $wrap.text("预览出错");
-                                }
-                            });
-                        }
-                    }, thumbnailWidth, thumbnailHeight );
-
-                    percentages[ file.id ] = [ file.size, 0 ];
-                    file.rotation = 0;
-                }
-
-                file.on('statuschange', function( cur, prev ) {
-                    if ( prev === 'progress' ) {
-                        $prgress.hide().width(0);
-                    } else if ( prev === 'queued' ) {
-                        $li.off( 'mouseenter mouseleave' );
-                        $btns.remove();
-                    }
-
-                    // 成功
-                    if ( cur === 'error' || cur === 'invalid' ) {
-                        console.log( file.statusText );
-                        showError( file.statusText );
-                        percentages[ file.id ][ 1 ] = 1;
-                    } else if ( cur === 'interrupt' ) {
-                        showError( 'interrupt' );
-                    } else if ( cur === 'queued' ) {
-                        percentages[ file.id ][ 1 ] = 0;
-                    } else if ( cur === 'progress' ) {
-                        $info.remove();
-                        $prgress.css('display', 'block');
-                    } else if ( cur === 'complete' ) {
-                        $li.append( '<span class="success"></span>' );
-                    }
-
-                    $li.removeClass( 'state-' + prev ).addClass( 'state-' + cur );
-                });
-
-                $li.on( 'mouseenter', function() {
-                    $btns.stop().animate({height: 30});
-                });
-
-                $li.on( 'mouseleave', function() {
-                    $btns.stop().animate({height: 0});
-                });
-
-                $btns.on( 'click', 'span', function() {
-                    var index = $(this).index(),
-                        deg;
-
-                    switch ( index ) {
-                        case 0:
-                            uploader.removeFile( file );
-                            return;
-
-                        case 1:
-                            file.rotation += 90;
-                            break;
-
-                        case 2:
-                            file.rotation -= 90;
-                            break;
-                    }
-
-                    if ( supportTransition ) {
-                        deg = 'rotate(' + file.rotation + 'deg)';
-                        $wrap.css({
-                            '-webkit-transform': deg,
-                            '-mos-transform': deg,
-                            '-o-transform': deg,
-                            'transform': deg
-                        });
-                    } else {
-                        $wrap.css( 'filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+ (~~((file.rotation/90)%4 + 4)%4) +')');
-                        // use jquery animate to rotation
-                        // $({
-                        //     rotation: rotation
-                        // }).animate({
-                        //     rotation: file.rotation
-                        // }, {
-                        //     easing: 'linear',
-                        //     step: function( now ) {
-                        //         now = now * Math.PI / 180;
-
-                        //         var cos = Math.cos( now ),
-                        //             sin = Math.sin( now );
-
-                        //         $wrap.css( 'filter', "progid:DXImageTransform.Microsoft.Matrix(M11=" + cos + ",M12=" + (-sin) + ",M21=" + sin + ",M22=" + cos + ",SizingMethod='auto expand')");
-                        //     }
-                        // });
-                    }
-
-
-                });
-
-                $li.appendTo( $queue );
+    // 将选中的规格放入数组
+    function into_array(){
+        <?php foreach($productType->productTypeSpecs as $key=>$productTypeSpec): ?>
+        spec_group_checked_<?=$key?> = new Array();
+        $('div[nc_type="spec_group_dl_<?=$key?>"]').find('input[type="checkbox"]:checked').each(function(){
+            i = $(this).attr('nc_type');
+            v = $(this).val();
+            c = null;
+            if ($(this).parents('div:first').attr('spec_img') == 't') {
+                c = 1;
             }
-
-            // 负责view的销毁
-            function removeFile( file ) {
-                var $li = $('#'+file.id);
-
-                delete percentages[ file.id ];
-                updateTotalProgress();
-                $li.off().find('.file-panel').off().end().remove();
-            }
-
-            function updateTotalProgress() {
-                var loaded = 0,
-                    total = 0,
-                    spans = $progress.children(),
-                    percent;
-
-                $.each( percentages, function( k, v ) {
-                    total += v[ 0 ];
-                    loaded += v[ 0 ] * v[ 1 ];
-                } );
-
-                percent = total ? loaded / total : 0;
-
-
-                spans.eq( 0 ).text( Math.round( percent * 100 ) + '%' );
-                spans.eq( 1 ).css( 'width', Math.round( percent * 100 ) + '%' );
-                updateStatus();
-            }
-
-            function updateStatus() {
-                var text = '', stats;
-
-                if ( state === 'ready' ) {
-                    text = '选中' + fileCount + '张图片，共' +
-                        WebUploader.formatSize( fileSize ) + '。';
-                } else if ( state === 'confirm' ) {
-                    stats = uploader.getStats();
-                    if ( stats.uploadFailNum ) {
-                        text = '已成功上传' + stats.successNum+ '张照片至XX相册，'+
-                            stats.uploadFailNum + '张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
-                    }
-
-                } else {
-                    stats = uploader.getStats();
-                    text = '共' + fileCount + '张（' +
-                        WebUploader.formatSize( fileSize )  +
-                        '），已上传' + stats.successNum + '张';
-
-                    if ( stats.uploadFailNum ) {
-                        text += '，失败' + stats.uploadFailNum + '张';
-                    }
-                }
-
-                $info.html( text );
-            }
-
-            function setState( val ) {
-                var file, stats;
-
-                if ( val === state ) {
-                    return;
-                }
-
-                $upload.removeClass( 'state-' + state );
-                $upload.addClass( 'state-' + val );
-                state = val;
-
-                switch ( state ) {
-                    case 'pedding':
-                        $placeHolder.removeClass( 'element-invisible' );
-                        $queue.hide();
-                        $statusBar.addClass( 'element-invisible' );
-                        uploader.refresh();
-                        break;
-
-                    case 'ready':
-                        $placeHolder.addClass( 'element-invisible' );
-                        $( '#filePicker2' ).removeClass( 'element-invisible');
-                        $queue.show();
-                        $statusBar.removeClass('element-invisible');
-                        uploader.refresh();
-                        break;
-
-                    case 'uploading':
-                        $( '#filePicker2' ).addClass( 'element-invisible' );
-                        $progress.show();
-                        $upload.text( '暂停上传' );
-                        break;
-
-                    case 'paused':
-                        $progress.show();
-                        $upload.text( '继续上传' );
-                        break;
-
-                    case 'confirm':
-                        $progress.hide();
-                        $( '#filePicker2' ).removeClass( 'element-invisible' );
-                        $upload.text( '开始上传' );
-
-                        stats = uploader.getStats();
-                        if ( stats.successNum && !stats.uploadFailNum ) {
-                            setState( 'finish' );
-                            return;
-                        }
-                        break;
-                    case 'finish':
-                        stats = uploader.getStats();
-                        if ( stats.successNum ) {
-                            alert( '上传成功' );
-                        } else {
-                            // 没有成功的图片，重设
-                            state = 'done';
-                            location.reload();
-                        }
-                        break;
-                }
-
-                updateStatus();
-            }
-
-            uploader.onUploadProgress = function( file, percentage ) {
-                var $li = $('#'+file.id),
-                    $percent = $li.find('.progress span');
-
-                $percent.css( 'width', percentage * 100 + '%' );
-                percentages[ file.id ][ 1 ] = percentage;
-                updateTotalProgress();
-            };
-
-            uploader.onFileQueued = function( file ) {
-                fileCount++;
-                fileSize += file.size;
-
-                if ( fileCount === 1 ) {
-                    $placeHolder.addClass( 'element-invisible' );
-                    $statusBar.show();
-                }
-
-                addFile( file );
-                setState( 'ready' );
-                updateTotalProgress();
-            };
-
-            uploader.onFileDequeued = function( file ) {
-                fileCount--;
-                fileSize -= file.size;
-
-                if ( !fileCount ) {
-                    setState( 'pedding' );
-                }
-
-                removeFile( file );
-                updateTotalProgress();
-
-            };
-
-            uploader.on( 'all', function( type ) {
-                var stats;
-                switch( type ) {
-                    case 'uploadFinished':
-                        setState( 'confirm' );
-                        break;
-
-                    case 'startUpload':
-                        setState( 'uploading' );
-                        break;
-
-                    case 'stopUpload':
-                        setState( 'paused' );
-                        break;
-
-                }
-            });
-
-            uploader.onError = function( code ) {
-                alert( 'Eroor: ' + code );
-            };
-
-            $upload.on('click', function() {
-                if ( $(this).hasClass( 'disabled' ) ) {
-                    return false;
-                }
-
-                if ( state === 'ready' ) {
-                    uploader.upload();
-                } else if ( state === 'paused' ) {
-                    uploader.upload();
-                } else if ( state === 'uploading' ) {
-                    uploader.stop();
-                }
-            });
-
-            $info.on( 'click', '.retry', function() {
-                uploader.retry();
-            } );
-
-            $info.on( 'click', '.ignore', function() {
-                alert( 'todo' );
-            } );
-
-            $upload.addClass( 'state-' + state );
-            updateTotalProgress();
+            spec_group_checked_<?=$key?>[spec_group_checked_<?=$key?>.length] = [v,i,c];
         });
+        spec_group_checked[<?=$key?>] = spec_group_checked_<?=$key?>;
+        <?php endforeach; ?>
+    }
+    //==========end 构造规格数组
 
-    })( jQuery );
 
-    $(function(){
-        var ue = UE.getEditor('editor');
-    });
+    //======= start 生成库存配置
+    function goods_stock_set(){
+        var spectablestr = getSpecTable();
+
+        if(spectablestr == ''){ //未选择任何规格时隐藏sku table
+            $('#spec-box').hide();
+        }else{
+            //获取头部
+            $('thead[nc_type="spec_thead"]').empty().html(getSpecHead());
+            $('tbody[nc_type="spec_table"]').empty().html(spectablestr)
+                .find('input[nc_type]').each(function(){
+                    s = $(this).attr('nc_type');
+                    try{$(this).val(V[s]);}catch(ex){$(this).val('');};
+                    if($(this).attr('data_type') == 'price' && $(this).val() == ''){
+                        $(this).val($('input[name="f_productprice"]').val());
+                        //$(this).attr("class",);
+                    }
+                    if($(this).attr('data_type') == 'stock' && $(this).val() == ''){
+                        $(this).val('0');
+                    }
+                }).end()
+                .find('input[data_type="stock"]').change(function(){
+                    computeStock();    // 库存计算
+                }).end()
+                .find('input[data_type="price"]').change(function(){
+                    computePrice();     // 价格计算
+                }).end()
+                .find('input[data_type="marketprice"]').change(function(){
+                    computeMarketPrice();     // 市场价格计算
+                }).end()
+                .find('input[data_type="costprice"]').change(function(){
+                    computeCostPrice();     // 成本价格计算
+                }).end()
+                .find('input[nc_type]').change(function(){
+                    s = $(this).attr('nc_type');
+                    V[s] = $(this).val();
+                });
+            $('#spec-box').show();
+        }
+    }
+
+    function getSpecTable(){
+        //count_sign 为几种规格
+        var selectspec = new Array();
+
+        //找出哪些规格是勾选了的
+        var count_td = 0;
+        for(var i=0;i<count_sign;i++){
+            if(spec_group_checked[i].length>0){
+                selectspec[count_td] = spec_group_checked[i];
+                count_td++;
+            }
+        }
+
+        var speclist = getSpecList(0,selectspec,new Array());
+        var str = '';
+
+        if(speclist.length>0){
+            for(var i=0;i<speclist.length;i++){
+                str+="<tr>";
+                var spec_bunch = 'i';
+                for(var j=0;j<speclist[i].length;j++){
+                    spec_bunch += "_"+speclist[i][j][1];
+                }
+                str += '<input type="hidden" name="spec['+spec_bunch+'][goods_id]" nc_type="'+spec_bunch+'|id" value="" />';
+                for(var j=0;j<speclist[i].length;j++){
+                    str+="<td>";
+                    str+='<input type="hidden" name="spec['+spec_bunch+'][sp_value]['+speclist[i][j][1]+']" value="'+speclist[i][j][0]+'" />';
+                    str+= '<input type="hidden" name="spec['+spec_bunch+'][color]" value="'+speclist[i][j][1]+'" />';
+                    str+=speclist[i][j][0];
+                    str+="</td>";
+                }
+
+                str +='<td><input class="text input price" style="width:90px;" type="text" name="spec['+spec_bunch+'][price]" data_type="price" nc_type="'+spec_bunch+'|price" value="" /><em class="add-on"><i class="icon-renminbi"></i></em></td>';
+                str +='<td><input class="text input stock" style="width:90px;" type="text" name="spec['+spec_bunch+'][stock]" data_type="stock" nc_type="'+spec_bunch+'|stock" value="" /></td>';
+                str +='<td><input class="text input sku" style="width:90px;" type="text" name="spec['+spec_bunch+'][sku]" nc_type="'+spec_bunch+'|sku" value="" /></td>';
+                str +='</tr>\n';
+            }
+        }
+        return str;
+    }
+
+    function getSpecList(index,data,t){
+        var ret     = new Array();
+        var tttt     = t.concat();
+
+        for(var i=index;i<data.length;i++){
+            for(var j=0;j<data[i].length;j++){
+                tttt[tttt.length] = data[i][j];
+                var aa = getSpecList(i+1,data,tttt);
+                if(aa.length>0){
+                    for(var l=0;l<aa.length;l++){
+                        ret[ret.length]=aa[l];
+                    }
+                    tttt = new Array();
+                    tttt=t.concat();
+                }else{
+                    if(data.length==tttt.length){
+                        var ret_length  = ret.length;
+                        ret[ret_length] = new Array();
+                        for(var ct=0;ct<tttt.length;ct++){
+                            var tmp_len = ret[ret_length].length;
+                            ret[ret_length][tmp_len]=tttt[ct];
+                        }
+
+                    }
+
+                    tttt = new Array();
+                    tttt =t.concat();
+                }
+            }
+
+            tttt = new Array();
+        }
+        return ret;
+    }
+
+    function getSpecHead(){
+        var headstr = '';
+        var selectspec = new Array();
+        //找出哪些规格是勾选了的
+        var count_td = 0;
+
+        for(var i=0;i<count_sign;i++){
+            if(spec_group_checked[i].length>0){
+                selectspec[count_td] = i;
+                count_td++;
+            }
+        }
+
+        for(var i=0;i<selectspec.length;i++){
+            headstr+='<th style="width:100px;">'+specarr[selectspec[i]]+'</th>\n';
+        }
+
+        headstr+='<th style="width:100px;">价格</th>\n';
+        headstr+='<th style="width:100px;">库存</th>\n';
+        headstr+='<th style="width:100px;">SKU</th>\n';
+
+        return headstr;
+    }
+    //======= end 生成库存配置
 </script>
-</body>
-</html>

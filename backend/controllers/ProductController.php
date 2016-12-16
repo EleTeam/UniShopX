@@ -104,13 +104,37 @@ class ProductController extends BaseController
      */
     public function actionCreateStep2()
     {
-        $model = new Product();
+        $category_id = Yii::$app->request->get('category_id');
+        $product_type_id = Yii::$app->request->get('product_type_id');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(empty($category_id) || empty($product_type_id)){
+            return '请在第一步选择商品分类和类型';
+        }
+
+        $category = ProductCategory::findOneActive($category_id);
+        $productType = ProductType::findOneActive($product_type_id);
+        $categories = $category->find()
+            ->where('status=:status and id!=:root_level_id', [':status'=>$category::STATUS_ACTIVE, ':root_level_id'=>$category::ROOT_LEVEL_ID])
+            ->orderBy('sort')
+            ->all();
+
+        if(empty($category)){
+            return '商品分类不存在';
+        }
+        if(empty($productType)){
+            return '商品类型不存在';
+        }
+
+        $product = new Product();
+
+        if ($product->load(Yii::$app->request->post()) && $product->save()) {
+            return $this->redirect(['view', 'id' => $product->id]);
         } else {
             return $this->render('create_step2', [
-                'model' => $model,
+                'product' => $product,
+                'productType' => $productType,
+                'category' => $category,
+                'categories' => $categories,
             ]);
         }
     }

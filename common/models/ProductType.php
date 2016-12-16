@@ -25,6 +25,8 @@ use common\components\ETActiveRecord;
  * @property integer $updated_at
  * @property integer $created_by
  * @property integer $updated_by
+ *
+ * @property ProductTypeSpec[] $productTypeSpecs
  */
 class ProductType extends ETActiveRecord
 {
@@ -62,5 +64,13 @@ class ProductType extends ETActiveRecord
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductTypeSpecs()
+    {
+        return $this->hasMany(ProductTypeSpec::className(), ['type_id' => 'id']);
     }
 }

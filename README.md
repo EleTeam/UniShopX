@@ -4,8 +4,17 @@
 
 #### 注：有任何问题请在Issues提交，EleTeam会尽快回复。
 
-#### EleTeam开源项目-电商全套解决方案之iOS版-Shop-PHP-Yii2。一个类似京东/天猫/淘宝的商城，有对应的APP支持，由EleTeam团队维护！
-#### 客户端是iOS商城，对应项目是 ETShop-for-iOS，https://github.com/EleTeam/Shop-PHP-Yii2
+#### EleTeam开源项目-电商全套解决方案之后端版-Shop-PHP-Yii2。一个类似京东/天猫/淘宝的商城，有对应的APP支持，由EleTeam团队维护！
+#### iOS手机端，对应项目是 Shop-iOS，https://github.com/EleTeam/Shop-iOS
+#### RN手机端，对应项目是 Shop-React-Native，https://github.com/EleTeam/Shop-React-Native
+
+#### 网站的功能模块
+    商品模块：支持一个商品多SKU模式
+    用户模块：注册登录，用户角色权限管理
+    地址模块
+    订单模块
+    购物车模块
+    文章模块
 
 #### 该电商网站的基础架构，能承担上万的并发请求：
     一份代码拆分为五个项目

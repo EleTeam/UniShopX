@@ -28,6 +28,13 @@ if(strpos($_SERVER['HTTP_HOST'], 'local.') === 0){
     ];
 }
 
+$redisConfig = [
+    'class' => 'yii\redis\Connection',
+    'hostname' => '120.24.54.172',
+    'port' => 6379,
+    'database' => 0,
+];
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
