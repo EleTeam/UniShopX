@@ -75,7 +75,7 @@ class Product extends ETActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
+            [['id', 'name'], 'required'],
             [['id', 'category_id', 'sort', 'created_at', 'created_by', 'updated_at', 'updated_by', 'featured_position_sort', 'app_featured_home_sort', 'app_featured_topic_sort', 'status'], 'integer'],
             [['price', 'featured_price'], 'number'],
             [['description'], 'string'],

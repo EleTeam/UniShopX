@@ -10,12 +10,15 @@
  */
 
 use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
 use backend\assets\AppAsset;
+use common\models\Product;
 use common\models\ProductCategory;
 use common\models\ProductType;
 
 /**
  * @var $this yii\web\View
+ * @var $product Product
  * @var $category ProductCategory
  * @var $categories ProductCategory[]
  * @var $productType ProductType
@@ -35,6 +38,7 @@ $this->registerJsFile("@web/js/product-view.js");
 ?>
 <div class="page-container">
     <form action="" method="post" class="form form-horizontal" id="form-article-add">
+        <input name="_csrf" type="hidden" id="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品分类：</label>
             <div class="formControls col-xs-8 col-sm-9">
@@ -56,9 +60,12 @@ $this->registerJsFile("@web/js/product-view.js");
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品标题：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="" name="">
+                <input type="text" class="input-text" value="<?=$product->name?>" placeholder="" id="" name="Product[name]">
+                <?php if(isset($product->errors['name'][0])): ?>
+                <span class="c-red">*<?=$product->errors['name'][0]?></span>
+                <?php endif; ?>
             </div>
         </div>
         <div class="row cl">
@@ -123,76 +130,9 @@ $this->registerJsFile("@web/js/product-view.js");
         </div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">排序值：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="0" placeholder="" id="" name="">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">价格计算单位：</label>
-            <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select class="select">
-                    <option>请选择</option>
-                    <option value="1">件</option>
-                    <option value="2">斤</option>
-                    <option value="3">KG</option>
-                    <option value="4">吨</option>
-                    <option value="5">套</option>
-                </select>
-				</span> </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">产品重量：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-                kg</div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">产品展示价格：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-                元</div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">市场价格：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-                元</div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">成本价格：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-                元</div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">最低销售价格：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
-                元</div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">销售开始时间：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:180px;">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">销售结束时间：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" class="input-text Wdate" style="width:180px;">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">产品关键字：</label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" name="" id="" placeholder="多个关键字用英文逗号隔开，限10个关键字" value="" class="input-text">
-            </div>
-        </div>
-        <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2">产品摘要：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <textarea name="" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)"></textarea>
+                <textarea name="" cols="" rows="" class="textarea" placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)"></textarea>
                 <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
             </div>
         </div>
@@ -355,23 +295,23 @@ $this->registerJsFile("@web/js/product-view.js");
         if(speclist.length>0){
             for(var i=0;i<speclist.length;i++){
                 str+="<tr>";
-                var spec_bunch = 'i';
+                var spec_bunch = '_';
                 for(var j=0;j<speclist[i].length;j++){
-                    spec_bunch += "_"+speclist[i][j][1];
+                    spec_bunch += speclist[i][j][1] + '_';
                 }
-                str += '<input type="hidden" name="spec['+spec_bunch+'][goods_id]" nc_type="'+spec_bunch+'|id" value="" />';
+                str += '<input type="hidden" name="spec[' + spec_bunch + '][goods_id]" nc_type="' + spec_bunch + '|id" value="" />';
                 for(var j=0;j<speclist[i].length;j++){
-                    str+="<td>";
-                    str+='<input type="hidden" name="spec['+spec_bunch+'][sp_value]['+speclist[i][j][1]+']" value="'+speclist[i][j][0]+'" />';
-                    str+= '<input type="hidden" name="spec['+spec_bunch+'][color]" value="'+speclist[i][j][1]+'" />';
-                    str+=speclist[i][j][0];
-                    str+="</td>";
+                    str += "<td>";
+                    str += '<input type="hidden" name="spec[' + spec_bunch + '][sp_value][' + speclist[i][j][1] + ']" value="' + speclist[i][j][0] + '" />';
+                    str += '<input type="hidden" name="spec[' + spec_bunch + '][color]" value="' + speclist[i][j][1] + '" />';
+                    str += speclist[i][j][0];
+                    str += "</td>";
                 }
 
-                str +='<td><input class="text input price" style="width:90px;" type="text" name="spec['+spec_bunch+'][price]" data_type="price" nc_type="'+spec_bunch+'|price" value="" /><em class="add-on"><i class="icon-renminbi"></i></em></td>';
-                str +='<td><input class="text input stock" style="width:90px;" type="text" name="spec['+spec_bunch+'][stock]" data_type="stock" nc_type="'+spec_bunch+'|stock" value="" /></td>';
-                str +='<td><input class="text input sku" style="width:90px;" type="text" name="spec['+spec_bunch+'][sku]" nc_type="'+spec_bunch+'|sku" value="" /></td>';
-                str +='</tr>\n';
+                str += '<td><input class="text input price" style="width:90px;" type="text" name="spec['+spec_bunch+'][price]" data_type="price" nc_type="'+spec_bunch+'|price" value="" /><em class="add-on"><i class="icon-renminbi"></i></em></td>';
+                str += '<td><input class="text input stock" style="width:90px;" type="text" name="spec['+spec_bunch+'][stock]" data_type="stock" nc_type="'+spec_bunch+'|stock" value="" /></td>';
+                str += '<td><input class="text input sku" style="width:90px;" type="text" name="spec['+spec_bunch+'][sku]" nc_type="'+spec_bunch+'|sku" value="" /></td>';
+                str += '</tr>\n';
             }
         }
         return str;

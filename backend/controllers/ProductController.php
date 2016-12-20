@@ -127,7 +127,12 @@ class ProductController extends BaseController
 
         $product = new Product();
 
-        if ($product->load(Yii::$app->request->post()) && $product->save()) {
+        if (Yii::$app->request->isPost
+                && $product->load(Yii::$app->request->post()) && $product->validate()) {
+            echo '<pre>';
+            print_r($_REQUEST);exit;
+
+            $product->save();
             return $this->redirect(['view', 'id' => $product->id]);
         } else {
             return $this->render('create_step2', [
