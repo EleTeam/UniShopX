@@ -12,6 +12,7 @@
 namespace backend\controllers;
 
 use common\models\ProductCategory;
+use common\models\ProductSpec;
 use common\models\ProductType;
 use Yii;
 use common\models\Product;
@@ -179,6 +180,13 @@ class ProductController extends BaseController
         $skus = Yii::$app->request->post('skus', []); //选中的规格值组合成的sku
         $sp_val = Yii::$app->request->post('sp_val', []); //选中的规格和规格值
 
+        $spec_id_names = [];
+        foreach($sp_val as $spec_id => $spec_value_ids){
+            $spec = ProductSpec::findOne($spec_id);
+            if($spec){
+                $spec_id_names[$spec->id] = $spec->name;
+            }
+        }
 
         if(empty($category_id) || empty($type_id)){
             return '请在第一步选择商品分类和类型';
@@ -217,6 +225,7 @@ class ProductController extends BaseController
             'categories' => $categories,
             'skus' => $skus,
             'sp_val' => $sp_val,
+            'spec_id_names' => $spec_id_names,
         ]);
     }
 

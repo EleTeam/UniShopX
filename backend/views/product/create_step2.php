@@ -22,7 +22,9 @@ use common\models\ProductType;
  * @var $category ProductCategory
  * @var $categories ProductCategory[]
  * @var $productType ProductType
- * @var $skus array 提交的规格信息
+ * @var $skus array 提交的sku信息
+ * @var $sp_val array 提交的规格信息
+ * @var $spec_id_names array
  */
 
 $this->title = Yii::t('app', 'Create Product');
@@ -99,7 +101,7 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>规格-<?=$productTypeSpec->productSpec->name?>：</label>
             <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-                <div nctype="spec_group_dl" nc_type="spec_group_dl_<?=$specIndex?>" class="button-group button-group-small radio" <?if($specIndex==0):?>spec_img="t"<?endif;?> >
+                <div nctype="spec_group_dl" nc_type="spec_group_dl_<?=$specIndex?>" class="button-group button-group-small radio" <?php if($specIndex==0):?>spec_img="t"<?php endif;?> >
                     <ul class="spec">
                         <?php foreach($productTypeSpec->productSpec->productSpecValues as $specValue): ?>
                         <li>
@@ -126,16 +128,7 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>SKU配置: </label>
             <div class="formControls col-xs-8 col-sm-9 button-group button-group-small radio">
                 <table class="table table-hover table_header tab_style_base table_view">
-                    <thead nc_type="spec_thead">
-                        <tr>
-                            <?php foreach($productType->productTypeSpecs as $productTypeSpec): ?>
-                            <th style="width:50px;" nctype="spec_name_<?=$productTypeSpec->productSpec->id?>"><?=$productTypeSpec->productSpec->name?></th>
-                            <?php endforeach; ?>
-                            <th style="width:50px;">价格</th>
-                            <th style="width:50px;">库存</th>
-                            <th style="width:50px;">SKU编码</th>
-                        </tr>
-                    </thead>
+                    <thead nc_type="spec_thead"></thead>
                     <tbody nc_type="spec_table"></tbody>
                 </table>
             </div>
@@ -196,6 +189,14 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
 
 <script type="text/javascript">
     var skuFields = []; //存储规格值，再次选中的时候可以搜索到最近保存的值, 键如skuFields['skus[_1_5_][price]']=5.55;
+    <?php foreach($skus as $spec_value_id_set => $sku): ?>
+    var namePrice = 'skus[<?=$spec_value_id_set?>][price]';
+    var nameCount = 'skus[<?=$spec_value_id_set?>][count]';
+    var nameCode = 'skus[<?=$spec_value_id_set?>][code]';
+    skuFields[namePrice] = '<?=$sku["price"]?>';
+    skuFields[nameCount] = '<?=$sku["count"]?>';
+    skuFields[nameCode] = '<?=$sku["code"]?>';
+    <?php endforeach; ?>
 
     //响应点击选择规格值
     $('div[nctype="spec_group_dl"]').on('click', 'span[nctype="input_checkbox"] > input[type="checkbox"]',function(){
@@ -203,8 +204,6 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
         $('tbody[nc_type="spec_table"]').find('input[type="text"]').each(function(){
             var name = $(this).attr('name');
             skuFields[name] = $(this).val();
-
-            console.log(skuFields);
         });
 
         into_array();
@@ -224,15 +223,15 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
             echo $str;
         ?>];
 
-    var V = new Array();
+    var V = [];
 
     //生成对应数量的规格数组
     <?php foreach($productType->productTypeSpecs as $key=>$productTypeSpec): ?>
-    var spec_group_checked_<?=$key?> = new Array();
+    var spec_group_checked_<?=$key?> = [];
     <?php endforeach; ?>
 
     var count_sign = <?=count($productType->productTypeSpecs)?>;
-    var specarr = new Array();
+    var specarr = [];
 
     //生成规格名称 specarr[0]='颜色'; specarr[1]='尺码';
     <?php foreach($productType->productTypeSpecs as $key=>$productTypeSpec): ?>
@@ -242,7 +241,7 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
     // 将选中的规格放入数组
     function into_array(){
         <?php foreach($productType->productTypeSpecs as $key=>$productTypeSpec): ?>
-        spec_group_checked_<?=$key?> = new Array();
+        spec_group_checked_<?=$key?> = [];
         $('div[nc_type="spec_group_dl_<?=$key?>"]').find('input[type="checkbox"]:checked').each(function(){
             i = $(this).attr('nc_type');
             v = $(this).val();
@@ -289,7 +288,7 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
 
     function getSpecTable(){
         //count_sign 为几种规格
-        var selectspec = new Array();
+        var selectspec = [];
 
         //找出哪些规格是勾选了的
         var count_td = 0;
@@ -300,7 +299,7 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
             }
         }
 
-        var speclist = getSpecList(0,selectspec,new Array());
+        var speclist = getSpecList(0,selectspec, []);
         var str = '';
 
         if(speclist.length>0){
@@ -314,10 +313,10 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
                 }
                 //sku对应的字段
                 var priceName = 'skus[' + spec_value_ids + '][price]';
-                var price = skuFields[priceName] != 'undefined' ? skuFields[priceName] : '';
                 var countName = 'skus[' + spec_value_ids + '][count]';
-                var count = skuFields[countName] != 'undefined' ? skuFields[countName] : '';
                 var codeName = 'skus[' + spec_value_ids + '][code]';
+                var price = skuFields[priceName] != 'undefined' ? skuFields[priceName] : '';
+                var count = skuFields[countName] != 'undefined' ? skuFields[countName] : '';
                 var code = skuFields[codeName] != 'undefined' ? skuFields[codeName] : '';
 
                 for(var j=0;j<speclist[i].length;j++){
@@ -337,8 +336,8 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
     }
 
     function getSpecList(index,data,t){
-        var ret     = new Array();
-        var tttt     = t.concat();
+        var ret  = [];
+        var tttt = t.concat();
 
         for(var i=index;i<data.length;i++){
             for(var j=0;j<data[i].length;j++){
@@ -348,12 +347,12 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
                     for(var l=0;l<aa.length;l++){
                         ret[ret.length]=aa[l];
                     }
-                    tttt = new Array();
-                    tttt=t.concat();
+                    tttt = [];
+                    tttt = t.concat();
                 }else{
                     if(data.length==tttt.length){
                         var ret_length  = ret.length;
-                        ret[ret_length] = new Array();
+                        ret[ret_length] = [];
                         for(var ct=0;ct<tttt.length;ct++){
                             var tmp_len = ret[ret_length].length;
                             ret[ret_length][tmp_len]=tttt[ct];
@@ -361,19 +360,19 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
 
                     }
 
-                    tttt = new Array();
+                    tttt = [];
                     tttt =t.concat();
                 }
             }
 
-            tttt = new Array();
+            tttt = [];
         }
         return ret;
     }
 
     function getSpecHead(){
         var headstr = '';
-        var selectspec = new Array();
+        var selectspec = [];
         //找出哪些规格是勾选了的
         var count_td = 0;
 
@@ -464,12 +463,7 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
         });
 
         into_array();   // 将选中的规格放入数组
-
-        var str = '';
-        <?php recursionSpec(0, count($productType->productTypeSpecs)); ?> //生成字符给str
-
-        $('tbody[nc_type="spec_table"]').empty().html(str+'<tr>');
-        $('#sku-box').show();
+        goods_stock_set();
     });
     <?php endif; ?>
 </script>

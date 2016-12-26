@@ -103,7 +103,7 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'app_long_image1', $this->app_long_image1])
             ->andFilterWhere(['like', 'app_long_image2', $this->app_long_image2])
             ->andFilterWhere(['like', 'app_long_image3', $this->app_long_image3])
-            ->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'type_id', $this->type_id])
             ->andFilterWhere(['like', 'app_long_image4', $this->app_long_image4])
             ->andFilterWhere(['like', 'app_long_image5', $this->app_long_image5]);
 
