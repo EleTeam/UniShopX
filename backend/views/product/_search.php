@@ -88,7 +88,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'app_long_image3') ?>
 
-    <?php // echo $form->field($model, 'type') ?>
+    <?php // echo $form->field($model, 'type_id') ?>
 
     <?php // echo $form->field($model, 'app_long_image4') ?>
 

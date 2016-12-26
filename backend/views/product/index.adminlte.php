@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'app_long_image1',
             // 'app_long_image2',
             // 'app_long_image3',
-            // 'type',
+            // 'type_id',
             // 'app_long_image4',
             // 'app_long_image5',
             // 'status',

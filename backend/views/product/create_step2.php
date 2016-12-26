@@ -22,6 +22,7 @@ use common\models\ProductType;
  * @var $category ProductCategory
  * @var $categories ProductCategory[]
  * @var $productType ProductType
+ * @var $skus array 提交的规格信息
  */
 
 $this->title = Yii::t('app', 'Create Product');
@@ -34,7 +35,6 @@ $this->registerJsFile("@web/huiadmin/lib/webuploader/0.1.5/webuploader.min.js");
 $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/ueditor.config.js");
 $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/ueditor.all.min.js");
 $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
-$this->registerJsFile("@web/js/product-view.js");
 ?>
 <div class="page-container">
     <form action="" method="post" class="form form-horizontal" id="form-article-add">
@@ -46,6 +46,9 @@ $this->registerJsFile("@web/js/product-view.js");
                     <select name="Product[category_id]" class="select">
                         <option value="<?=$category->id?>"><?=$category->name?></option>
                     </select>
+                    <?php if(isset($product->errors['category_id'][0])): ?>
+                        <span class="c-red">*<?=$product->errors['category_id'][0]?></span>
+                    <?php endif; ?>
 				</span>
             </div>
         </div>
@@ -53,9 +56,12 @@ $this->registerJsFile("@web/js/product-view.js");
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品类型：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <span class="select-box">
-                    <select name="Product[product_type_id]" class="select">
+                    <select name="Product[type_id]" class="select">
                         <option value="<?=$productType->id?>"><?=$productType->name?></option>
                     </select>
+                    <?php if(isset($product->errors['type_id'][0])): ?>
+                        <span class="c-red">*<?=$product->errors['type_id'][0]?></span>
+                    <?php endif; ?>
 				</span>
             </div>
         </div>
@@ -98,7 +104,7 @@ $this->registerJsFile("@web/js/product-view.js");
                         <?php foreach($productTypeSpec->productSpec->productSpecValues as $specValue): ?>
                         <li>
                             <span nctype="input_checkbox">
-                                <input style="30px;display:inline" type="checkbox" name="sp_val[<?=$specIndex?>][<?=$specValue->id?>]" nc_type="<?=$specValue->id?>" value="<?=$specValue->name?>">
+                                <input style="30px;display:inline" type="checkbox" name="sp_val[<?=$productTypeSpec->productSpec->id?>][<?=$specValue->id?>]" nc_type="<?=$specValue->id?>" value="<?=$specValue->name?>">
                             </span>
                             <span nctype="pv_name"><?=$specValue->name?></span>
                         </li>
@@ -109,23 +115,29 @@ $this->registerJsFile("@web/js/product-view.js");
         </div>
         <?php endforeach; ?>
 
+        <?php if(Yii::$app->request->isPost && empty($skus)): ?>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*请勾选以上规格</span></label>
+        </div>
+        <?php endif; ?>
+
         <!-- 规格区-填写sku信息 -->
-        <div id="spec-box" style="display:none;">
+        <div id="sku-box" style="display:none;">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>SKU配置: </label>
             <div class="formControls col-xs-8 col-sm-9 button-group button-group-small radio">
-                    <table class="table table-hover table_header tab_style_base table_view">
-                        <thead nc_type="spec_thead">
-                            <tr>
-                                <?php foreach($productType->productTypeSpecs as $productTypeSpec): ?>
-                                <th style="width:50px;" nctype="spec_name_<?=$productTypeSpec->productSpec->id?>"><?=$productTypeSpec->productSpec->name?></th>
-                                <?php endforeach; ?>
-                                <th style="width:50px;">价格</th>
-                                <th style="width:50px;">库存</th>
-                                <th style="width:50px;">SKU</th>
-                            </tr>
-                        </thead>
-                        <tbody nc_type="spec_table"></tbody>
-                    </table>
+                <table class="table table-hover table_header tab_style_base table_view">
+                    <thead nc_type="spec_thead">
+                        <tr>
+                            <?php foreach($productType->productTypeSpecs as $productTypeSpec): ?>
+                            <th style="width:50px;" nctype="spec_name_<?=$productTypeSpec->productSpec->id?>"><?=$productTypeSpec->productSpec->name?></th>
+                            <?php endforeach; ?>
+                            <th style="width:50px;">价格</th>
+                            <th style="width:50px;">库存</th>
+                            <th style="width:50px;">SKU编码</th>
+                        </tr>
+                    </thead>
+                    <tbody nc_type="spec_table"></tbody>
+                </table>
             </div>
         </div>
 
@@ -175,8 +187,7 @@ $this->registerJsFile("@web/js/product-view.js");
         </div>
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
-                <button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
+                <button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
                 <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
             </div>
         </div>
@@ -184,9 +195,21 @@ $this->registerJsFile("@web/js/product-view.js");
 </div>
 
 <script type="text/javascript">
+    var skuFields = []; //存储规格值，再次选中的时候可以搜索到最近保存的值, 键如skuFields['skus[_1_5_][price]']=5.55;
+
     //响应点击选择规格值
     $('div[nctype="spec_group_dl"]').on('click', 'span[nctype="input_checkbox"] > input[type="checkbox"]',function(){
+        //保存skuFields
+        $('tbody[nc_type="spec_table"]').find('input[type="text"]').each(function(){
+            var name = $(this).attr('name');
+            skuFields[name] = $(this).val();
+
+            console.log(skuFields);
+        });
+
         into_array();
+
+        //生成每行sku信息
         goods_stock_set();
     });
 
@@ -235,12 +258,12 @@ $this->registerJsFile("@web/js/product-view.js");
     //==========end 构造规格数组
 
 
-    //======= start 生成库存配置
+    //======= start 生成每行sku信息
     function goods_stock_set(){
         var spectablestr = getSpecTable();
 
         if(spectablestr == ''){ //未选择任何规格时隐藏sku table
-            $('#spec-box').hide();
+            $('#sku-box').hide();
         }else{
             //获取头部
             $('thead[nc_type="spec_thead"]').empty().html(getSpecHead());
@@ -249,30 +272,18 @@ $this->registerJsFile("@web/js/product-view.js");
                     s = $(this).attr('nc_type');
                     try{$(this).val(V[s]);}catch(ex){$(this).val('');};
                     if($(this).attr('data_type') == 'price' && $(this).val() == ''){
-                        $(this).val($('input[name="f_productprice"]').val());
+                        $(this).val($('input[name="price"]').val());
                         //$(this).attr("class",);
                     }
-                    if($(this).attr('data_type') == 'stock' && $(this).val() == ''){
+                    if($(this).attr('data_type') == 'count' && $(this).val() == ''){
                         $(this).val('0');
                     }
-                }).end()
-                .find('input[data_type="stock"]').change(function(){
-                    computeStock();    // 库存计算
-                }).end()
-                .find('input[data_type="price"]').change(function(){
-                    computePrice();     // 价格计算
-                }).end()
-                .find('input[data_type="marketprice"]').change(function(){
-                    computeMarketPrice();     // 市场价格计算
-                }).end()
-                .find('input[data_type="costprice"]').change(function(){
-                    computeCostPrice();     // 成本价格计算
                 }).end()
                 .find('input[nc_type]').change(function(){
                     s = $(this).attr('nc_type');
                     V[s] = $(this).val();
                 });
-            $('#spec-box').show();
+            $('#sku-box').show();
         }
     }
 
@@ -295,22 +306,30 @@ $this->registerJsFile("@web/js/product-view.js");
         if(speclist.length>0){
             for(var i=0;i<speclist.length;i++){
                 str+="<tr>";
-                var spec_bunch = '_';
+
+                //spec_value_ids字符串
+                var spec_value_ids = '_';
                 for(var j=0;j<speclist[i].length;j++){
-                    spec_bunch += speclist[i][j][1] + '_';
+                    spec_value_ids += speclist[i][j][1] + '_';
                 }
-                str += '<input type="hidden" name="spec[' + spec_bunch + '][goods_id]" nc_type="' + spec_bunch + '|id" value="" />';
+                //sku对应的字段
+                var priceName = 'skus[' + spec_value_ids + '][price]';
+                var price = skuFields[priceName] != 'undefined' ? skuFields[priceName] : '';
+                var countName = 'skus[' + spec_value_ids + '][count]';
+                var count = skuFields[countName] != 'undefined' ? skuFields[countName] : '';
+                var codeName = 'skus[' + spec_value_ids + '][code]';
+                var code = skuFields[codeName] != 'undefined' ? skuFields[codeName] : '';
+
                 for(var j=0;j<speclist[i].length;j++){
                     str += "<td>";
-                    str += '<input type="hidden" name="spec[' + spec_bunch + '][sp_value][' + speclist[i][j][1] + ']" value="' + speclist[i][j][0] + '" />';
-                    str += '<input type="hidden" name="spec[' + spec_bunch + '][color]" value="' + speclist[i][j][1] + '" />';
+                    str += '<input type="hidden" name="skus[' + spec_value_ids + '][sp_value][' + speclist[i][j][1] + ']" value="' + speclist[i][j][0] + '" />';
                     str += speclist[i][j][0];
                     str += "</td>";
                 }
 
-                str += '<td><input class="text input price" style="width:90px;" type="text" name="spec['+spec_bunch+'][price]" data_type="price" nc_type="'+spec_bunch+'|price" value="" /><em class="add-on"><i class="icon-renminbi"></i></em></td>';
-                str += '<td><input class="text input stock" style="width:90px;" type="text" name="spec['+spec_bunch+'][stock]" data_type="stock" nc_type="'+spec_bunch+'|stock" value="" /></td>';
-                str += '<td><input class="text input sku" style="width:90px;" type="text" name="spec['+spec_bunch+'][sku]" nc_type="'+spec_bunch+'|sku" value="" /></td>';
+                str += '<td><input class="text input price" style="width:90px;" type="text" name="skus['+spec_value_ids+'][price]" data_type="price" nc_type="'+spec_value_ids+'|price" value="' + price + '" /><em class="add-on"><i class="icon-renminbi"></i></em></td>';
+                str += '<td><input class="text input count" style="width:90px;" type="text" name="skus['+spec_value_ids+'][count]" data_type="count" nc_type="'+spec_value_ids+'|count" value="' + count + '" /></td>';
+                str += '<td><input class="text input code" style="width:90px;" type="text" name="skus['+spec_value_ids+'][code]" nc_type="'+spec_value_ids+'|code" value="' + code + '" /></td>';
                 str += '</tr>\n';
             }
         }
@@ -371,9 +390,86 @@ $this->registerJsFile("@web/js/product-view.js");
 
         headstr+='<th style="width:100px;">价格</th>\n';
         headstr+='<th style="width:100px;">库存</th>\n';
-        headstr+='<th style="width:100px;">SKU</th>\n';
+        headstr+='<th style="width:100px;">SKU编码</th>\n';
 
         return headstr;
     }
-    //======= end 生成库存配置
+    //======= end 生成每行sku信息
+
+    //========提交后失败重新生成之前提交的规格
+    <?php
+    function recursionSpec($len, $sign) {
+        if($len < $sign){
+            echo "for (var i_".$len."=0; i_".$len."<spec_group_checked[".$len."].length; i_".$len."++){td_".(intval($len)+1)." = spec_group_checked[".$len."][i_".$len."];\n";
+            $len++;
+            recursionSpec($len, $sign);
+        }else{
+            echo "var tmp_spec_td = new Array();\n";
+            for($i=0; $i< $len; $i++){
+                echo "tmp_spec_td[".($i)."] = td_".($i+1)."[1];\n";
+            }
+            echo "tmp_spec_td.sort(function(a,b){return a-b});\n";
+            echo "var spec_value_ids = '_';\n";
+            for($i=0; $i< $len; $i++){
+                echo "spec_value_ids += tmp_spec_td[".($i)."] + '_';\n";
+            }
+
+            echo "str += '<tr>';\n";
+
+            for($i=0; $i< $len; $i++){
+                echo "str +='<td><input type=\"hidden\" name=\"skus['+spec_value_ids+'][sp_value]['+td_".($i+1)."[1]+']\" value=\"'+td_".($i+1)."[0]+'\" /><label style=\"width:90px;\">'+td_".($i+1)."[0]+'</label></td>';\n";
+            }
+
+            echo "str +='<td><input class=\"text input price\" style=\"width:90px;\" type=\"text\" name=\"skus['+spec_value_ids+'][price]\" data_type=\"price\" nc_type=\"'+spec_value_ids+'|price\" value=\"\" /><em class=\"add-on\"><i class=\"icon-renminbi\"></i></em></td>';\n";
+
+            echo "str +='<td><input class=\"text input count\" style=\"width:90px;\" type=\"text\" name=\"skus['+spec_value_ids+'][count]\" data_type=\"count\" nc_type=\"'+spec_value_ids+'|count\" value=\"\" /></td>';\n";
+
+            echo "str += '<td><input class=\"text input sku\" style=\"width:90px;\" type=\"text\" name=\"skus['+spec_value_ids+'][code]\" nc_type=\"'+spec_value_ids+'|sku\" value=\"\" /></td>';\n";
+
+            echo "str += '</tr>';\n";
+
+            for($i=0; $i< $len; $i++){
+                echo "}\n";
+            }
+        }
+    }
+    ?>
+    <?php if(Yii::$app->request->isPost): ?>
+    $(function(){
+        var sp_val_names = [];  //提交的规格id和规格值id列表, 存储如sp_val_names['sp_val[10][8237]']
+        var E_SPV = []; //提交的规格值列表id-name
+
+        //php规格和规格值对象转为js对象
+        <?php foreach ($sp_val as $spec_id => $spec_value_ids): ?>
+        <?php foreach ($spec_value_ids as $spec_value_id => $spec_value_name): ?>
+        var key = 'sp_val[<?=$spec_id?>][<?=$spec_value_id?>]';
+        sp_val_names[key] = '<?=$spec_value_name?>';
+        <?php endforeach; ?>
+        <?php endforeach; ?>
+
+        <?php
+        $string = '';
+        foreach ($skus as $k => $v) {
+            $string .= "E_SPV['{$k}'] = '标准';";
+        }
+        echo $string;
+        ?>
+
+        //勾选已选中的规格
+        $('div[nctype="spec_group_dl"]').find('input[type="checkbox"]').each(function(){
+            var name = $(this).attr('name');
+            if (typeof(sp_val_names[name]) != 'undefined'){
+                $(this).attr('checked',true);
+            }
+        });
+
+        into_array();   // 将选中的规格放入数组
+
+        var str = '';
+        <?php recursionSpec(0, count($productType->productTypeSpecs)); ?> //生成字符给str
+
+        $('tbody[nc_type="spec_table"]').empty().html(str+'<tr>');
+        $('#sku-box').show();
+    });
+    <?php endif; ?>
 </script>

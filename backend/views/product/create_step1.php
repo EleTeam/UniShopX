@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>选择商品类型：</label>
         <div class="formControls col-xs-8 col-sm-9">
             <span class="select-box">
-				<select name="product_type_id" class="select">
+				<select name="type_id" class="select">
                     <option value="">请选择...</option>
                     <?php foreach($productTypes as $productType): ?>
                         <option value="<?=$productType->id?>"><?=$productType->name?></option>

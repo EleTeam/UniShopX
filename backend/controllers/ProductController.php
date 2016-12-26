@@ -98,23 +98,96 @@ class ProductController extends BaseController
     }
 
     /**
-     * Creates a new Product model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * 第二步创建商品
+     * post过来的值
+     * 选中的规格和规格值:
+         [sp_val] => Array
+            (
+                [1] => Array
+                    (
+                        [1] => 标准
+                        [2] => 常温
+                    )
+
+                [2] => Array
+                    (
+                        [4] => 标准
+                        [5] => 大杯
+                    )
+            )
+     * 选中的规格值组合成的sku:
+        [skus] => Array
+            (
+                [_1_4_] => Array
+                (
+                    [goods_id] =>
+                    [sp_value] => Array
+                    (
+                    [1] => 标准
+                    [4] => 标准
+                    )
+                    [price] =>
+                    [count] => 0
+                    [code] =>
+                )
+
+                [_1_5_] => Array
+                (
+                    [goods_id] =>
+                    [sp_value] => Array
+                    (
+                    [1] => 标准
+                    [5] => 大杯
+                    )
+                    [price] =>
+                    [count] => 0
+                    [code] =>
+                )
+
+                [_2_4_] => Array
+                (
+                    [goods_id] =>
+                    [sp_value] => Array
+                    (
+                    [2] => 常温
+                    [4] => 标准
+                    )
+                    [price] =>
+                    [count] => 0
+                    [code] =>
+                )
+
+                [_2_5_] => Array
+                (
+                    [goods_id] =>
+                    [sp_value] => Array
+                    (
+                    [2] => 常温
+                    [5] => 大杯
+                    )
+                    [price] =>
+                    [count] => 0
+                    [code] =>
+                )
+            )
      * @return mixed
      */
     public function actionCreateStep2()
     {
         $category_id = Yii::$app->request->get('category_id');
-        $product_type_id = Yii::$app->request->get('product_type_id');
+        $type_id = Yii::$app->request->get('type_id');
+        $skus = Yii::$app->request->post('skus', []); //选中的规格值组合成的sku
+        $sp_val = Yii::$app->request->post('sp_val', []); //选中的规格和规格值
 
-        if(empty($category_id) || empty($product_type_id)){
+
+        if(empty($category_id) || empty($type_id)){
             return '请在第一步选择商品分类和类型';
         }
 
         $category = ProductCategory::findOneActive($category_id);
-        $productType = ProductType::findOneActive($product_type_id);
+        $productType = ProductType::findOneActive($type_id);
         $categories = $category->find()
-            ->where('status=:status and id!=:root_level_id', [':status'=>$category::STATUS_ACTIVE, ':root_level_id'=>$category::ROOT_LEVEL_ID])
+            ->where('status=:status and id!=:root_level_id', [':status'=>ProductCategory::STATUS_ACTIVE, ':root_level_id'=>ProductCategory::ROOT_LEVEL_ID])
             ->orderBy('sort')
             ->all();
 
@@ -126,22 +199,25 @@ class ProductController extends BaseController
         }
 
         $product = new Product();
-
+        //提交表单，如果验证通过，新增商品
         if (Yii::$app->request->isPost
                 && $product->load(Yii::$app->request->post()) && $product->validate()) {
-            echo '<pre>';
-            print_r($_REQUEST);exit;
-
             $product->save();
             return $this->redirect(['view', 'id' => $product->id]);
-        } else {
-            return $this->render('create_step2', [
-                'product' => $product,
-                'productType' => $productType,
-                'category' => $category,
-                'categories' => $categories,
-            ]);
         }
+
+//        echo '<pre>';
+//        print_r($_REQUEST);
+//        print_r($product->errorsToString());
+
+        return $this->render('create_step2', [
+            'product' => $product,
+            'productType' => $productType,
+            'category' => $category,
+            'categories' => $categories,
+            'skus' => $skus,
+            'sp_val' => $sp_val,
+        ]);
     }
 
     /**

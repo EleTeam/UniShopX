@@ -51,7 +51,7 @@ use common\components\ETActiveRecord;
  * @property string $app_long_image3
  * @property string $app_long_image4
  * @property string $app_long_image5
- * @property string $type 商品类型，一个商品属于一种类型，类型关联规格值
+ * @property integer $type_id 商品类型id，一个商品属于一种商品类型，商品类型关联规格值，来自ProductType::$id
  * @property integer $status
  *
  * @property ProductCategory $category
@@ -75,12 +75,12 @@ class Product extends ETActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name'], 'required'],
-            [['id', 'category_id', 'sort', 'created_at', 'created_by', 'updated_at', 'updated_by', 'featured_position_sort', 'app_featured_home_sort', 'app_featured_topic_sort', 'status'], 'integer'],
+            [['name', 'type_id', 'category_id'], 'required'],
+            [['id', 'category_id', 'type_id', 'sort', 'created_at', 'created_by', 'updated_at', 'updated_by', 'featured_position_sort', 'app_featured_home_sort', 'app_featured_topic_sort', 'status'], 'integer'],
             [['price', 'featured_price'], 'number'],
             [['description'], 'string'],
             [['image', 'featured_image', 'image_small', 'name', 'featured_position', 'app_featured_image', 'short_description', 'meta_keywords', 'meta_description', 'remarks', 'app_long_image4', 'app_long_image5'], 'string', 'max' => 255],
-            [['app_featured_home', 'is_audit', 'featured', 'app_featured_topic', 'type'], 'string', 'max' => 1],
+            [['app_featured_home', 'is_audit', 'featured', 'app_featured_topic'], 'string', 'max' => 1],
             [['image_medium', 'image_large', 'app_long_image1', 'app_long_image2', 'app_long_image3'], 'string', 'max' => 1000],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
@@ -124,7 +124,7 @@ class Product extends ETActiveRecord
             'app_long_image1' => Yii::t('app', 'App Long Image1'),
             'app_long_image2' => Yii::t('app', 'App Long Image2'),
             'app_long_image3' => Yii::t('app', 'App Long Image3'),
-            'type' => Yii::t('app', 'Type'),
+            'type_id' => Yii::t('app', 'Product Type'),
             'app_long_image4' => Yii::t('app', 'App Long Image4'),
             'app_long_image5' => Yii::t('app', 'App Long Image5'),
             'status' => Yii::t('app', 'Status'),

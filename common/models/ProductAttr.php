@@ -52,6 +52,16 @@ class ProductAttr extends ETActiveRecord
     }
 
     /**
+     * 双主键
+     *
+     * @return array
+     */
+    public static function primaryKey()
+    {
+        return ['product_id', 'item_id'];
+    }
+
+    /**
      * @inheritdoc
      */
     public function attributeLabels()

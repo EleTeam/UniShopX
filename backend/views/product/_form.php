@@ -162,7 +162,7 @@ EOF
 
     <?= $form->field($model, 'app_long_image3')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'type_id')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'app_long_image4')->textInput(['maxlength' => true]) ?>
 
