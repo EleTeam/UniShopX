@@ -396,43 +396,6 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
     //======= end 生成每行sku信息
 
     //========提交后失败重新生成之前提交的规格
-    <?php
-    function recursionSpec($len, $sign) {
-        if($len < $sign){
-            echo "for (var i_".$len."=0; i_".$len."<spec_group_checked[".$len."].length; i_".$len."++){td_".(intval($len)+1)." = spec_group_checked[".$len."][i_".$len."];\n";
-            $len++;
-            recursionSpec($len, $sign);
-        }else{
-            echo "var tmp_spec_td = new Array();\n";
-            for($i=0; $i< $len; $i++){
-                echo "tmp_spec_td[".($i)."] = td_".($i+1)."[1];\n";
-            }
-            echo "tmp_spec_td.sort(function(a,b){return a-b});\n";
-            echo "var spec_value_ids = '_';\n";
-            for($i=0; $i< $len; $i++){
-                echo "spec_value_ids += tmp_spec_td[".($i)."] + '_';\n";
-            }
-
-            echo "str += '<tr>';\n";
-
-            for($i=0; $i< $len; $i++){
-                echo "str +='<td><input type=\"hidden\" name=\"skus['+spec_value_ids+'][sp_value]['+td_".($i+1)."[1]+']\" value=\"'+td_".($i+1)."[0]+'\" /><label style=\"width:90px;\">'+td_".($i+1)."[0]+'</label></td>';\n";
-            }
-
-            echo "str +='<td><input class=\"text input price\" style=\"width:90px;\" type=\"text\" name=\"skus['+spec_value_ids+'][price]\" data_type=\"price\" nc_type=\"'+spec_value_ids+'|price\" value=\"\" /><em class=\"add-on\"><i class=\"icon-renminbi\"></i></em></td>';\n";
-
-            echo "str +='<td><input class=\"text input count\" style=\"width:90px;\" type=\"text\" name=\"skus['+spec_value_ids+'][count]\" data_type=\"count\" nc_type=\"'+spec_value_ids+'|count\" value=\"\" /></td>';\n";
-
-            echo "str += '<td><input class=\"text input sku\" style=\"width:90px;\" type=\"text\" name=\"skus['+spec_value_ids+'][code]\" nc_type=\"'+spec_value_ids+'|sku\" value=\"\" /></td>';\n";
-
-            echo "str += '</tr>';\n";
-
-            for($i=0; $i< $len; $i++){
-                echo "}\n";
-            }
-        }
-    }
-    ?>
     <?php if(Yii::$app->request->isPost): ?>
     $(function(){
         var sp_val_names = [];  //提交的规格id和规格值id列表, 存储如sp_val_names['sp_val[10][8237]']
