@@ -108,7 +108,7 @@ class ProductController extends BaseController
                 [1] => Array
                     (
                         [1] => 标准
-                        [2] => 常温
+                        [2] => 标准
                     )
 
                 [2] => Array
@@ -133,38 +133,12 @@ class ProductController extends BaseController
                     [code] =>
                 )
 
-                [_1_5_] => Array
-                (
-                    [goods_id] =>
-                    [sp_value] => Array
-                    (
-                    [1] => 标准
-                    [5] => 大杯
-                    )
-                    [price] =>
-                    [count] => 0
-                    [code] =>
-                )
-
-                [_2_4_] => Array
-                (
-                    [goods_id] =>
-                    [sp_value] => Array
-                    (
-                    [2] => 常温
-                    [4] => 标准
-                    )
-                    [price] =>
-                    [count] => 0
-                    [code] =>
-                )
-
                 [_2_5_] => Array
                 (
                     [goods_id] =>
                     [sp_value] => Array
                     (
-                    [2] => 常温
+                    [2] => 标准
                     [5] => 大杯
                     )
                     [price] =>
@@ -267,11 +241,8 @@ class ProductController extends BaseController
             }
         }
 
-//        echo '<pre>';
-//        print_r($skus);
-//        exit;
-
         return $this->render('create_step2', [
+            'title' => 'Create Product',
             'product' => $product,
             'productType' => $productType,
             'category' => $category,
@@ -291,15 +262,129 @@ class ProductController extends BaseController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $product = self::findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        //为表单构建规格, 参考actionCreateStep2()
+        $skus = [];
+        $sp_val = [];
+
+        //直接访问
+        if (Yii::$app->request->isGet) {
+            /**
+             * @var $productSku ProductSku
+             */
+            foreach ($product->productSkus as $productSku) {
+                //构建$sp_val
+                if ($productSku->spec_ids) {
+                    $spec_ids = explode('_', trim($productSku->spec_ids, '_'));
+                    foreach ($spec_ids as $spec_id) {
+                        $sp_val[$spec_id] = $spec_id;
+                    }
+                }
+                //构建skus
+                if ($productSku->spec_value_ids) {
+                    $skus[$productSku->spec_value_ids] = [
+                        'price' => $productSku->price,
+                        'count' => $productSku->count,
+                        'code' => $productSku->count,
+                    ];
+                }
+            }
+            echo '<pre>';
+            print_r($sp_val);
+            print_r($skus);
+            exit;
         }
+        //表单提交
+        else{
+            $skus = Yii::$app->request->post('skus', []); //选中的规格值组合成的sku
+            $sp_val = Yii::$app->request->post('sp_val', []); //选中的规格和规格值
+        }
+
+
+        $spec_id_names = [];
+        $spec_ids = '_'; //组合spec_id给保存sku使用
+        foreach($sp_val as $spec_id => $spec_value_ids){
+            $spec = ProductSpec::findOne($spec_id);
+            if($spec){
+                $spec_id_names[$spec->id] = $spec->name;
+            }
+            $spec_ids .= $spec_id . '_';
+        }
+
+        $categories = ProductCategory::find()
+            ->where('status=:status and id!=:root_level_id', [':status'=>ProductCategory::STATUS_ACTIVE, ':root_level_id'=>ProductCategory::ROOT_LEVEL_ID])
+            ->orderBy('sort')
+            ->all();
+
+        //提交表单，如果验证通过，新增商品
+        $skuError = '';
+        if (Yii::$app->request->isPost){
+            $isValid = true;
+            //验证sku信息
+            if(!$skus){
+                $skuError = '请勾选以上规格';
+                $isValid = false;
+            }
+            $codes = [];
+            foreach($skus as $spec_value_ids => $sku){
+                if(empty($sku['price'])){
+                    $skuError = '价格不能为空';
+                    $isValid = false;
+                    break;
+                }
+                if(empty($sku['code'])){
+                    $skuError = 'SKU编码不能为空';
+                    $isValid = false;
+                    break;
+                }
+                if(in_array($sku['code'], $codes)){
+                    $skuError = 'SKU编码不能重复';
+                    $isValid = false;
+                    break;
+                }
+                if(ProductSku::findOneNotDeleted(['code' => $sku['code']])){
+                    $skuError = "SKU编码({$sku['code']})已经存在";
+                    $isValid = false;
+                    break;
+                }
+                $codes[] = $sku['code'];
+            }
+
+            //验证商品信息
+            if($isValid) {
+                if($product->load(Yii::$app->request->post()) && $product->validate()){
+                    //保存商品
+                    $product->save();
+
+                    //保存sku
+                    foreach($skus as $spec_value_ids => $sku) {
+                        $productSku = new ProductSku();
+                        $productSku->product_id = $product->id;
+                        $productSku->spec_ids = $spec_ids;
+                        $productSku->spec_value_ids = $spec_value_ids;
+                        $productSku->price = $sku['price'];
+                        $productSku->count = $sku['count'];
+                        $productSku->code = $sku['code'];
+                        $productSku->save();
+                    }
+
+                    return $this->redirect(['view', 'id' => $product->id]);
+                }
+            }
+        }
+
+        return $this->render('_form', [
+            'title' => 'Update Product',
+            'product' => $product,
+            'productType' => $product->productType,
+            'category' => $product->category,
+            'categories' => $categories,
+            'skus' => $skus,
+            'sp_val' => $sp_val,
+            'spec_id_names' => $spec_id_names,
+            'skuError' => $skuError,
+        ]);
     }
 
     /**

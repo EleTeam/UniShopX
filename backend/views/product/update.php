@@ -3,30 +3,37 @@
  * Shop-PHP-Yii2
  *
  * @author Tony Wong
- * @date 2015-06-22
+ * @date 2016-12-27
  * @email 908601756@qq.com
- * @copyright Copyright © 2015年 EleTeam
+ * @copyright Copyright © 2016年 EleTeam
  * @license The MIT License (MIT)
  */
 
-use yii\helpers\Html;
+use common\models\Product;
+use common\models\ProductCategory;
+use common\models\ProductType;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Product */
+/**
+ * @var $this yii\web\View
+ * @var $product Product
+ * @var $category ProductCategory
+ * @var $categories ProductCategory[]
+ * @var $productType ProductType
+ * @var $skus array 提交的sku信息
+ * @var $sp_val array 提交的规格信息
+ * @var $skuError string 提交的sku信息是否有误
+ * @var $spec_id_names array
+ */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Product',
-]) . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = Yii::t('app', 'Update Product');
 ?>
-<div class="product-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
-        'model' => $model,
+        'product' => $product,
+        'category' => $category,
+        'categories' => $categories,
+        'productType' => $productType,
+        'skus' => $skus,
+        'sp_val' => $sp_val,
+        'skuError' => $skuError,
+        'spec_id_names' => $spec_id_names,
     ]) ?>
-
-</div>

@@ -3,14 +3,12 @@
  * Shop-PHP-Yii2
  *
  * @author Tony Wong
- * @date 2015-06-22
+ * @date 2016-12-27
  * @email 908601756@qq.com
- * @copyright Copyright © 2015年 EleTeam
+ * @copyright Copyright © 2016年 EleTeam
  * @license The MIT License (MIT)
  */
 
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
 use backend\assets\AppAsset;
 use common\models\Product;
 use common\models\ProductCategory;

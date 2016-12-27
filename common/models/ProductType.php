@@ -27,6 +27,7 @@ use common\components\ETActiveRecord;
  * @property integer $updated_by
  *
  * @property ProductTypeSpec[] $productTypeSpecs
+ * @property Product[] $products
  */
 class ProductType extends ETActiveRecord
 {
@@ -72,5 +73,13 @@ class ProductType extends ETActiveRecord
     public function getProductTypeSpecs()
     {
         return $this->hasMany(ProductTypeSpec::className(), ['type_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['type_id' => 'id']);
     }
 }

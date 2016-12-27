@@ -55,6 +55,7 @@ use common\components\ETActiveRecord;
  * @property integer $status
  *
  * @property ProductCategory $category
+ * @property ProductType $productType
  * @property ProductAttr[] $productAttrs
  * @property ProductSku[] $productSkus
  * @property ProductAttrItem[] $items
@@ -142,6 +143,14 @@ class Product extends ETActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getProductType()
+    {
+        return $this->hasOne(ProductType::className(), ['id' => 'type_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getProductAttrs()
     {
         return $this->hasMany(ProductAttr::className(), ['product_id' => 'id']);
@@ -152,7 +161,8 @@ class Product extends ETActiveRecord
      */
     public function getProductSkus()
     {
-        return $this->hasMany(ProductSku::className(), ['product_id' => 'id']);
+        return $this->hasMany(ProductSku::className(), ['product_id' => 'id'])
+            ->where('status != :status', [':status'=>self::STATUS_DELETED]);
     }
 
     /**
