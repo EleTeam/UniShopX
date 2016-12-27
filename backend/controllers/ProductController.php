@@ -12,6 +12,7 @@
 namespace backend\controllers;
 
 use common\models\ProductCategory;
+use common\models\ProductSku;
 use common\models\ProductSpec;
 use common\models\ProductType;
 use Yii;
@@ -181,11 +182,13 @@ class ProductController extends BaseController
         $sp_val = Yii::$app->request->post('sp_val', []); //选中的规格和规格值
 
         $spec_id_names = [];
+        $spec_ids = '_'; //组合spec_id给保存sku使用
         foreach($sp_val as $spec_id => $spec_value_ids){
             $spec = ProductSpec::findOne($spec_id);
             if($spec){
                 $spec_id_names[$spec->id] = $spec->name;
             }
+            $spec_ids .= $spec_id . '_';
         }
 
         if(empty($category_id) || empty($type_id)){
@@ -208,15 +211,65 @@ class ProductController extends BaseController
 
         $product = new Product();
         //提交表单，如果验证通过，新增商品
-        if (Yii::$app->request->isPost
-                && $product->load(Yii::$app->request->post()) && $product->validate()) {
-            $product->save();
-            return $this->redirect(['view', 'id' => $product->id]);
+        $skuError = '';
+        if (Yii::$app->request->isPost){
+            $isValid = true;
+            //验证sku信息
+            if(!$skus){
+                $skuError = '请勾选以上规格';
+                $isValid = false;
+            }
+            $codes = [];
+            foreach($skus as $spec_value_ids => $sku){
+                if(empty($sku['price'])){
+                    $skuError = '价格不能为空';
+                    $isValid = false;
+                    break;
+                }
+                if(empty($sku['code'])){
+                    $skuError = 'SKU编码不能为空';
+                    $isValid = false;
+                    break;
+                }
+                if(in_array($sku['code'], $codes)){
+                    $skuError = 'SKU编码不能重复';
+                    $isValid = false;
+                    break;
+                }
+                if(ProductSku::findOneNotDeleted(['code' => $sku['code']])){
+                    $skuError = "SKU编码({$sku['code']})已经存在";
+                    $isValid = false;
+                    break;
+                }
+                $codes[] = $sku['code'];
+            }
+
+            //验证商品信息
+            if($isValid) {
+                if($product->load(Yii::$app->request->post()) && $product->validate()){
+                    //保存商品
+                    $product->save();
+
+                    //保存sku
+                    foreach($skus as $spec_value_ids => $sku) {
+                        $productSku = new ProductSku();
+                        $productSku->product_id = $product->id;
+                        $productSku->spec_ids = $spec_ids;
+                        $productSku->spec_value_ids = $spec_value_ids;
+                        $productSku->price = $sku['price'];
+                        $productSku->count = $sku['count'];
+                        $productSku->code = $sku['code'];
+                        $productSku->save();
+                    }
+
+                    return $this->redirect(['view', 'id' => $product->id]);
+                }
+            }
         }
 
 //        echo '<pre>';
-//        print_r($_REQUEST);
-//        print_r($product->errorsToString());
+//        print_r($skus);
+//        exit;
 
         return $this->render('create_step2', [
             'product' => $product,
@@ -226,6 +279,7 @@ class ProductController extends BaseController
             'skus' => $skus,
             'sp_val' => $sp_val,
             'spec_id_names' => $spec_id_names,
+            'skuError' => $skuError,
         ]);
     }
 

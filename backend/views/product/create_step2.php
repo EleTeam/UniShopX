@@ -24,6 +24,7 @@ use common\models\ProductType;
  * @var $productType ProductType
  * @var $skus array 提交的sku信息
  * @var $sp_val array 提交的规格信息
+ * @var $skuError string 提交的sku信息是否有误
  * @var $spec_id_names array
  */
 
@@ -84,19 +85,6 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
         </div>
 
         <!-- 规格区-选择规格值 -->
-        <?php /* foreach($productType->productTypeSpecs as $productTypeSpec): ?>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2">规格-<?=$productTypeSpec->productSpec->name?>：</label>
-            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
-                <?php foreach($productTypeSpec->productSpec->productSpecValues as $specValue): ?>
-                <div class="check-box">
-                    <input type="checkbox" id="checkbox-<?=$specValue->id?>">
-                    <label for="checkbox-<?=$specValue->id?>"><?=$specValue->name?></label>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-        <?php endforeach; */?>
         <?php foreach($productType->productTypeSpecs as $specIndex => $productTypeSpec): ?>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>规格-<?=$productTypeSpec->productSpec->name?>：</label>
@@ -117,9 +105,10 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
         </div>
         <?php endforeach; ?>
 
-        <?php if(Yii::$app->request->isPost && empty($skus)): ?>
+        <!-- sku错误信息 -->
+        <?php if($skuError): ?>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*请勾选以上规格</span></label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*<?=$skuError?></span></label>
         </div>
         <?php endif; ?>
 
@@ -189,10 +178,10 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
 
 <script type="text/javascript">
     var skuFields = []; //存储规格值，再次选中的时候可以搜索到最近保存的值, 键如skuFields['skus[_1_5_][price]']=5.55;
-    <?php foreach($skus as $spec_value_id_set => $sku): ?>
-    var namePrice = 'skus[<?=$spec_value_id_set?>][price]';
-    var nameCount = 'skus[<?=$spec_value_id_set?>][count]';
-    var nameCode = 'skus[<?=$spec_value_id_set?>][code]';
+    <?php foreach($skus as $spec_value_ids => $sku): ?>
+    var namePrice = 'skus[<?=$spec_value_ids?>][price]';
+    var nameCount = 'skus[<?=$spec_value_ids?>][count]';
+    var nameCode = 'skus[<?=$spec_value_ids?>][code]';
     skuFields[namePrice] = '<?=$sku["price"]?>';
     skuFields[nameCount] = '<?=$sku["count"]?>';
     skuFields[nameCode] = '<?=$sku["code"]?>';
@@ -222,8 +211,6 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
             $str = rtrim($str, ",");
             echo $str;
         ?>];
-
-    var V = [];
 
     //生成对应数量的规格数组
     <?php foreach($productType->productTypeSpecs as $key=>$productTypeSpec): ?>
@@ -261,29 +248,21 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
     function goods_stock_set(){
         var spectablestr = getSpecTable();
 
-        if(spectablestr == ''){ //未选择任何规格时隐藏sku table
-            $('#sku-box').hide();
-        }else{
-            //获取头部
-            $('thead[nc_type="spec_thead"]').empty().html(getSpecHead());
-            $('tbody[nc_type="spec_table"]').empty().html(spectablestr)
-                .find('input[nc_type]').each(function(){
-                    s = $(this).attr('nc_type');
-                    try{$(this).val(V[s]);}catch(ex){$(this).val('');};
-                    if($(this).attr('data_type') == 'price' && $(this).val() == ''){
-                        $(this).val($('input[name="price"]').val());
-                        //$(this).attr("class",);
-                    }
-                    if($(this).attr('data_type') == 'count' && $(this).val() == ''){
-                        $(this).val('0');
-                    }
-                }).end()
-                .find('input[nc_type]').change(function(){
-                    s = $(this).attr('nc_type');
-                    V[s] = $(this).val();
-                });
-            $('#sku-box').show();
-        }
+        //获取头部
+        $('thead[nc_type="spec_thead"]').empty().html(getSpecHead());
+
+        $('tbody[nc_type="spec_table"]').empty().html(spectablestr)
+            .find('input[nc_type]').each(function(){
+                if($(this).attr('data_type') == 'price' && $(this).val() == ''){
+                    $(this).val($('input[name="price"]').val());
+                    //$(this).attr("class",);
+                }
+                if($(this).attr('data_type') == 'count' && $(this).val() == ''){
+                    $(this).val('0');
+                }
+        });
+
+        $('#sku-box').show();
     }
 
     function getSpecTable(){
@@ -315,9 +294,9 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
                 var priceName = 'skus[' + spec_value_ids + '][price]';
                 var countName = 'skus[' + spec_value_ids + '][count]';
                 var codeName = 'skus[' + spec_value_ids + '][code]';
-                var price = skuFields[priceName] != 'undefined' ? skuFields[priceName] : '';
-                var count = skuFields[countName] != 'undefined' ? skuFields[countName] : '';
-                var code = skuFields[codeName] != 'undefined' ? skuFields[codeName] : '';
+                var price = skuFields[priceName] != undefined ? skuFields[priceName] : '';
+                var count = skuFields[countName] != undefined ? skuFields[countName] : '';
+                var code = skuFields[codeName] != undefined ? skuFields[codeName] : '';
 
                 for(var j=0;j<speclist[i].length;j++){
                     str += "<td>";
@@ -398,8 +377,7 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
     //========提交后失败重新生成之前提交的规格
     <?php if(Yii::$app->request->isPost): ?>
     $(function(){
-        var sp_val_names = [];  //提交的规格id和规格值id列表, 存储如sp_val_names['sp_val[10][8237]']
-        var E_SPV = []; //提交的规格值列表id-name
+        var sp_val_names = [];  //提交的规格id和规格值id列表, 存储如sp_val_names['sp_val[10][8237]'], 在php中赋值
 
         //php规格和规格值对象转为js对象
         <?php foreach ($sp_val as $spec_id => $spec_value_ids): ?>
@@ -408,14 +386,6 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
         sp_val_names[key] = '<?=$spec_value_name?>';
         <?php endforeach; ?>
         <?php endforeach; ?>
-
-        <?php
-        $string = '';
-        foreach ($skus as $k => $v) {
-            $string .= "E_SPV['{$k}'] = '标准';";
-        }
-        echo $string;
-        ?>
 
         //勾选已选中的规格
         $('div[nctype="spec_group_dl"]').find('input[type="checkbox"]').each(function(){

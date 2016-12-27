@@ -21,10 +21,10 @@ use common\components\ETActiveRecord;
  * @property integer $product_id
  * @property string $spec_ids
  * @property string $spec_value_ids
- * @property string $sku
  * @property string $price
  * @property integer $status
  * @property integer $count
+ * * @property integer $code
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $created_by
@@ -49,11 +49,11 @@ class ProductSku extends ETActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'sku'], 'required'],
+            [['product_id', 'code'], 'required'],
             [['price'], 'number'],
             [['product_id', 'status', 'count', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['spec_ids', 'spec_value_ids', 'sku'], 'string', 'max' => 255],
-            [['sku'], 'unique'],
+            [['spec_ids', 'spec_value_ids', 'code'], 'string', 'max' => 255],
+            [['code'], 'unique'],
         ];
     }
 
@@ -67,7 +67,7 @@ class ProductSku extends ETActiveRecord
             'product_id' => Yii::t('app', 'Product Id'),
             'spec_ids' => Yii::t('app', 'Spec Ids'),
             'spec_value_ids' => Yii::t('app', 'Spec Value Ids'),
-            'sku' => Yii::t('app', 'Sku'),
+            'code' => Yii::t('app', 'SKU Code'),
             'price' => Yii::t('app', 'Price'),
             'status' => Yii::t('app', 'Status'),
             'count' => Yii::t('app', 'Count'),

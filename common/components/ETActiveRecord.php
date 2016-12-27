@@ -121,6 +121,20 @@ class ETActiveRecord extends ActiveRecord
     }
 
     /**
+     * 获取一个未删除的记录对象
+     * @param $condition 底层findOne($condition)的参数
+     * @return static|null static instance matching the condition, or `null` if nothing matches.
+     */
+    public static function findOneNotDeleted($condition)
+    {
+        $record = self::findOne($condition);
+        if($record && $record->status != self::STATUS_DELETED) {
+            return $record;
+        }
+        return null;
+    }
+
+    /**
      * 转换模型的错误信息数组为字符串
      * @return string
      */
