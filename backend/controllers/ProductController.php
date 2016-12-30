@@ -14,11 +14,13 @@ namespace backend\controllers;
 use common\models\ProductCategory;
 use common\models\ProductSku;
 use common\models\ProductSpec;
+use common\models\ProductSpecValue;
 use common\models\ProductType;
 use Yii;
 use common\models\Product;
 use common\models\ProductSearch;
 use yii\filters\AccessControl;
+use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -122,11 +124,10 @@ class ProductController extends BaseController
             (
                 [_1_4_] => Array
                 (
-                    [goods_id] =>
-                    [sp_value] => Array
+                    [spec_value_id_names] => Array
                     (
-                    [1] => 标准
-                    [4] => 标准
+                        [1] => 标准
+                        [4] => 标准
                     )
                     [price] =>
                     [count] => 0
@@ -135,11 +136,10 @@ class ProductController extends BaseController
 
                 [_2_5_] => Array
                 (
-                    [goods_id] =>
-                    [sp_value] => Array
+                    [spec_value_id_names] => Array
                     (
-                    [2] => 标准
-                    [5] => 大杯
+                        [2] => 标准
+                        [5] => 大杯
                     )
                     [price] =>
                     [count] => 0
@@ -147,6 +147,8 @@ class ProductController extends BaseController
                 )
             )
      * @return mixed
+     *
+     * ALTER TABLE `etshop`.`product` ADD COLUMN `specs_json` varchar(255) COMMENT '选择的规格id和规格值' AFTER `status`;
      */
     public function actionCreateStep2()
     {
@@ -187,6 +189,9 @@ class ProductController extends BaseController
         //提交表单，如果验证通过，新增商品
         $skuError = '';
         if (Yii::$app->request->isPost){
+//            echo '<pre>';
+//            print_r($sp_val);
+
             $isValid = true;
             //验证sku信息
             if(!$skus){
@@ -210,7 +215,7 @@ class ProductController extends BaseController
                     $isValid = false;
                     break;
                 }
-                if(ProductSku::findOneNotDeleted(['code' => $sku['code']])){
+                if(ProductSku::findOne(['code' => $sku['code']])){
                     $skuError = "SKU编码({$sku['code']})已经存在";
                     $isValid = false;
                     break;
@@ -219,29 +224,30 @@ class ProductController extends BaseController
             }
 
             //验证商品信息
-            if($isValid) {
-                if($product->load(Yii::$app->request->post()) && $product->validate()){
-                    //保存商品
-                    $product->save();
+            $product->specs_json = Json::encode($sp_val);
+            if($product->load(Yii::$app->request->post()) && $product->validate() && $isValid) {
+                //保存商品
+                $product->save();
 
-                    //保存sku
-                    foreach($skus as $spec_value_ids => $sku) {
-                        $productSku = new ProductSku();
-                        $productSku->product_id = $product->id;
-                        $productSku->spec_ids = $spec_ids;
-                        $productSku->spec_value_ids = $spec_value_ids;
-                        $productSku->price = $sku['price'];
-                        $productSku->count = $sku['count'];
-                        $productSku->code = $sku['code'];
-                        $productSku->save();
-                    }
-
-                    return $this->redirect(['view', 'id' => $product->id]);
+                //保存sku
+                foreach($skus as $spec_value_ids => $sku) {
+                    $productSku = new ProductSku();
+                    $productSku->product_id = $product->id;
+                    $productSku->spec_ids = $spec_ids;
+                    $productSku->spec_value_ids = $spec_value_ids;
+                    $productSku->price = $sku['price'];
+                    $productSku->count = $sku['count'];
+                    $productSku->code = $sku['code'];
+                    $productSku->save();
                 }
+
+                return $this->redirect(['view', 'id' => $product->id]);
             }
+
+            print_r($product->errorsToString());
         }
 
-        return $this->render('create_step2', [
+        return $this->render('_form', [
             'title' => 'Create Product',
             'product' => $product,
             'productType' => $productType,
@@ -265,40 +271,37 @@ class ProductController extends BaseController
         $product = self::findModel($id);
 
         //为表单构建规格, 参考actionCreateStep2()
-        $skus = [];
         $sp_val = [];
+        $skus = [];
+        $oldSkus = [];
 
-        //直接访问
-        if (Yii::$app->request->isGet) {
-            /**
-             * @var $productSku ProductSku
-             */
-            foreach ($product->productSkus as $productSku) {
-                //构建$sp_val
-                if ($productSku->spec_ids) {
-                    $spec_ids = explode('_', trim($productSku->spec_ids, '_'));
-                    foreach ($spec_ids as $spec_id) {
-                        $sp_val[$spec_id] = $spec_id;
-                    }
+        /**
+         * @var $productSku ProductSku
+         */
+        foreach ($product->productSkus as $productSku) {
+            //构建$sp_val
+            $sp_val = $product->specsArray;
+            //构建skus
+            if ($productSku->spec_value_ids) {
+                $spec_value_id_names = [];
+                foreach($productSku->productSpecValues as $productSpecValue){
+                    $spec_value_id_names[$productSpecValue->id] = $productSpecValue->name;
                 }
-                //构建skus
-                if ($productSku->spec_value_ids) {
-                    $skus[$productSku->spec_value_ids] = [
-                        'price' => $productSku->price,
-                        'count' => $productSku->count,
-                        'code' => $productSku->count,
-                    ];
-                }
+                $skus[$productSku->spec_value_ids] = [
+                    'spec_value_id_names' => $spec_value_id_names,
+                    'id' => $productSku->id,
+                    'price' => $productSku->price,
+                    'count' => $productSku->count,
+                    'code' => $productSku->code,
+                ];
             }
-            echo '<pre>';
-            print_r($sp_val);
-            print_r($skus);
-            exit;
         }
-        //表单提交
-        else{
-            $skus = Yii::$app->request->post('skus', []); //选中的规格值组合成的sku
+        $oldSkus = $skus;
+
+        //表单提交, 用表单的$sp_val和$skus
+        if (Yii::$app->request->isPost){
             $sp_val = Yii::$app->request->post('sp_val', []); //选中的规格和规格值
+            $skus = Yii::$app->request->post('skus', []); //选中的规格值组合成的sku
         }
 
 
@@ -343,8 +346,11 @@ class ProductController extends BaseController
                     $isValid = false;
                     break;
                 }
-                if(ProductSku::findOneNotDeleted(['code' => $sku['code']])){
-                    $skuError = "SKU编码({$sku['code']})已经存在";
+                $otherProduct = ProductSku::find()
+                    ->where('code=:code and product_id!=:product_id', [':code'=>$sku['code'], ':product_id'=>$id])
+                    ->one();
+                if($otherProduct){
+                    $skuError = "SKU编码(sku code:{$sku['code']}, product id:{$otherProduct->id})已经存在";
                     $isValid = false;
                     break;
                 }
@@ -352,14 +358,20 @@ class ProductController extends BaseController
             }
 
             //验证商品信息
+            $product->specs_json = Json::encode($sp_val);
             if($isValid) {
                 if($product->load(Yii::$app->request->post()) && $product->validate()){
                     //保存商品
                     $product->save();
 
                     //保存sku
+                    $savedSkuIds = [];
                     foreach($skus as $spec_value_ids => $sku) {
-                        $productSku = new ProductSku();
+                        //如果sku存在则保存, 否则增加
+                        $productSku = ProductSku::findOne(['id'=>$sku['id']]);
+                        if(!$productSku) {
+                            $productSku = new ProductSku();
+                        }
                         $productSku->product_id = $product->id;
                         $productSku->spec_ids = $spec_ids;
                         $productSku->spec_value_ids = $spec_value_ids;
@@ -367,6 +379,14 @@ class ProductController extends BaseController
                         $productSku->count = $sku['count'];
                         $productSku->code = $sku['code'];
                         $productSku->save();
+                        $savedSkuIds[$productSku->id] = $productSku->id;
+                    }
+
+                    //硬删除本商品不需要的sku
+                    foreach($oldSkus as $oldSku){
+                        if(!isset($savedSkuIds[$oldSku['id']])){
+                            ProductSku::deleteAll('id=:id', [':id'=>$oldSku['id']]);
+                        }
                     }
 
                     return $this->redirect(['view', 'id' => $product->id]);

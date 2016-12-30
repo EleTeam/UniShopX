@@ -19,8 +19,8 @@ use common\components\ETActiveRecord;
  *
  * @property integer $id
  * @property integer $product_id
- * @property string $spec_ids
- * @property string $spec_value_ids
+ * @property string $spec_ids  如: _1_2_  ,$spec_ids与$spec_value_ids一一对应
+ * @property string $spec_value_ids  如: _3_4_
  * @property string $price
  * @property integer $status
  * @property integer $count
@@ -30,8 +30,8 @@ use common\components\ETActiveRecord;
  * @property integer $created_by
  * @property integer $updated_by
  *
- * @property ProductSpec[] $productSpec
- * @property ProductSpecValue[] $productSpecValue
+ * @property ProductSpec[] $productSpecs 根据$spec_ids获得, $productSpecs与$productSpecValues一一对应
+ * @property ProductSpecValue[] $productSpecValues 根据$spec_value_ids获得
  */
 class ProductSku extends ETActiveRecord
 {
@@ -98,8 +98,9 @@ class ProductSku extends ETActiveRecord
      */
     public function getProductSpecs()
     {
+        $spec_ids = explode('_', trim($this->spec_ids, '_'));
         $specs = [];
-        foreach($this->spec_ids as $spec_id){
+        foreach($spec_ids as $spec_id){
             $spec = ProductSpec::findOne($spec_id);
             $specs[] = $spec;
         }
@@ -113,8 +114,9 @@ class ProductSku extends ETActiveRecord
      */
     public function getProductSpecValues()
     {
+        $spec_value_ids = explode('_', trim($this->spec_value_ids, '_'));
         $specValues = [];
-        foreach($this->spec_value_ids as $spec_value_id){
+        foreach($spec_value_ids as $spec_value_id){
             $specValue = ProductSpecValue::findOne($spec_value_id);
             $specValues[] = $specValue;
         }

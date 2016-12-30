@@ -90,9 +90,9 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
                         <ul class="spec">
                             <?php foreach($productTypeSpec->productSpec->productSpecValues as $specValue): ?>
                                 <li>
-                            <span nctype="input_checkbox">
-                                <input style="30px;display:inline" type="checkbox" name="sp_val[<?=$productTypeSpec->productSpec->id?>][<?=$specValue->id?>]" nc_type="<?=$specValue->id?>" value="<?=$specValue->name?>">
-                            </span>
+                                    <span nctype="input_checkbox">
+                                        <input style="30px;display:inline" type="checkbox" name="sp_val[<?=$productTypeSpec->productSpec->id?>][<?=$specValue->id?>]" nc_type="<?=$specValue->id?>" value="<?=$specValue->name?>">
+                                    </span>
                                     <span nctype="pv_name"><?=$specValue->name?></span>
                                 </li>
                             <?php endforeach; ?>
@@ -176,9 +176,11 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
 <script type="text/javascript">
     var skuFields = []; //存储规格值，再次选中的时候可以搜索到最近保存的值, 键如skuFields['skus[_1_5_][price]']=5.55;
     <?php foreach($skus as $spec_value_ids => $sku): ?>
+    var nameId = 'skus[<?=$spec_value_ids?>][id]';
     var namePrice = 'skus[<?=$spec_value_ids?>][price]';
     var nameCount = 'skus[<?=$spec_value_ids?>][count]';
     var nameCode = 'skus[<?=$spec_value_ids?>][code]';
+    skuFields[nameId] = '<?=$sku["id"]?>';
     skuFields[namePrice] = '<?=$sku["price"]?>';
     skuFields[nameCount] = '<?=$sku["count"]?>';
     skuFields[nameCode] = '<?=$sku["code"]?>';
@@ -288,16 +290,18 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
                     spec_value_ids += speclist[i][j][1] + '_';
                 }
                 //sku对应的字段
-                var priceName = 'skus[' + spec_value_ids + '][price]';
-                var countName = 'skus[' + spec_value_ids + '][count]';
-                var codeName = 'skus[' + spec_value_ids + '][code]';
-                var price = skuFields[priceName] != undefined ? skuFields[priceName] : '';
-                var count = skuFields[countName] != undefined ? skuFields[countName] : '';
-                var code = skuFields[codeName] != undefined ? skuFields[codeName] : '';
+                var nameId = 'skus[' + spec_value_ids + '][id]';
+                var namePrice = 'skus[' + spec_value_ids + '][price]';
+                var nameCount = 'skus[' + spec_value_ids + '][count]';
+                var nameCode = 'skus[' + spec_value_ids + '][code]';
+                var id = skuFields[nameId] != undefined ? skuFields[nameId] : '';
+                var price = skuFields[namePrice] != undefined ? skuFields[namePrice] : '';
+                var count = skuFields[nameCount] != undefined ? skuFields[nameCount] : '';
+                var code = skuFields[nameCode] != undefined ? skuFields[nameCode] : '';
 
                 for(var j=0;j<speclist[i].length;j++){
                     str += "<td>";
-                    str += '<input type="hidden" name="skus[' + spec_value_ids + '][sp_value][' + speclist[i][j][1] + ']" value="' + speclist[i][j][0] + '" />';
+                    str += '<input type="hidden" name="skus[' + spec_value_ids + '][spec_value_id_names][' + speclist[i][j][1] + ']" value="' + speclist[i][j][0] + '" />';
                     str += speclist[i][j][0];
                     str += "</td>";
                 }
@@ -305,6 +309,7 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
                 str += '<td><input class="text input price" style="width:90px;" type="text" name="skus['+spec_value_ids+'][price]" data_type="price" nc_type="'+spec_value_ids+'|price" value="' + price + '" /><em class="add-on"><i class="icon-renminbi"></i></em></td>';
                 str += '<td><input class="text input count" style="width:90px;" type="text" name="skus['+spec_value_ids+'][count]" data_type="count" nc_type="'+spec_value_ids+'|count" value="' + count + '" /></td>';
                 str += '<td><input class="text input code" style="width:90px;" type="text" name="skus['+spec_value_ids+'][code]" nc_type="'+spec_value_ids+'|code" value="' + code + '" /></td>';
+                str += '<input type="hidden" name="skus['+spec_value_ids+'][id]" nc_type="'+spec_value_ids+'|id" value="' + id + '" /></td>';
                 str += '</tr>\n';
             }
         }
@@ -372,7 +377,7 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
     //======= end 生成每行sku信息
 
     //========提交后失败重新生成之前提交的规格
-    <?php if(Yii::$app->request->isPost): ?>
+    <?php //if(Yii::$app->request->isPost): ?>
     $(function(){
         var sp_val_names = [];  //提交的规格id和规格值id列表, 存储如sp_val_names['sp_val[10][8237]'], 在php中赋值
 
@@ -395,5 +400,5 @@ $this->registerJsFile("@web/huiadmin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js");
         into_array();   // 将选中的规格放入数组
         goods_stock_set();
     });
-    <?php endif; ?>
+    <?php //endif; ?>
 </script>

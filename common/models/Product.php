@@ -12,6 +12,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Json;
 use common\components\ETActiveRecord;
 
 /**
@@ -53,6 +54,23 @@ use common\components\ETActiveRecord;
  * @property string $app_long_image5
  * @property integer $type_id 商品类型id，一个商品属于一种商品类型，商品类型关联规格值，来自ProductType::$id
  * @property integer $status
+ * @property string $specs_json  选中的规格和规格值, 如:{"1":{"1":"标准","3":"加热"},"2":{"5":"大杯","6":"中杯"}}
+ *      由于javascript不支持关联数组，所以json_encode()只将索引数组（indexed array）转为数组格式，而将关联数组（associative array）转为对象格式。
+ *                      json解码后如下:
+ *                               [sp_val] => Array
+ *                               (
+ *                                  [1] => Array        [1]为spec_id
+ *                                  (
+ *                                      [1] => 标准     [1]为spec_value_id, 标准为spec_value_name
+ *                                      [2] => 标准
+ *                                  )
+ *                                  [2] => Array
+ *                                  (
+ *                                      [4] => 标准
+ *                                      [5] => 大杯
+ *                                  )
+ *                               )
+ * @property array $specsArray  $specs_json解码后的数组
  *
  * @property ProductCategory $category
  * @property ProductType $productType
@@ -76,11 +94,11 @@ class Product extends ETActiveRecord
     public function rules()
     {
         return [
-            [['name', 'type_id', 'category_id'], 'required'],
+            [['name', 'type_id', 'category_id', 'specs_json'], 'required'],
             [['id', 'category_id', 'type_id', 'sort', 'created_at', 'created_by', 'updated_at', 'updated_by', 'featured_position_sort', 'app_featured_home_sort', 'app_featured_topic_sort', 'status'], 'integer'],
             [['price', 'featured_price'], 'number'],
             [['description'], 'string'],
-            [['image', 'featured_image', 'image_small', 'name', 'featured_position', 'app_featured_image', 'short_description', 'meta_keywords', 'meta_description', 'remarks', 'app_long_image4', 'app_long_image5'], 'string', 'max' => 255],
+            [['image', 'featured_image', 'image_small', 'name', 'featured_position', 'app_featured_image', 'short_description', 'meta_keywords', 'meta_description', 'remarks', 'app_long_image4', 'app_long_image5', 'specs_json'], 'string', 'max' => 255],
             [['app_featured_home', 'is_audit', 'featured', 'app_featured_topic'], 'string', 'max' => 1],
             [['image_medium', 'image_large', 'app_long_image1', 'app_long_image2', 'app_long_image3'], 'string', 'max' => 1000],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
@@ -130,6 +148,16 @@ class Product extends ETActiveRecord
             'app_long_image5' => Yii::t('app', 'App Long Image5'),
             'status' => Yii::t('app', 'Status'),
         ];
+    }
+
+    /**
+     * 将$specs_json转为数组$specs_array
+     *
+     * @return array|mixed
+     */
+    public function getSpecsArray()
+    {
+        return $this->specs_json ? Json::decode($this->specs_json, true) : [];
     }
 
     /**
