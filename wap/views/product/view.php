@@ -10,6 +10,8 @@
  */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+use common\models\ProductSpec;
 
 /**
  * @var $this yii\web\View
@@ -30,6 +32,9 @@ use yii\helpers\Html;
 </div>
 <div class="page no-tabbar product-view" data-page="product-view">
     <div class="page-content">
+        <!-- post提交的CSRF令牌验证 -->
+        <input type="hidden" value="<?php echo Yii::$app->request->getCsrfToken(); ?>" name="YII_CSRF_TOKEN" />
+
         <div id="main">
             <!-- Swiper Slider -->
             <div class="swiper-container">
@@ -106,13 +111,14 @@ use yii\helpers\Html;
         <div class="toolbar-inner shopping-bar box">
             <div class="shopcart">
                 <a href="html/cart.html">
-                    <img src="http://static.yoyash.com/m/img/icon/shoppingcart@3x.png">
-                    <span class="bage font5 cart-num">0</span>
+                    <img src="../image/shoppingcart3x.png">
+                    <span class="bage font5 cart-num" id="product-cart-num">0</span>
                 </a>
             </div>
             <div class="box box-flex open-model">
-                <a href="#" class="btn btn-gold cart box-flex" flag="addtocart" name="detail-spec">加入购物车</a>
-                <a href="#" class="btn btn-blue box-flex" flag="submit" name="detail-spec">立即购买</a>
+                <a href="#" class="btn btn-gold cart box-flex add-to-cart" data-product-id="<?=$product->id?>"
+                    data-url="<?=Url::toRoute('/cart/addItem')?>">加入购物车</a>
+                <a href="#" class="btn btn-blue box-flex" id="direct-buy" name="detail-spec">立即购买</a>
             </div>
         </div>
     </div>
@@ -128,20 +134,26 @@ use yii\helpers\Html;
             <input name="specnames" type="hidden">
             <input name="leastNum" value="1" type="hidden">
         </div>
-        <div class="size-list">
-            <?php foreach($product->productSkus as $productSku): ?>
+        <div class="size-list spec-box">
+            <?php foreach($product->specsArray as $spec_id => $spec_values): ?>
+                <?php
+                    $spec = ProductSpec::findOneActive($spec_id);
+                    if(!$spec){
+                        continue;
+                    }
+                ?>
                 <div class="size-item box spec-item">
-                    <label class="title">规格</label>
-                    <div class="box-flex">
-                        <label>
-                            <input name="19" value="8670" type="radio">
-                            <span data-id="8670" name="spec">2瓶装</span>
-                        </label>
+                    <!-- 存储sku_id和spec_value_ids, 在site.js里根据选中的规格值组合成spec_value_id, 从而找到sku_id -->
+                    <?php foreach($product->productSkus as $sku): ?>
+                    <i style="display: none" class="skus" data-sku-id="<?=$sku->id?>" data-spec-value-ids="<?=$sku->spec_value_ids?>"></i>
+                    <?php endforeach; ?>
 
-                        <label>
-                            <input name="19" value="8675" type="radio">
-                            <span data-id="8675" name="spec">1瓶装</span>
-                        </label>
+                    <label class="title"><?=$spec->name?></label>
+                    <div class="box-flex">
+                        <?php foreach($spec_values as $spec_value_id => $spec_value_name): ?>
+                        <!-- class="is-selected" 为被选择的规格值 -->
+                        <span data-spec-value-id="<?=$spec_value_id?>" class="spec-value" name="spec-value"><?=$spec_value_name?></span>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -149,15 +161,14 @@ use yii\helpers\Html;
             <div class="size-item shop-count">
                 <label>数量</label>
                 <span name="plus">-</span>
-                <input readonly="readonly" value="1" name="amount" type="tel">
+                <input readonly="readonly" value="1" name="product-count" type="tel">
                 <span name="add">+</span>
             </div>
             <div class="limit-tips">*限购<span></span>件，超出以结算价为准</div>
         </div>
         <div class="comfire box">
-            <a href="#" id="cartSure" class="btn btn-blue box-flex" style="display: none;">确定</a>
-            <a href="#" class="btn btn-gold cart box-flex addtocart" flag="addtocart">加入购物车</a>
-            <a href="#" class="btn btn-blue box-flex submit" flag="submit">立即购买</a>
+            <a href="#" class="btn btn-gold cart box-flex add-to-cart">加入购物车</a>
+            <a href="#" class="btn btn-blue box-flex submit">立即购买</a>
         </div>
     </div>
 </div>

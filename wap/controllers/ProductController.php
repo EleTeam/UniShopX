@@ -28,8 +28,9 @@ class ProductController extends BaseController
      */
     public function actionView($id)
     {
-        $expand = ['category', 'productAttrs', 'productSkus'];
-        $product = Product::find()->where('id=:id', [':id'=>$id])->with($expand)->one();
+//        $expand = ['category', 'productAttrs', 'productSkus'];
+//        $product = Product::find()->where('id=:id', [':id'=>$id])->with($expand)->one();
+        $product = Product::findOneNotDeleted($id);
         return $this->render('view', [
             'product' => $product,
         ]);

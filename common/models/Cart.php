@@ -128,6 +128,7 @@ class Cart extends ETActiveRecord
 
     /**
      * 添加产品到购物车
+     *  注意: 以前版本是可以用属性定义不同的产品, 现在只要sku就可以定义了
      * @param $user_id
      * @param $app_cart_cookie_id
      * @param $product_id
@@ -135,6 +136,7 @@ class Cart extends ETActiveRecord
      * @param $attrs 的格式 [$item_id=>$value_id, 1=>2, ...]
      * @return Cart|null
      * @throws DbException
+     * @deprecated 用sku定义不同的商品, 而不是属性
      */
     public static function addItem($user_id, $app_cart_cookie_id, $product_id, $count, array $attrs)
     {
@@ -207,6 +209,84 @@ class Cart extends ETActiveRecord
 
         return $cart;
 	}
+
+    /**
+     * 添加产品到购物车
+     *
+     * @param $user_id
+     * @param $app_cart_cookie_id
+     * @param $product_id
+     * @param $sku_id
+     * @param $count
+     * @return Cart|null
+     * @throws DbException
+     */
+    public static function addItemBy($user_id, $app_cart_cookie_id, $product_id, $sku_id, $count)
+    {
+        $product = Product::findOne($product_id);
+        if(!$product){
+            throw new DbException('商品不存在');
+        }
+
+        $sku = ProductSku::findOne($sku_id);
+        if(!$product){
+            throw new DbException('商品SKU不存在');
+        }
+
+        $cart = Cart::myCart($user_id, $app_cart_cookie_id);
+        //购物车存在
+        if($cart){
+            $cartItem = CartItem::findOneBy($cart->id, $sku_id);
+            if($cartItem){ //商品在购物车里
+                $cartItem->count = $cartItem->count + $count;
+                $cartItem->is_selected = CartItem::YES;
+                $cartItem->save();
+            }else{ //商品不在购物车里
+                //添加购物车项
+                $cartItemNew = new CartItem();
+                $itemData = [
+                    'cart_id' => $cart->id,
+                    'product_id' => $product_id,
+                    'sku_id' => $sku_id,
+                    'count' => $count,
+                    'user_id' => $user_id,
+                    'app_cart_cookie_id' => $app_cart_cookie_id,
+                    'is_selected' => CartItem::YES,
+                ];
+                if(!($cartItemNew->load($itemData, '') && $cartItemNew->save())){
+                    throw new DbException($cartItemNew->errorsToString());
+                }
+            }
+        }
+        //购物车不存在
+        else{
+            //添加购物车
+            $cart = new Cart();
+            $cartData = [
+                'user_id' => $user_id,
+                'app_cart_cookie_id' => $app_cart_cookie_id,
+            ];
+            if($cart->load($cartData, '') && $cart->save()){
+                //添加购物车项
+                $item = new CartItem();
+                $itemData = [
+                    'cart_id' => $cart->id,
+                    'product_id' => $product_id,
+                    'sku_id' => $sku_id,
+                    'count' => $count,
+                    'is_selected' => CartItem::YES,
+                ];
+                if(!($item->load($itemData, '') && $item->save())){
+                    throw new DbException($item->errorsToString());
+                }
+            }else{
+                throw new DbException($cart->errorsToString());
+            }
+
+        }
+
+        return $cart;
+    }
 
     /**
      * 购物车项的个数

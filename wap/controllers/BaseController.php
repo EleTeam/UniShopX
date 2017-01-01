@@ -127,6 +127,11 @@ class BaseController extends Controller
         return $this->getParam('app_cart_cookie_id') ? $this->getParam('app_cart_cookie_id') : Cart::genAppCartCookieId();
     }
 
+    protected function isLoggedIn()
+    {
+        return Yii::$app->user->isGuest ? false : true;
+    }
+
     protected function getUser()
     {
         if(Yii::$app->user->isGuest){
@@ -134,5 +139,10 @@ class BaseController extends Controller
         }else{
             return User::findOne(Yii::$app->user->id);
         }
+    }
+
+    protected function getUserId()
+    {
+        return $this->getUser() ? $this->getUser()->id : 0;
     }
 }

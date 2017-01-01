@@ -220,6 +220,58 @@ myApp.onPageInit('product-view', function(page){
     $$('.close-spec-modal').on('click', function(){
         myApp.closeModal();
     });
+    //选择规格值, class="is_selected" 为被选择的规格值
+    $$('[name="spec-value"]').on('click', function(){
+        $$(this).parent().find('[name="spec-value"]').each(function(){
+            $$(this).removeClass('is-selected');
+        });
+        $$(this).addClass('is-selected');
+    });
+    //添加入购物车
+    $$('.add-to-cart').on('click', function(){
+        var product_id = $$(this).attr('data-product-id');
+        var count = $$('[name="product-count"]').val();
+        var url = $$(this).attr('data-url');
+
+        //根据选中的规格值组合成spec_value_ids, 从而找到sku_id
+        var spec_value_ids = '_';
+        $$('.spec-box').find('[name="spec-value"]').each(function(){
+            if($$(this).hasClass('is-selected')){
+                spec_value_ids += $$(this).attr('data-spec-value-id') + '_';
+            }
+        });
+        var sku_id = '';
+        $$('.skus').each(function(){
+            if(spec_value_ids == $$(this).attr('data-spec-value-ids')){
+                sku_id = $$(this).attr('data-sku-id');
+            }
+        });
+
+        if(!sku_id){
+            alert('请选择规格');
+            return;
+        }
+
+        var YII_CSRF_TOKEN = $$('input[name="YII_CSRF_TOKEN"]').val();
+        var data = 'product_id=' + product_id + '&sku_id=' + sku_id + '&count=' + count + '&YII_CSRF_TOKEN=' + YII_CSRF_TOKEN;
+
+        myApp.showIndicator();
+        $$.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function(json){
+                myApp.hideIndicator();
+                if(json.result) {
+                    $$('#product-cart-num').html(json.data.cart_num);
+                }else{
+                    alert(json.message);
+                }
+            }
+        });
+    });
+    //直接购买
 });
 
 

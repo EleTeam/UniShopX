@@ -119,6 +119,7 @@ class CartItem extends ETActiveRecord
      * @param $product_id
      * @param $attrs 的格式 [$item_id=>$value_id, 1=>2, ...]
      * @return CartItem|null
+     * @deprecated 用sku定义不同的商品, 而不是属性
      */
     public static function findOneByCartIdProductIdAttrs($cart_id, $product_id, array $attrs)
     {
@@ -142,6 +143,20 @@ class CartItem extends ETActiveRecord
         }
 
         return null;
+    }
+
+    /**
+     * 获得购物车唯一的产品, 如某个购物车的某个商品带着某些属性
+     * @param $cart_id
+     * @param $sku_id
+     * @return CartItem|null
+     */
+    public static function findOneBy($cart_id, $sku_id)
+    {
+        $cartItem = self::find()
+            ->where(['cart_id'=>$cart_id, 'sku_id'=>$sku_id, 'status'=>self::STATUS_ACTIVE])
+            ->one();
+        return $cartItem;
     }
 
     /**
