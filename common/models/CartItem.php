@@ -38,7 +38,8 @@ use common\components\ETActiveRecord;
  *
  * @property Cart $cart
  * @property Product $product
- * @property CartItemAttrs[] $cartItemAttrs
+ * @property ProductSku $productSku
+ * @property CartItemAttr[] $cartItemAttrs
  */
 class CartItem extends ETActiveRecord
 {
@@ -104,6 +105,14 @@ class CartItem extends ETActiveRecord
     public function getProduct()
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductSku()
+    {
+        return $this->hasOne(ProductSku::className(), ['id' => 'sku_id']);
     }
 
     /**

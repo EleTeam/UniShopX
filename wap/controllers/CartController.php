@@ -28,33 +28,21 @@ class CartController extends BaseController
      */
     public function actionIndex()
     {
-//        $cartItemsArr = [];
-//        $cart_num = 0;
-//        $total_price = 0;
-//        $app_cart_cookie_id = $this->getAppCartCookieId();
-//
-//        $cart = Cart::myCart($this->getUserId(), $app_cart_cookie_id);
-//        if($cart) {
-//            $items = Cart::findItems($cart->id);
-//            foreach($items as $cartItem){
-//                $cartItemsArr[] = $cartItem->toArray([], ['product']);
-//            }
-//            $total_price = Cart::sumTotalPriceByItems($items);
-//            $cart_num = Cart::sumCartNumByItems($items);
-//        }
+        $cart_num = 0;
+        $total_price = 0;
+        $app_cart_cookie_id = $this->getAppCartCookieId();
 
-//        $data = [
-//            'cart' => $cart,
-//            'couponItems' => null,
-//            'cart_num' => $cart_num,
-//            'total_price' => $total_price,
-//            'is_logged_in' => $this->isLoggedIn(),
-//            'app_cart_cookie_id' => $app_cart_cookie_id,
-//        ];
+        $cart = Cart::myCart($this->getUserId(), $app_cart_cookie_id);
+        if($cart) {
+            $total_price = Cart::sumTotalPriceByItems($cart->cartItems);
+            $cart_num = Cart::sumCartNumByItems($cart->cartItems);
+        }
+
         return $this->render('index', [
-//            'cart' => $cart,
-//            'total_price' => $total_price,
-
+            'cart' => $cart,
+            'total_price' => $total_price,
+            'cart_num' => $cart_num,
+            'is_logged_in' => $this->isLoggedIn(),
         ]);
     }
 

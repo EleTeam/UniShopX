@@ -194,6 +194,24 @@ class Product extends ETActiveRecord
     }
 
     /**
+     * 获得当前产品具体的ProductSku
+     *
+     * @param $sku_id
+     * @return ProductSku|null
+     */
+    public function getProductSkuBy($sku_id)
+    {
+        if($this->productSkus){
+            foreach($this->productSkus as $productSku){
+                if($productSku->id == $sku_id){
+                    return $productSku;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getProductAttrItems()

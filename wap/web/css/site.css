@@ -79,7 +79,14 @@ i.tabbar-demo-icon-4 {
 .active i.tabbar-demo-icon-4 {
     background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 25 19' fill='%23007aff'><g><path d='M23,3h-4.1l-2.4-2.4c0,0,0,0,0,0l0,0C16.1,0.2,15.6,0,15.1,0h-5C9.5,0,9,0.3,8.6,0.6l0,0L6.2,3H2C0.9,3,0,3.9,0,5v12 c0,1.1,0.9,2,2,2h21c1.1,0,2-0.9,2-2V5C25,3.9,24.1,3,23,3z M12.5,16c-3,0-5.5-2.5-5.5-5.5C7,7.5,9.5,5,12.5,5c3,0,5.5,2.5,5.5,5.5 C18,13.5,15.5,16,12.5,16z'/><circle cx='12.5' cy='10.5' r='4.5'/></g></svg>");
 }
-
+.float-right {
+    float: right;
+}
+.icon-right {
+    background-image: url("../image/ic_arrow_right.png");
+    height: 20px;
+    width: 20px;
+}
 
 /******** 公用块 ***********/
 .block {background-color: #fff;}
@@ -640,3 +647,188 @@ i.tabbar-demo-icon-4 {
     width: 40px;
 }
 .product-view .is-selected {color:#cb9d71;}
+
+
+/********* 购物车 *************/
+.cart .noPro {
+    color: #332c2b;
+    font-size: 1rem;
+    left: 31%;
+    position: absolute;
+    text-align: center;
+    top: 25%;
+    white-space: nowrap;
+}
+.cart .noPro img {
+    height: auto;
+    width: 7rem;
+}
+.cart .noPro #goShopping {
+    background-color: #fff;
+    border: 1px solid #cb9d71;
+    border-radius: 5px;
+    color: #cb9d71;
+    font-size: 1rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    margin: 20px 0 0;
+    width: 100px;
+}
+.cart .shoppingCarMod .shoppingCar-list-block .item-inner::after, .cart .shoppingCarMod .shoppingCar-list-block ul::after, .cart .shoppingCarMod .shoppingCar-list-block ul::before {
+    background: #fff none repeat scroll 0 0;
+    height: 0;
+}
+.cart .shoppingCarMod .shoppingCar-list-block.media-list .item-inner {
+    padding-bottom: 0;
+    padding-top: 5px;
+}
+.cart .shoppingCarMod .shopping-group {
+    border-bottom: 1px solid #f3f3f3;
+    border-top: 1px solid #f3f3f3;
+    margin-top: 15px;
+}
+.cart .shoppingCarMod .shopping-group:first-child {
+    border-top: medium none;
+    margin-top: 0;
+}
+.cart .label.label-checkbox {
+    cursor: pointer;
+    transition-property: none;
+}
+.cart label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox {
+    background-color: #cb9d71;
+}
+.shoppingCar-list-block {
+    background: #fff none repeat scroll 0 0;
+    margin: 0;
+    width: 100%;
+}
+.shoppingCar-list-block .item-inner {
+    padding: 0;
+}
+.shoppingCar-list-block .item-inner-right {
+    line-height: 0;
+}
+.shoppingCar-list-block .item-inner-right i {
+    margin: 0 10px;
+}
+.shoppingCar-list-block li .item-content {
+    padding-bottom: 9px;
+    padding-left: 0;
+    width: 100%;
+}
+.shoppingCar-list-block li .title {
+    color: #332c2b;
+    display: -webkit-box;
+    overflow: hidden;
+}
+.shoppingCar-list-block li .item-title-row {
+    margin: 4px 0 0;
+}
+.shoppingCar-list-block li .type {
+    color: #999;
+    font-size: 12px;
+    line-height: 18px;
+}
+.shoppingCar-list-block li .price {
+    -moz-box-flex: 1;
+    color: #cb9d71;
+    flex: 1 1 0;
+    line-height: 30px;
+}
+.shoppingCar-list-block li .oppRule_choose a.add, .shoppingCar-list-block li .oppRule_choose a.plus, .shoppingCar-list-block li .oppRule_choose input.num_value {
+    background-color: #f8f9fb;
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 1.8rem;
+    line-height: 1.8rem;
+    margin: 0 1px;
+    padding: 0;
+    text-align: center;
+}
+.shoppingCar-list-block li .oppRule_choose .choose {
+    -moz-box-flex: 1;
+    flex: 1 1 0;
+}
+.shoppingCar-list-block li .oppRule_choose a.add, .shoppingCar-list-block li .oppRule_choose a.plus {
+    color: #737271;
+    font-size: 16px;
+    font-weight: 500;
+    min-width: 1rem;
+    width: 1.8rem;
+}
+#store-main h5, .elasticLayer-actionSheet .actions-modal-button.actions-modal-button-bold, .modal-button.modal-button-bold {
+    font-weight: 300;
+}
+.shoppingCar-list-block li .oppRule_choose input.num_value {
+    min-width: 15%;
+    width: 15%;
+}
+.shoppingCar-list-block li .item-inner {
+    -moz-box-flex: 1;
+    flex: 1 1 0;
+    width: auto;
+}
+.shoppingCar-list-block .pro-pic {
+    border: 1px solid #f1f1f1;
+    margin: 0 10px;
+    width: 4rem;
+}
+.cart .list-block {
+    font-size: 14px;
+}
+.cart .list-block li {
+    padding-top: 10px;
+}
+.cart .list-block li:first-child {
+    padding-top: 0;
+}
+.cart .list-block .color-red:last-child {
+    border: medium none;
+}
+.cart .list-block .padding-none.color-red, .cart .toolbar-inner {
+    padding: 0;
+}
+.cart .list-block .seperator {
+    border-bottom: 1px solid #f3f3f3;
+}
+.shoppingCarToolbar {
+    background-color: #fff;
+    height: 50px;
+}
+.shoppingCarToolbar .item-inner {
+    color: #474443;
+    display: block;
+    padding: 8px 15px 7px 0;
+    text-align: right;
+}
+.shoppingCarToolbar .item-inner .price {
+    color: #cb9d71;
+    font-size: 1.4rem;
+}
+.shoppingCarToolbar .button.button-fill {
+    background: #052841 none repeat scroll 0 0;
+    border-radius: 0;
+    color: #cb9d71;
+    font-size: 1.8rem;
+    height: 50px;
+    line-height: 50px;
+}
+.cart-empty .empty-tips {
+    background-color: #f2fafd;
+    color: #2182b8;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+}
+.cart-empty .empty-tips .col-40 {
+    text-align: right;
+}
+.cart-empty .empty-tips div {
+    display: inline-block;
+}
+.cart img {
+    vertical-align: middle;
+    width: 100%;
+}

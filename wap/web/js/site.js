@@ -56,11 +56,6 @@ $$('#tab-my-icon').on('click', function(){
     tabMyView.router.load({url:url, animatePages:false, ignoreCache:true, reload:true});
 });
 
-/**********  公共函数 *************/
-//返回首页
-
-
-
 //首页
 myApp.onPageInit('home', function(page){
     //幻灯片
@@ -117,6 +112,13 @@ myApp.onPageInit('category', function(page) {
         $$(this).addClass('focus');
         var index = $$(this).index();
         mySwiper.slideTo(index);
+    });
+});
+
+//购物车首页
+myApp.onPageInit('cart', function(page){
+    $$('#goShopping').on('click', function(){
+        location.href = '/';
     });
 });
 

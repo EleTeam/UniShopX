@@ -78,7 +78,8 @@ class Cart extends ETActiveRecord
      */
     public function getCartItems()
     {
-        return $this->hasMany(CartItem::className(), ['cart_id' => 'id']);
+        return $this->hasMany(CartItem::className(), ['cart_id' => 'id'])
+                    ->where('is_ordered=:is_ordered and status!=:status', [':is_ordered'=>self::NO, ':status'=>self::STATUS_DELETED]);
     }
 
     /**
