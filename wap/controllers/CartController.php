@@ -64,9 +64,9 @@ class CartController extends BaseController
      */
     public function actionAddItem()
     {
-        $sku_id = $this->getParam('sku_id');
-        $product_id = $this->getParam('product_id');
-        $count = $this->getParam('count');
+        $sku_id = Yii::$app->request->post('sku_id');
+        $product_id = Yii::$app->request->post('product_id');
+        $count = Yii::$app->request->post('count');
         $app_cart_cookie_id = $this->getAppCartCookieId();
 
         try {

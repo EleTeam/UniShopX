@@ -15,6 +15,18 @@ var myApp = new Framework7({
 // Export selectors engine
 var $$ = Dom7;
 
+/**
+ * 模态提示框
+ * @param title 提示标题
+ * @param time  展示时间长, 单位毫秒
+ */
+function myAlert(title, time) {
+    time = time || 2000;
+    myApp.modal({'title': title});
+    setTimeout(function () {
+        myApp.closeModal();
+    }, time);
+}
 
 // 必须初始化视图才能加载数据, 使用导航条穿透布局必须使用{dynamicNavbar:true}
 var tabHomeView     = myApp.addView('#tab-home', {dynamicNavbar:true});
@@ -229,7 +241,7 @@ myApp.onPageInit('product-view', function(page){
     });
     //添加入购物车
     $$('.add-to-cart').on('click', function(){
-        var product_id = $$(this).attr('data-product-id');
+        var product_id = $$('input[name="product_id"]').val();
         var count = $$('[name="product-count"]').val();
         var url = $$(this).attr('data-url');
 
@@ -252,8 +264,8 @@ myApp.onPageInit('product-view', function(page){
             return;
         }
 
-        var YII_CSRF_TOKEN = $$('input[name="YII_CSRF_TOKEN"]').val();
-        var data = 'product_id=' + product_id + '&sku_id=' + sku_id + '&count=' + count + '&YII_CSRF_TOKEN=' + YII_CSRF_TOKEN;
+        var _csrf = $$('input[name="_csrf"]').val();
+        var data = 'product_id=' + product_id + '&sku_id=' + sku_id + '&count=' + count + '&_csrf=' + _csrf;
 
         myApp.showIndicator();
         $$.ajax({
@@ -263,8 +275,11 @@ myApp.onPageInit('product-view', function(page){
             dataType: 'json',
             success: function(json){
                 myApp.hideIndicator();
-                if(json.result) {
+                if(json.status) {
                     $$('#product-cart-num').html(json.data.cart_num);
+                    //关闭规格层
+                    myApp.closeModal();
+                    myAlert('成功加入购物车');
                 }else{
                     alert(json.message);
                 }
@@ -273,43 +288,3 @@ myApp.onPageInit('product-view', function(page){
     });
     //直接购买
 });
-
-
-
-/////////////////////
-// Callbacks to run specific code for specific pages, for example for About page:
-myApp.onPageInit('about', function (page) {
-    // run createContentPage func after link was clicked
-    $$('.create-page').on('click', function () {
-        createContentPage();
-    });
-});
-
-// Generate dynamic page
-var dynamicPageIndex = 0;
-function createContentPage() {
-	mainView.router.loadContent(
-        '<!-- Top Navbar-->' +
-        '<div class="navbar">' +
-        '  <div class="navbar-inner">' +
-        '    <div class="left"><a href="#" class="back link"><i class="icon icon-back"></i><span>Back</span></a></div>' +
-        '    <div class="center sliding">Dynamic Page ' + (++dynamicPageIndex) + '</div>' +
-        '  </div>' +
-        '</div>' +
-        '<div class="pages">' +
-        '  <!-- Page, data-page contains page name-->' +
-        '  <div data-page="dynamic-pages" class="page">' +
-        '    <!-- Scrollable page content-->' +
-        '    <div class="page-content">' +
-        '      <div class="content-block">' +
-        '        <div class="content-block-inner">' +
-        '          <p>Here is a dynamic page created on ' + new Date() + ' !</p>' +
-        '          <p>Go <a href="#" class="back">back</a> or go to <a href="services.html">Services</a>.</p>' +
-        '        </div>' +
-        '      </div>' +
-        '    </div>' +
-        '  </div>' +
-        '</div>'
-    );
-	return;
-}

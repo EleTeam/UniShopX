@@ -20,6 +20,7 @@ use common\components\ETActiveRecord;
  * @property integer $id
  * @property integer $cart_id
  * @property integer $product_id
+ * @property integer $sku_id
  *
  * 以下两个字段与Cart::$user_id/Cart::$app_cart_cookie_id共同存在是需要的, 为的是方便获取和更高效更新CartItem对象
  * @property integer $user_id
@@ -55,7 +56,7 @@ class CartItem extends ETActiveRecord
     public function rules()
     {
         return [
-            [['cart_id', 'product_id', 'user_id', 'created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'count', 'is_ordered', 'is_selected', 'cookie_id'], 'integer'],
+            [['cart_id', 'product_id', 'sku_id', 'user_id', 'created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'count', 'is_ordered', 'is_selected', 'cookie_id'], 'integer'],
             [['app_cart_cookie_id'], 'string'],
             [['cart_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cart::className(), 'targetAttribute' => ['cart_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],

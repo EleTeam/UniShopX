@@ -229,7 +229,7 @@ class Cart extends ETActiveRecord
         }
 
         $sku = ProductSku::findOne($sku_id);
-        if(!$product){
+        if(!$sku){
             throw new DbException('商品SKU不存在');
         }
 

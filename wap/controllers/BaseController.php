@@ -12,6 +12,7 @@
 namespace wap\controllers;
 
 use common\models\User;
+use wap\components\Cookie;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -122,9 +123,20 @@ class BaseController extends Controller
         $this->jsonEncode(false, $data, $message, $code, $share);
     }
 
+    /**
+     * 获取客户端的$app_cart_cookie_id
+     *  如果没则生成并且保存到客户端
+     *
+     * @return string|void
+     */
     protected function getAppCartCookieId()
     {
-        return $this->getParam('app_cart_cookie_id') ? $this->getParam('app_cart_cookie_id') : Cart::genAppCartCookieId();
+        $app_cart_cookie_id = Cookie::getAppCartCookieId();
+        if(empty($app_cart_cookie_id)){
+            $app_cart_cookie_id = Cart::genAppCartCookieId();
+            Cookie::setAppCartCookieId($app_cart_cookie_id);
+        }
+        return $app_cart_cookie_id;
     }
 
     protected function isLoggedIn()

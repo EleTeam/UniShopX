@@ -1,2 +1,0 @@
-/*! UYAC2.0 Platform updated in 2016-07-15 */
-seajs.config({base:"/js/framework/sea-modules",alias:{constant:"/js/main/constant.js",init:"/js/main/init.js",router:"/js/main/router.js",common:"/js/main/common.js",$:"jquery/1.10.1/jquery",angularjs:"angular"},map:[[/^(.*\/js\/.*\.(?:css|js))(?:.*)$/i,"$1?v=20160707"],[/^(.*\/template\/.*\.(?:css|tpl))(?:.*)$/i,"$1?v=20160707"]]});

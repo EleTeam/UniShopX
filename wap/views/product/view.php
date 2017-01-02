@@ -33,7 +33,8 @@ use common\models\ProductSpec;
 <div class="page no-tabbar product-view" data-page="product-view">
     <div class="page-content">
         <!-- post提交的CSRF令牌验证 -->
-        <input type="hidden" value="<?php echo Yii::$app->request->getCsrfToken(); ?>" name="YII_CSRF_TOKEN" />
+        <input type="hidden" value="<?=Yii::$app->request->getCsrfToken()?>" name="_csrf" />
+        <input type="hidden" value="<?=$product->id?>" name="product_id" />
 
         <div id="main">
             <!-- Swiper Slider -->
@@ -116,8 +117,7 @@ use common\models\ProductSpec;
                 </a>
             </div>
             <div class="box box-flex open-model">
-                <a href="#" class="btn btn-gold cart box-flex add-to-cart" data-product-id="<?=$product->id?>"
-                    data-url="<?=Url::toRoute('/cart/addItem')?>">加入购物车</a>
+                <a href="#" class="btn btn-gold cart box-flex add-to-cart" data-url="<?=Url::toRoute('/cart/add-item')?>">加入购物车</a>
                 <a href="#" class="btn btn-blue box-flex" id="direct-buy" name="detail-spec">立即购买</a>
             </div>
         </div>
@@ -167,7 +167,7 @@ use common\models\ProductSpec;
             <div class="limit-tips">*限购<span></span>件，超出以结算价为准</div>
         </div>
         <div class="comfire box">
-            <a href="#" class="btn btn-gold cart box-flex add-to-cart">加入购物车</a>
+            <a href="#" class="btn btn-gold cart box-flex add-to-cart" data-url="<?=Url::toRoute('/cart/add-item')?>">加入购物车</a>
             <a href="#" class="btn btn-blue box-flex submit">立即购买</a>
         </div>
     </div>
