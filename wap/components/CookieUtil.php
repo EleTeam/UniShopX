@@ -13,11 +13,12 @@ namespace wap\components;
 
 use Yii;
 use yii\base\Component;
+use yii\web\Cookie;
 
 /**
- * Cookie类管理Wap项目定义的cookie
+ * Cookie工具类管理Wap项目定义的cookie
  */
-class Cookie extends Component
+class CookieUtil extends Component
 {
     /**
      * 临时购物车的cookie, 用于非登录用户保存购物车信息
@@ -40,7 +41,7 @@ class Cookie extends Component
      */
     public static function setAppCartCookieId($value)
     {
-        $cookie = new \yii\web\Cookie([
+        $cookie = new Cookie([
             'name' => self::APP_CART_COOKIE_ID,
             'value' => $value,
             'expire' => time() + 365 * 24 * 3600, //保存一年

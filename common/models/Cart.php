@@ -391,4 +391,34 @@ class Cart extends ETActiveRecord
         $cart = static::myCart($user_id, $app_cart_cookie_id);
         return $cart ? $cart->id : null;
     }
+
+    /**
+     * 合并购物车, 用在登陆后和注册后, 合并后重新生成app_cart_cookie_id保存在客户端, 用户退出后就不会遗留登录用户的购物车信息
+     *
+     * @param $user_id
+     * @param $app_cart_cookie_id
+     */
+    public static function combineCart($user_id, $app_cart_cookie_id)
+    {
+        //转移购物车给用户
+        if($user_id && $app_cart_cookie_id) {
+            $cookieCart = Cart::findOneByAppCartCookieId($app_cart_cookie_id);
+            if($cookieCart){
+                $userCart = Cart::myCart($user_id, null);
+                $cookieCartItems = Cart::findItems($cookieCart->id);
+                if($cookieCartItems) {
+                    //如果用户购物车有cookie购物车项, 则先删除用户的购物车项
+                    foreach($cookieCartItems as $cookieCartItem) {
+                        CartItem::updateAll(['status'=>CartItem::STATUS_DELETED],
+                            'user_id = :user_id and sku_id = :sku_id and status != :status',
+                            [':user_id' => $user_id, ':sku_id' => $cookieCartItem->sku_id, ':status' => CartItem::STATUS_DELETED]);
+                    }
+                    //转移购物车项给用户
+                    CartItem::updateAll(['user_id'=>$user_id, 'cart_id'=>$userCart->id],
+                        'app_cart_cookie_id = :app_cart_cookie_id and status != :status',
+                        ['app_cart_cookie_id' => $app_cart_cookie_id, ':status' => CartItem::STATUS_DELETED]);
+                }
+            }
+        }
+    }
 }

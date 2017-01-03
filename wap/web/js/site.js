@@ -129,8 +129,6 @@ myApp.onPageInit('user-login', function(page){
         var data = myApp.formToJSON($$('.user-login .login-form'));
         var reloadPage = $$(this).attr('data-reload-page');
         myApp.showIndicator();
-        //tabMyView.router.reloadPage($$(this).attr('data-reload-page'));
-        //$$('#tab-my-icon').trigger('click');
         $$.ajax({
             url: loginUrl,
             method: 'POST',
@@ -139,9 +137,16 @@ myApp.onPageInit('user-login', function(page){
             success: function(result){
                 myApp.hideIndicator();
                 if(result.status){
-                    //tabMyView.router.reloadPage(reloadPage);
-                    //$$('#tab-my-icon').trigger('click');
-                    tabMyView.router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
+                    //返回页面配置
+                    var options = {url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true};
+                    //返回购物车首页
+                    if(reloadPage == '/cart'){
+                        tabCartView.router.back(options);
+                    }
+                    //返回我的首页
+                    else{
+                        tabMyView.router.back(options);
+                    }
                 }else{
                     var toast = myApp.toast(result.message, '', {});
                     toast.show(true);

@@ -12,7 +12,7 @@
 namespace wap\controllers;
 
 use common\models\User;
-use wap\components\Cookie;
+use wap\components\CookieUtil;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -131,10 +131,10 @@ class BaseController extends Controller
      */
     protected function getAppCartCookieId()
     {
-        $app_cart_cookie_id = Cookie::getAppCartCookieId();
+        $app_cart_cookie_id = CookieUtil::getAppCartCookieId();
         if(empty($app_cart_cookie_id)){
             $app_cart_cookie_id = Cart::genAppCartCookieId();
-            Cookie::setAppCartCookieId($app_cart_cookie_id);
+            CookieUtil::setAppCartCookieId($app_cart_cookie_id);
         }
         return $app_cart_cookie_id;
     }

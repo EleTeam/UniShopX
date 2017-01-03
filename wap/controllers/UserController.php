@@ -11,6 +11,8 @@
 
 namespace wap\controllers;
 
+use common\models\Cart;
+use wap\components\CookieUtil;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -63,16 +65,30 @@ class UserController extends BaseController
      */
     public function actionLogin()
     {
+        //登陆后返回的页面
+        $reload_page = Yii::$app->request->get('reload_page', '/my');
+
+        //get请求
         if(Yii::$app->request->isGet){
-            return $this->render('login');
+            return $this->render('login', ['reload_page' => $reload_page]);
         }
 
+        //post请求
         if(!Yii::$app->user->isGuest){
             return $this->jsonSuccess('已经登录');
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post(), '') && $model->login()) {
+            //合并购物车
+            $user_id = Yii::$app->user->id;
+            $app_cart_cookie_id = CookieUtil::getAppCartCookieId();
+            if($app_cart_cookie_id){
+                Cart::combineCart($user_id, $app_cart_cookie_id);
+                //重新生成app_cart_cookie_id
+                $app_cart_cookie_id = Cart::genAppCartCookieId();
+                CookieUtil::setAppCartCookieId($app_cart_cookie_id);
+            }
             return $this->jsonSuccess(['user_id'=>Yii::$app->getUser()->getId()], '登陆成功');
         } else {
             return $this->jsonFail($model->getErrors(null), $model->errorsToOneString());
@@ -80,16 +96,21 @@ class UserController extends BaseController
     }
 
     /**
-     * 用户登录
+     * 用户注册
      *
      * @return mixed
      */
     public function actionSignup()
     {
+        //注册后返回的页面
+        $reload_page = Yii::$app->request->get('reload_page', '/my');
+
+        //get请求
         if(Yii::$app->request->isGet){
-            return $this->render('signup');
+            return $this->render('signup', ['reload_page' => $reload_page]);
         }
 
+        //post请求
         if(!Yii::$app->user->isGuest){
             return $this->jsonSuccess('已经登录');
         }
@@ -101,6 +122,16 @@ class UserController extends BaseController
             $loginForm->username = $signupForm->mobile;
             $loginForm->password = $signupForm->password;
             $loginForm->login();
+
+            //合并购物车
+            $user_id = Yii::$app->user->id;
+            $app_cart_cookie_id = CookieUtil::getAppCartCookieId();
+            if($app_cart_cookie_id){
+                Cart::combineCart($user_id, $app_cart_cookie_id);
+                //重新生成app_cart_cookie_id
+                $app_cart_cookie_id = Cart::genAppCartCookieId();
+                CookieUtil::setAppCartCookieId($app_cart_cookie_id);
+            }
 
             return $this->jsonSuccess(['user_id'=>Yii::$app->getUser()->getId()], '注册成功');
         } else {
