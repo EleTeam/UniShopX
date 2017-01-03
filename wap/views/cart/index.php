@@ -10,6 +10,7 @@
  */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use common\models\Cart;
 
 /**
@@ -27,6 +28,27 @@ use common\models\Cart;
 </div>
 <div class="page" data-page="cart">
     <div class="page-content cart">
+        <?php if(!$is_logged_in): ?>
+            <div class="cart-empty" style="display: block;">
+                <div class="empty-tips">
+                    <div>
+                        <a href="<?=Url::toRoute('/user/login')?>">
+                            登录后可同步账户购物车中的商品
+                        </a>
+                    </div>
+                    <div class="float-right">
+                        <a href="<?=Url::toRoute('/user/login')?>"><i class="icon icon-right"></i></a>
+                    </div>
+                </div>
+                <?php if(!($cart && $cart->cartItems)): ?>
+                <div class="noPro">
+                    <img src="../image/ic_cart_empty.png">
+                    <div>购物车没有商品哦~</div>
+                    <div id="goShopping"><a href="#" class="">去逛逛</a></div>
+                </div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
         <?php if($cart && $cart->cartItems): ?>
             <div class="shoppingCarMod">
                 <div class="shopping-group">
@@ -36,21 +58,27 @@ use common\models\Cart;
                             <li class="item-content swipeout" data-cart-item-id="<?=$cartItem->id?>" data-product-id="<?=$cartItem->product->id?>">
                                 <div class="swipeout-content item-content">
                                     <label class="label-checkbox">
-                                        <input name="my-checkbox" data-id="6711471333122342" type="checkbox">
+                                        <input name="cart-ids" value="<?=$cart->id?>" type="checkbox"
+                                               <?php if($cartItem->is_selected): ?>checked="checked"<?php endif; ?>>
                                         <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
                                     </label>
-                                    <div class="pro-pic" data-id="6711471333122342">
+                                    <div class="pro-pic">
                                         <a class="pro-info">
                                             <img src="<?=$cartItem->product->image_small?>" onerror="this.src='../image/no_image.jpg';" width="100">
                                         </a>
                                     </div>
                                     <div class="item-inner">
-                                        <div class="title" data-id="6711471333122342"><?=$cartItem->product->id?></div>
-                                        <div class="item-title-row">
-                                            <p class="type" data-id="6711471333122342">色号:MB自然肤色  </p>
-                                        </div>
+                                        <div class="title"><?=$cartItem->product->name?></div>
+                                        <?php foreach($cartItem->productSku->productSpecs as $index => $productSpec): ?>
+                                            <?php $productSpecValue = $cartItem->productSku->productSpecValues[$index]; ?>
+                                            <div class="item-title-row">
+                                                <p class="type" data-spec-id="<?=$productSpec->id?>" data-spec-value-id="<?=$productSpecValue->id?>">
+                                                    <?=$productSpec->name?>: <?=$productSpecValue->name?>
+                                                </p>
+                                            </div>
+                                        <?php endforeach; ?>
                                         <div class="item-title-row oppRule_choose">
-                                            <div class="price" data-id="6711471333122342">¥ <?=$cartItem->productSku->price?></div>
+                                            <div class="price">¥ <?=$cartItem->productSku->price?></div>
                                             <div class="choose text-center" data-stock="199">
                                                 <a href="#" class="plus" name="plus" data-cartid="70011">-</a>
                                                 <input readonly="readonly" class="num_value" value="<?=$cartItem->count?>" type="text">
@@ -74,24 +102,33 @@ use common\models\Cart;
                     </div>
                 </div>
             </div>
-        <?php else: ?>
-            <div class="cart-empty" style="display: block;">
-                <div class="empty-tips">
-                    <div>
-                        <a href="html/uyac-login.html">
-                            登录后可同步账户购物车中的商品
-                        </a>
+        <?php endif ?>
+    </div>
+    <div class="toolbar shoppingCarToolbar">
+        <div class="toolbar-inner">
+            <!--购物车底部结算模块-->
+            <div class="list-block shoppingCar-list-block">
+                <div class="item-content box">
+                    <div class="box-flex">
+                        <label class="label-checkbox">
+                            <input name="my-checkbox" type="checkbox">
+                            <div class="item-media">
+                                <i class="icon icon-form-checkbox"></i>&nbsp;
+                                <span class="check-all-btn">全选</span>
+                            </div>
+                        </label>
                     </div>
-                    <div class="float-right">
-                        <a href="html/uyac-login.html"><i class="icon icon-right"></i></a>
+                    <div class="box-flex">
+                        <div class="item-inner">
+                            <div>总计：<b class="price">￥<?=$total_price?></b></div>
+                            <small class="font-gray-status">(免配送费)</small>
+                        </div>
                     </div>
-                </div>
-                <div class="noPro">
-                    <img src="../image/ic_cart_empty.png">
-                    <div>购物车没有商品哦~</div>
-                    <div id="goShopping"><a href="#" class="">去逛逛</a></div>
+                    <div class="box-flex">
+                        <a href="#" class="button button-fill" name="submitCart">结算(<span class="num"><?=$cart_num?></span>)</a>
+                    </div>
                 </div>
             </div>
-        <?php endif ?>
+        </div>
     </div>
 </div>

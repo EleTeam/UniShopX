@@ -695,9 +695,6 @@ i.tabbar-demo-icon-4 {
     cursor: pointer;
     transition-property: none;
 }
-.cart label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox {
-    background-color: #cb9d71;
-}
 .shoppingCar-list-block {
     background: #fff none repeat scroll 0 0;
     margin: 0;
@@ -793,9 +790,11 @@ i.tabbar-demo-icon-4 {
 .cart .list-block .seperator {
     border-bottom: 1px solid #f3f3f3;
 }
+/*底部工具栏*/
 .shoppingCarToolbar {
     background-color: #fff;
     height: 50px;
+    margin-bottom: 60px;
 }
 .shoppingCarToolbar .item-inner {
     color: #474443;
@@ -811,10 +810,20 @@ i.tabbar-demo-icon-4 {
     background: #052841 none repeat scroll 0 0;
     border-radius: 0;
     color: #cb9d71;
-    font-size: 1.8rem;
+    font-size: 1rem;
     height: 50px;
     line-height: 50px;
 }
+.shoppingCarToolbar .toolbar::before {
+    height: 0;
+}
+.shoppingCarToolbar .list-block {
+    font-size: 14px;
+}
+.shoppingCarToolbar .navbar-inner, .toolbar-inner{
+    padding:0;
+}
+/*购物车为空*/
 .cart-empty .empty-tips {
     background-color: #f2fafd;
     color: #2182b8;
