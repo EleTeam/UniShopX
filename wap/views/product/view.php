@@ -111,7 +111,7 @@ use common\models\ProductSpec;
     <div class="toolbar">
         <div class="toolbar-inner shopping-bar box">
             <div class="shopcart">
-                <a href="html/cart.html">
+                <a href="<?=Url::toRoute('/cart/view')?>">
                     <img src="../image/shoppingcart3x.png">
                     <span class="bage font5 cart-num" id="product-cart-num">0</span>
                 </a>

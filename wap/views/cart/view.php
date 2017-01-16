@@ -3,13 +3,12 @@
  * Shop-PHP-Yii2
  *
  * @author Tony Wong
- * @date 2016-09-30
+ * @date 2017-01-16
  * @email 908601756@qq.com
- * @copyright Copyright © 2016年 EleTeam
+ * @copyright Copyright © 2017年 EleTeam
  * @license The MIT License (MIT)
  */
 
-use yii\helpers\Html;
 use yii\helpers\Url;
 use common\models\Cart;
 
@@ -21,12 +20,19 @@ use common\models\Cart;
  * @var $is_logged_in int
  */
 ?>
+<!-- Top Navbar-->
 <div class="navbar">
     <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="icon icon-back"></i>
+                <span>返回</span>
+            </a>
+        </div>
         <div class="center sliding">购物车</div>
     </div>
 </div>
-<div class="page" data-page="cart">
+<div class="page no-tabbar cart-view" data-page="cart">
     <div class="page-content cart">
         <?php if(!$is_logged_in): ?>
             <div class="cart-empty" style="display: block;">

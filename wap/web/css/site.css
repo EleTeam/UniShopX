@@ -649,7 +649,7 @@ i.tabbar-demo-icon-4 {
 .product-view .is-selected {color:#cb9d71;}
 
 
-/********* 购物车 *************/
+/********* 购物车首页 *************/
 .cart .noPro {
     color: #332c2b;
     font-size: 1rem;
@@ -841,3 +841,7 @@ i.tabbar-demo-icon-4 {
     vertical-align: middle;
     width: 100%;
 }
+
+
+/********* 购物车详情页 继承购物车首页 *************/
+.cart-view .shoppingCarToolbar { margin-bottom:0; }

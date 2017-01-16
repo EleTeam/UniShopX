@@ -47,6 +47,29 @@ class CartController extends BaseController
     }
 
     /**
+     * 购物车查看页
+     */
+    public function actionView()
+    {
+        $cart_num = 0;
+        $total_price = 0;
+        $app_cart_cookie_id = $this->getAppCartCookieId();
+
+        $cart = Cart::myCart($this->getUserId(), $app_cart_cookie_id);
+        if($cart) {
+            $total_price = Cart::sumTotalPriceByItems($cart->cartItems);
+            $cart_num = Cart::sumCartNumByItems($cart->cartItems);
+        }
+
+        return $this->render('view', [
+            'cart' => $cart,
+            'total_price' => $total_price,
+            'cart_num' => $cart_num,
+            'is_logged_in' => $this->isLoggedIn(),
+        ]);
+    }
+
+    /**
      * 添加产品到购物车，如果app_cart_cookie_id为空则生成唯一的它
      * attributes 的格式是 itemId_itemValueId, 如 1_2,2_10,3_15
      */
