@@ -27,11 +27,11 @@
     图片项目：Nginx存放图片等静态文件
     后台项目：Nginx + PHP-FPM，UI框架用 Framework7
 
-#### Redis 安装与使用
+#### Redis 安装与使用, 必须安装
     Linux下安装Redis：
         用源码包安装，yii2-redis需要redis>=2.6.12的版本
-        1.cd /usr/local/src, wget download.redis.io/releases/redis-3.2.6.tar.gz
-        2.tar xvf redis-3.2.6.tar.gz，cd redis-3.2.6
+        1.cd /usr/local/src;  wget download.redis.io/releases/redis-3.2.6.tar.gz
+        2.tar xvf redis-3.2.6.tar.gz;  cd redis-3.2.6
         3.make && make install
         4.cp redis.conf /usr/local/etc
         5.redis-server /usr/local/etc/redis.conf &
@@ -47,7 +47,7 @@
     让外网可以访问Redis：
         1.打开redis端口：iptables -I INPUT -p tcp --dport 6379 -j ACCEPT && service iptables save && service iptables restart
         2.修改redis的配置文件，将所有bind信息全部屏蔽。
-          vi /etc/redis.conf
+          vi /etc/redis.conf 或者 vi /usr/local/etc/redis.conf
               # bind 127.0.0.1
               protected-mode no
         3.重启redis
@@ -65,9 +65,18 @@
     
 #### 安装环境要求:
     php-5.6.x
-    mysql-server-5.6.x
+    mysql-server-5.6.x, 否则导入sql文件语法出错
     httpd-2.x/nginx
-    
+
+#### rpm安装MySQL-5.6.35
+     wget https://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.35-linux-glibc2.5-x86_64.tar.gz
+     tar xvf mysql-5.6.35-linux-glibc2.5-x86_64.tar.gz
+     ln -s mysql-5.6.35-linux-glibc2.5-x86_64/ mysql
+     cd mysql
+     ./scripts/mysql_install_db
+     ./bin/mysqld_safe &
+     ./bin/mysql_secure_installation
+
 #### 该项目分为4个小项目，Apache需要创建4个虚拟主机，存放该项目的所有代码，虚拟主机的配置如下：
     <VirtualHost *:80>
         ServerAdmin 908601756@qq.com
@@ -118,8 +127,11 @@
     
 #### 配置项目:
     以下文件夹要求读写权限:
-        chmod -R 777 frontend/runtime backend/runtime api/runtime console/runtime
-        chmod -R 777 frontend/web/assets backend/web/assets
+        chmod -R 777 frontend/runtime frontend/web/assets
+        chmod -R 777 backend/runtime  backend/web/assets
+        chmod -R 777 wap/runtime      wap/web/assets
+        chmod -R 777 api/runtime
+        chmod -R 777 console/runtime
     数据库配置文件：
         common/config/main-local.php
 
