@@ -66,7 +66,7 @@
 #### 安装环境要求:
     php-5.6.x
     mysql-server-5.6.x, 否则导入sql文件语法出错
-    httpd-2.x/nginx
+    httpd-2.x/nginx, 需要打开重写规则AllowOverride All
 
 #### rpm安装MySQL-5.6.35
      wget https://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.35-linux-glibc2.5-x86_64.tar.gz
