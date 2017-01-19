@@ -49,6 +49,20 @@ a {color: #3e3e3e;}
     color: #777;
 }
 
+/* 按钮 */
+.btn {
+    border: medium none;
+    display: block;
+    height: 38px;
+    line-height: 38px;
+    width: 100%;
+    text-align: center;
+}
+.btn.btn-blue {
+    background-color: #052841;
+    color: #c89664;
+}
+
 /* Tab bar icons */
 i.tabbar-demo-icon-1 {
     width: 30px;
@@ -1013,7 +1027,7 @@ i.tabbar-demo-icon-4 {
 }
 
 
-/****************** 订单确认页 *******************/
+/*************************** 地址列表页 ***************************/
 .address .no-address,
 .address .no-identity {
     margin: 30% 25% 0;
@@ -1045,6 +1059,10 @@ i.tabbar-demo-icon-4 {
     margin: 0 10px;
     width: 68px;
 }
-.address .address-default, .btn, .text-center {
+.address .address-default{
     text-align: center;
 }
+
+
+/*************************** 地址添加页 ***************************/
+.address-create .list-block { margin: 0; }

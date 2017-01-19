@@ -65,7 +65,7 @@ use common\models\Address;
     </div>
     <div class="addressToolbar toolbar">
         <div class="toolbar-inner box">
-            <a href="" class="btn btn-blue box-flex">添加收货地址</a>
+            <a href="<?=Url::toRoute('/address/create')?>" class="btn btn-blue box-flex">添加收货地址</a>
         </div>
     </div>
 </div>
