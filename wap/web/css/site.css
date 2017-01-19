@@ -848,90 +848,74 @@ i.tabbar-demo-icon-4 {
 
 
 /********* 订单确认页 *************/
-.cart .noPro {
-    color: #332c2b;
-    font-size: 1rem;
-    left: 31%;
-    position: absolute;
-    text-align: center;
-    top: 25%;
-    white-space: nowrap;
-}
-.cart .noPro img {
-    height: auto;
-    width: 7rem;
-}
-.cart .noPro #goShopping {
-    background-color: #fff;
-    border: 1px solid #cb9d71;
-    border-radius: 5px;
-    color: #cb9d71;
-    font-size: 1rem;
-    height: 2.5rem;
-    line-height: 2.5rem;
-    margin: 20px 0 0;
-    width: 100px;
-}
-.cart .shoppingCarMod .shoppingCar-list-block .item-inner::after, .cart .shoppingCarMod .shoppingCar-list-block ul::after, .cart .shoppingCarMod .shoppingCar-list-block ul::before {
+.preorder .shoppingCar-list-block .item-inner::after,
+.preorder .shoppingCar-list-block ul::after,
+.preorder .shoppingCar-list-block ul::before {
     background: #fff none repeat scroll 0 0;
     height: 0;
 }
-.cart .shoppingCarMod .shoppingCar-list-block.media-list .item-inner {
+.preorder .shoppingCar-list-block.media-list .item-inner {
     padding-bottom: 0;
     padding-top: 5px;
 }
-.cart .shoppingCarMod .shopping-group {
+.preorder .shopping-group {
     border-bottom: 1px solid #f3f3f3;
     border-top: 1px solid #f3f3f3;
     margin-top: 15px;
 }
-.cart .shoppingCarMod .shopping-group:first-child {
+.preorder .shopping-group:first-child {
     border-top: medium none;
     margin-top: 0;
 }
-.cart .label.label-checkbox {
+.preorder .label.label-checkbox {
     cursor: pointer;
     transition-property: none;
 }
-.shoppingCar-list-block {
+.preorder .shoppingCar-list-block {
     background: #fff none repeat scroll 0 0;
     margin: 0;
     width: 100%;
 }
-.shoppingCar-list-block .item-inner {
+.preorder img {
+    vertical-align: middle;
+    width: 100%;
+}
+.preorder .shoppingCar-list-block .item-inner {
     padding: 0;
 }
-.shoppingCar-list-block .item-inner-right {
+.preorder .shoppingCar-list-block .item-inner-right {
     line-height: 0;
 }
-.shoppingCar-list-block .item-inner-right i {
+.preorder .shoppingCar-list-block .item-inner-right i {
     margin: 0 10px;
 }
-.shoppingCar-list-block li .item-content {
+.preorder .shoppingCar-list-block li .item-content {
     padding-bottom: 9px;
     padding-left: 0;
     width: 100%;
 }
-.shoppingCar-list-block li .title {
+.preorder .shoppingCar-list-block li .title {
     color: #332c2b;
     display: -webkit-box;
     overflow: hidden;
 }
-.shoppingCar-list-block li .item-title-row {
+.preorder .shoppingCar-list-block li .item-title-row {
     margin: 4px 0 0;
 }
-.shoppingCar-list-block li .type {
+.preorder .shoppingCar-list-block li .type {
     color: #999;
     font-size: 12px;
     line-height: 18px;
 }
-.shoppingCar-list-block li .price {
+.preorder .shoppingCar-list-block li .price {
     -moz-box-flex: 1;
     color: #cb9d71;
     flex: 1 1 0;
     line-height: 30px;
 }
-.shoppingCar-list-block li .oppRule_choose a.add, .shoppingCar-list-block li .oppRule_choose a.plus, .shoppingCar-list-block li .oppRule_choose input.num_value {
+.preorder .shoppingCar-list-block li .oppRule_choose a.add,
+.preorder .shoppingCar-list-block li .oppRule_choose a.plus,
+.preorder .shoppingCar-list-block li .oppRule_choose input.num_value {
     background-color: #f8f9fb;
     border-radius: 3px;
     box-sizing: border-box;
@@ -942,69 +926,66 @@ i.tabbar-demo-icon-4 {
     padding: 0;
     text-align: center;
 }
-.shoppingCar-list-block li .oppRule_choose .choose {
+.preorder .shoppingCar-list-block li .oppRule_choose .choose {
     -moz-box-flex: 1;
     flex: 1 1 0;
 }
-.shoppingCar-list-block li .oppRule_choose a.add, .shoppingCar-list-block li .oppRule_choose a.plus {
+.preorder .shoppingCar-list-block li .oppRule_choose a.add,
+.preorder .shoppingCar-list-block li .oppRule_choose a.plus {
     color: #737271;
     font-size: 16px;
     font-weight: 500;
     min-width: 1rem;
     width: 1.8rem;
 }
-#store-main h5, .elasticLayer-actionSheet .actions-modal-button.actions-modal-button-bold, .modal-button.modal-button-bold {
-    font-weight: 300;
-}
-.shoppingCar-list-block li .oppRule_choose input.num_value {
+.preorder .shoppingCar-list-block li .oppRule_choose input.num_value {
     min-width: 15%;
     width: 15%;
 }
-.shoppingCar-list-block li .item-inner {
+.preorder .shoppingCar-list-block li .item-inner {
     -moz-box-flex: 1;
     flex: 1 1 0;
     width: auto;
 }
-.shoppingCar-list-block .pro-pic {
+.preorder .shoppingCar-list-block .pro-pic {
     border: 1px solid #f1f1f1;
     margin: 0 10px;
     width: 4rem;
 }
-.cart .list-block {
+.preorder .list-block {
     font-size: 14px;
 }
-.cart .list-block li {
+.preorder  .list-block li {
     padding-top: 10px;
 }
-.cart .list-block li:first-child {
+.preorder .list-block li:first-child {
     padding-top: 0;
 }
-.cart .list-block .color-red:last-child {
+.preorder .list-block .color-red:last-child {
     border: medium none;
 }
-.cart .list-block .padding-none.color-red, .cart .toolbar-inner {
+.preorder .list-block .padding-none.color-red, .preorder .toolbar-inner {
     padding: 0;
 }
-.cart .list-block .seperator {
+.preorder .list-block .seperator {
     border-bottom: 1px solid #f3f3f3;
 }
 /*底部工具栏*/
-.shoppingCarToolbar {
+.preorder .toolbar {
     background-color: #fff;
     height: 50px;
-    margin-bottom: 60px;
 }
-.shoppingCarToolbar .item-inner {
+.preorder .toolbar .item-inner {
     color: #474443;
     display: block;
     padding: 8px 15px 7px 0;
     text-align: right;
 }
-.shoppingCarToolbar .item-inner .price {
+.preorder .toolbar .item-inner .price {
     color: #cb9d71;
     font-size: 1.4rem;
 }
-.shoppingCarToolbar .button.button-fill {
+.preorder .toolbar .button.button-fill {
     background: #052841 none repeat scroll 0 0;
     border-radius: 0;
     color: #cb9d71;
@@ -1012,30 +993,12 @@ i.tabbar-demo-icon-4 {
     height: 50px;
     line-height: 50px;
 }
-.shoppingCarToolbar .toolbar::before {
+.preorder .toolbar::before {
     height: 0;
 }
-.shoppingCarToolbar .list-block {
+.preorder .toolbar .list-block {
     font-size: 14px;
 }
-.shoppingCarToolbar .navbar-inner, .toolbar-inner{
+.preorder .toolbar .navbar-inner, .toolbar-inner{
     padding:0;
-}
-/*购物车为空*/
-.cart-empty .empty-tips {
-    background-color: #f2fafd;
-    color: #2182b8;
-    height: 50px;
-    line-height: 50px;
-    padding: 0 20px;
-}
-.cart-empty .empty-tips .col-40 {
-    text-align: right;
-}
-.cart-empty .empty-tips div {
-    display: inline-block;
-}
-.cart img {
-    vertical-align: middle;
-    width: 100%;
 }

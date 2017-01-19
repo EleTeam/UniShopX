@@ -32,20 +32,14 @@ use common\models\Cart;
         <div class="center sliding">提交订单</div>
     </div>
 </div>
-<div class="page no-tabbar cart-view" data-page="cart">
-    <div class="page-content cart">
-        <div class="shoppingCarMod">
-            <div class="shopping-group">
+<div class="page no-tabbar preorder" data-page="cart">
+    <div class="page-content">
+        <div class="shopping-group">
                 <div class="list-block shoppingCar-list-block media-list">
                     <ul>
                         <?php foreach($cart->cartItems as $cartItem): ?>
                             <li class="item-content swipeout" data-cart-item-id="<?=$cartItem->id?>" data-product-id="<?=$cartItem->product->id?>">
                                 <div class="swipeout-content item-content">
-                                    <label class="label-checkbox">
-                                        <input name="cart-ids" value="<?=$cart->id?>" type="checkbox"
-                                               <?php if($cartItem->is_selected): ?>checked="checked"<?php endif; ?>>
-                                        <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
-                                    </label>
                                     <div class="pro-pic">
                                         <a class="pro-info" href="<?=Url::toRoute('/product/view?id=').$cartItem->product->id?>">
                                             <img src="<?=$cartItem->product->image_small?>" onerror="this.src='../image/no_image.jpg';" width="100">
@@ -64,7 +58,7 @@ use common\models\Cart;
                                             <?php endforeach; ?>
                                         </a>
                                         <div class="item-title-row oppRule_choose">
-                                            <div class="price">¥ <?=$cartItem->productSku->price?></div>
+                                            <div class="price">x<?=$cartItem->count?> &nbsp;&nbsp;&nbsp; ¥<?=$cartItem->productSku->price?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -73,10 +67,9 @@ use common\models\Cart;
                         <?php endforeach; ?>
                     </ul>
                 </div>
-            </div>
         </div>
     </div>
-    <div class="toolbar shoppingCarToolbar">
+    <div class="toolbar">
         <div class="toolbar-inner">
             <!--购物车底部结算模块-->
             <div class="list-block shoppingCar-list-block">

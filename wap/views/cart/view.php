@@ -133,7 +133,7 @@ use common\models\Cart;
                         </div>
                     </div>
                     <div class="box-flex">
-                        <a class="button button-fill" name="submitCart"
+                        <a class="button button-fill" name="submitCart" data-ignore-cache="true"
                             <?php if($is_logged_in): ?>
                                 href="<?=Url::toRoute('/preorder')?>"
                             <?php else: ?>
