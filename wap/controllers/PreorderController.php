@@ -12,6 +12,7 @@
 namespace wap\controllers;
 
 use common\models\Cart;
+use common\models\Address;
 use Yii;
 use yii\db\Exception as DbException;
 
@@ -39,11 +40,13 @@ class PreorderController extends BaseController
             $cart_num = Cart::sumCartNumByItems($cart->cartItems);
         }
 
+        $address = Address::findDefault($this->getUserId());
+
         return $this->render('index', [
             'cart' => $cart,
             'total_price' => $total_price,
             'cart_num' => $cart_num,
-            'is_logged_in' => $this->isLoggedIn(),
+            'address' => $address,
         ]);
     }
 }

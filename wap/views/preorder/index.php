@@ -10,14 +10,15 @@
  */
 
 use yii\helpers\Url;
+use common\models\Address;
 use common\models\Cart;
 
 /**
  * @var $this yii\web\View
+ * @var $address Address
  * @var $cart Cart
  * @var $total_price float
  * @var $cart_num int
- * @var $is_logged_in int
  */
 ?>
 <!-- Top Navbar-->
@@ -34,6 +35,41 @@ use common\models\Cart;
 </div>
 <div class="page no-tabbar preorder" data-page="cart">
     <div class="page-content">
+        <div class="list-block address-list-block">
+            <ul>
+                <input value="<?= $address ? $address->id : 0?>" name="address-id" type="hidden">
+                <li class="row item-content">
+                    <div class="col-10">
+                        <i class="icon icon-address-pin"></i>
+                    </div>
+                    <div class="col-80">
+                        <a href="<?=Url::toRoute('/address')?>" data-ignore-cache="true">
+                            <div class="address-container">
+                                <?php if($address): ?>
+                                    <div class="item-inner row">
+                                        <div class="item-title">收 货 人：<span><?=$address->fullname?></span></div>
+                                        <div class="item-after"><span><?=$address->telephone?></span></div>
+                                    </div>
+                                    <div class="item-inner row">
+                                        <div class="col-100">
+                                            <span><?= $address->area ? $address->area->getPathNames4Print().' '.$address->detail : ''?></span>
+                                        </div>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="item-inner row">
+                                        <div class="item-title">添加收货地址</div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-10">
+                        <i class="icon icon-right font-gray-light"></i>
+                    </div>
+                </li>
+                <li class="line"></li>
+            </ul>
+        </div>
         <div class="shopping-group">
                 <div class="list-block shoppingCar-list-block media-list">
                     <ul>
@@ -81,13 +117,7 @@ use common\models\Cart;
                         </div>
                     </div>
                     <div class="box-flex">
-                        <a class="button button-fill" name="submitCart"
-                            <?php if($is_logged_in): ?>
-                                href="<?=Url::toRoute('/preorder')?>"
-                            <?php else: ?>
-                                href="<?=Url::toRoute('/user/login?reload_page=/cart')?>"
-                            <?php endif; ?>
-                        >提交订单(<span class="num"><?=$cart_num?></span>)</a>
+                        <a class="button button-fill" name="submitCart" href="<?=Url::toRoute('/order/add')?>">提交订单</a>
                     </div>
                 </div>
             </div>

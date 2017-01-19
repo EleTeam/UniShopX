@@ -45,6 +45,9 @@ a {color: #3e3e3e;}
     line-height: 1;
     padding: 2px 6px;
 }
+.font-gray-light {
+    color: #777;
+}
 
 /* Tab bar icons */
 i.tabbar-demo-icon-1 {
@@ -848,6 +851,17 @@ i.tabbar-demo-icon-4 {
 
 
 /********* 订单确认页 *************/
+.preorder .address-list-block {
+    margin: 0;
+}
+.preorder .address-list-block .item-inner::after {
+    height: 0;
+}
+.preorder .icon-address-pin {
+    background-image: url("../image/ic_address_pin.png");
+    height: 18px;
+    width: 18px;
+}
 .preorder .shoppingCar-list-block .item-inner::after,
 .preorder .shoppingCar-list-block ul::after,
 .preorder .shoppingCar-list-block ul::before {
@@ -955,12 +969,7 @@ i.tabbar-demo-icon-4 {
 .preorder .list-block {
     font-size: 14px;
 }
-.preorder  .list-block li {
-    padding-top: 10px;
-}
-.preorder .list-block li:first-child {
-    padding-top: 0;
-}
+.preorder .list-block .item-inner { min-height: 20px; }
 .preorder .list-block .color-red:last-child {
     border: medium none;
 }
@@ -1001,4 +1010,41 @@ i.tabbar-demo-icon-4 {
 }
 .preorder .toolbar .navbar-inner, .toolbar-inner{
     padding:0;
+}
+
+
+/****************** 订单确认页 *******************/
+.address .no-address,
+.address .no-identity {
+    margin: 30% 25% 0;
+    text-align: center;
+}
+.address li:first-child {
+    margin-top: 0;
+}
+.address .list-block ul {
+    background-color: #f8f9fb;
+}
+.address li {
+    margin: 10px 0;
+}
+.address .card {
+    border-radius: 0;
+    box-shadow: 0 0 0 #fff;
+    margin: 0;
+    width: 100%;
+}
+.address .address-default {
+    background-color: #c89664;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.9rem;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 10px;
+    width: 68px;
+}
+.address .address-default, .btn, .text-center {
+    text-align: center;
 }
