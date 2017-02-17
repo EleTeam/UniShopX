@@ -80,50 +80,51 @@
 #### 该项目分为4个小项目，Apache需要创建4个虚拟主机，存放该项目的所有代码，虚拟主机的配置如下：
     <VirtualHost *:80>
         ServerAdmin 908601756@qq.com
-        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/Shop-PHP-Yii2/backend/web"
-        ServerName local.eleteambackend.ygcr8.com
-        ErrorLog "logs/local.eleteambackend.ygcr8.com-error_log"
-        CustomLog "logs/local.eleteambackend.ygcr8.com-access_log" common
+        DocumentRoot "/var/www/html/Shop-PHP-Yii2/backend/web"
+        ServerName admin.eleteam.com
+        ErrorLog "logs/admin.eleteam.com-error_log"
+        CustomLog "logs/admin.eleteam.com-access_log" common
     </VirtualHost>
     <VirtualHost *:80>
         ServerAdmin 908601756@qq.com
-        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/Shop-PHP-Yii2/frontend/web"
-        ServerName local.eleteam.ygcr8.com
-        ServerAlias local.eleteam.ygcr8.com
-        ErrorLog "logs/local.eleteam.ygcr8.com-error_log"
-        CustomLog "logs/local.eleteam.ygcr8.com-access_log" common
+        DocumentRoot "/var/www/html/Shop-PHP-Yii2/frontend/web"
+        ServerName eleteam.com
+        ServerAlias www.eleteam.com
+        ErrorLog "logs/eleteam.com-error_log"
+        CustomLog "logs/eleteam.com-access_log" common
     </VirtualHost>
     <VirtualHost *:80>
         ServerAdmin 908601756@qq.com
-        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/Shop-PHP-Yii2/data"
-        ServerName local.eleteamdata.ygcr8.com
-        ServerAlias local.eleteamdata.ygcr8.com
-        ErrorLog "logs/local.eleteamdata.ygcr8.com-error_log"
-        CustomLog "logs/local.eleteamdata.ygcr8.com-access_log" common
+        DocumentRoot "/var/www/html/Shop-PHP-Yii2/data"
+        ServerName data.eleteam.com
+        ServerAlias data.eleteam.com
+        ErrorLog "logs/data.eleteam.com-error_log"
+        CustomLog "logs/data.eleteam.com-access_log" common
     </VirtualHost>
     <VirtualHost *:80>
         ServerAdmin 908601756@qq.com
-        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/Shop-PHP-Yii2/api/web"
-        ServerName local.eleteamapi.ygcr8.com
-        ServerAlias local.eleteamapi.ygcr8.com
-        ErrorLog "logs/local.eleteamapi.ygcr8.com-error_log"
-        CustomLog "logs/local.eleteamapi.ygcr8.com-access_log" common
+        DocumentRoot "/var/www/html/Shop-PHP-Yii2/api/web"
+        ServerName api.eleteam.com
+        ServerAlias api.eleteam.com
+        ErrorLog "logs/api.eleteam.com-error_log"
+        CustomLog "logs/api.eleteam.com-access_log" common
     </VirtualHost>
     <VirtualHost *:80>
         ServerAdmin 908601756@qq.com
-        DocumentRoot "/Users/tony/Desktop/Develop/PHP-WWW/Shop-PHP-Yii2/wap/web"
-        ServerName local.eleteamwap.ygcr8.com
-        ServerAlias local.eleteamwap.ygcr8.com
-        ErrorLog "logs/local.eleteamwap.ygcr8.com-error_log"
-        CustomLog "logs/local.eleteamwap.ygcr8.com-access_log" common
+        DocumentRoot "/var/www/html/Shop-PHP-Yii2/wap/web"
+        ServerName m.eleteam.com
+        ServerAlias m.eleteam.com
+        ErrorLog "logs/m.eleteam.com-error_log"
+        CustomLog "logs/m.eleteam.com-access_log" common
     </VirtualHost>
 
 #### 配置本地的hosts文件:
-    127.0.0.1       local.eleteam.ygcr8.com
-    127.0.0.1       local.eleteambackend.ygcr8.com
-    127.0.0.1       local.eleteamdata.ygcr8.com
-    127.0.0.1       local.eleteamapi.ygcr8.com
-    127.0.0.1       local.eleteamwap.ygcr8.com
+    127.0.0.1       local.eleteam.com
+    127.0.0.1       local.m.eleteam.com
+    127.0.0.1       local.admin.eleteam.com
+    127.0.0.1       local.api.eleteam.com
+    127.0.0.1       local.admin.eleteam.com
+    127.0.0.1       local.data.eleteam.com
     
 #### 配置项目:
     以下文件夹要求读写权限:
@@ -145,12 +146,12 @@
     参考文档：http://geek.csdn.net/news/detail/52070
     
 #### 线上的访问地址:
-    前台: http://eleteam.ygcr8.com
-    wap: http://eleteamwap.ygcr8.com
-    api: http://eleteamapi.ygcr8.com/v1/product/view?id=3
-    数据: http://eleteamdata.ygcr8.com
-    gii: http://eleteam.ygcr8.com/gii
-    后台: http://eleteambackend.ygcr8.com
+    前台: eleteam.com
+    wap: m.eleteam.com
+    api: api.eleteam.com/v1/product/view?id=3
+    数据: data.eleteam.com
+    gii: eleteam.com/gii
+    后台: admin.eleteam.com
         后台超级用户: admin/123456
         后台普通用户: demo/123456
 
