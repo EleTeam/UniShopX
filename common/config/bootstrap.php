@@ -18,6 +18,6 @@ Yii::setAlias('@wap', dirname(dirname(__DIR__)) . '/wap');
 Yii::setAlias('@data', dirname(dirname(__DIR__)) . '/data');
 
 if(strpos($_SERVER['HTTP_HOST'], 'local.') === 0)
-    Yii::setAlias('@dataHost', 'http://local.data.eleteam.com'); //本地地址
+    Yii::setAlias('@dataHost', 'http://local.m.eleteam.com'); //本地地址
 else
-    Yii::setAlias('@dataHost', 'http://data.eleteam.com'); //外网地址
+    Yii::setAlias('@dataHost', 'http://m.eleteam.com'); //外网地址
