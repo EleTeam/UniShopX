@@ -32,7 +32,7 @@ class SignupForm extends ETModel
             ['mobile', 'filter', 'filter' => 'trim'],
             ['mobile', 'required'],
             ['mobile', 'string', 'min' => 11, 'max' => 11],
-            ['mobile', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This mobile number has already been taken.'],
+            ['mobile', 'unique', 'targetClass' => '\common\models\User', 'message' => '该手机号已经存在'],
 
             ['password', 'filter', 'filter' => 'trim'],
             ['password', 'required'],

@@ -12,9 +12,8 @@
 namespace wap\controllers;
 
 use common\models\Product;
-use common\models\ProductCategory;
 use Yii;
-use yii\web\NotFoundHttpException;
+use common\models\Cart;
 
 /**
  * Product controller
@@ -31,8 +30,18 @@ class ProductController extends BaseController
 //        $expand = ['category', 'productAttrs', 'productSkus'];
 //        $product = Product::find()->where('id=:id', [':id'=>$id])->with($expand)->one();
         $product = Product::findOneNotDeleted($id);
+
+        //购物车数量
+        $cart_num = 0;
+        $app_cart_cookie_id = $this->getAppCartCookieId();
+        $cart = Cart::myCart($this->getUserId(), $app_cart_cookie_id);
+        if($cart) {
+            $cart_num = Cart::sumCartNumByItems($cart->cartItems);
+        }
+
         return $this->render('view', [
             'product' => $product,
+            'cart_num' => $cart_num,
         ]);
     }
 }

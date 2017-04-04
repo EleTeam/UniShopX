@@ -28,7 +28,9 @@ function myAlert(title, time) {
     }, time);
 }
 
+// 带有文案的标签栏布局
 // 必须初始化视图才能加载数据, 使用导航条穿透布局必须使用{dynamicNavbar:true}
+// 四个tabview, 在重载返回页面时要指定在哪个tabview上
 var tabHomeView     = myApp.addView('#tab-home', {dynamicNavbar:true});
 var tabCategoryView = myApp.addView('#tab-category', {dynamicNavbar:true});
 var tabCartView     = myApp.addView('#tab-cart', {dynamicNavbar:true});
@@ -137,16 +139,7 @@ myApp.onPageInit('user-login', function(page){
             success: function(result){
                 myApp.hideIndicator();
                 if(result.status){
-                    //返回页面配置
-                    var options = {url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true};
-                    //返回购物车首页
-                    if(reloadPage == '/cart'){
-                        tabCartView.router.back(options);
-                    }
-                    //返回我的首页
-                    else{
-                        tabMyView.router.back(options);
-                    }
+                    myApp.getCurrentView().router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
                 }else{
                     var toast = myApp.toast(result.message, '', {});
                     toast.show(true);
@@ -171,7 +164,7 @@ myApp.onPageInit('user-signup', function(page) {
             success: function(result){
                 myApp.hideIndicator();
                 if(result.status){
-                    tabMyView.router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
+                    myApp.getCurrentView().router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
                 }else{
                     var toast = myApp.toast(result.message, '', {});
                     toast.show(true);
@@ -196,7 +189,7 @@ myApp.onPageInit('my-setting', function(){
             success: function(result){
                 myApp.hideIndicator();
                 if(result.status){
-                    tabMyView.router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
+                    myApp.getCurrentView().router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
                 }else{
                     var toast = myApp.toast(result.message, '', {});
                     toast.show(true);
@@ -216,7 +209,7 @@ myApp.onPageInit('user-view', function(){
             method: 'GET',
             success: function(result){
                 myApp.hideIndicator();
-                tabMyView.router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});//{pageName:'my', animatePages:false, ignoreCache:true, reload:true, force:true});
+                myApp.getCurrentView().router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});//{pageName:'my', animatePages:false, ignoreCache:true, reload:true, force:true});
             }
         });
     });

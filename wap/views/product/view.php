@@ -111,14 +111,14 @@ use common\models\ProductSpec;
     <div class="toolbar">
         <div class="toolbar-inner shopping-bar box">
             <div class="shopcart">
-                <a href="<?=Url::toRoute('/cart/view')?>">
+                <a href="<?=Url::toRoute('/cart/view')?>" data-ignore-cache="true">
                     <img src="../image/shoppingcart3x.png">
-                    <span class="bage font5 cart-num" id="product-cart-num">0</span>
+                    <span class="bage font5 cart-num" id="product-cart-num"><?=$cart_num?></span>
                 </a>
             </div>
             <div class="box box-flex open-model">
                 <a href="#" class="btn btn-gold cart box-flex add-to-cart" data-url="<?=Url::toRoute('/cart/add-item')?>">加入购物车</a>
-                <a href="#" class="btn btn-blue box-flex" id="direct-buy" name="detail-spec">立即购买</a>
+                <!--<a href="#" class="btn btn-blue box-flex" id="direct-buy" name="detail-spec">立即购买</a>-->
             </div>
         </div>
     </div>
@@ -168,7 +168,7 @@ use common\models\ProductSpec;
         </div>
         <div class="comfire box">
             <a href="#" class="btn btn-gold cart box-flex add-to-cart" data-url="<?=Url::toRoute('/cart/add-item')?>">加入购物车</a>
-            <a href="#" class="btn btn-blue box-flex submit">立即购买</a>
+            <!--<a href="#" class="btn btn-blue box-flex submit">立即购买</a>-->
         </div>
     </div>
 </div>

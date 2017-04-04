@@ -59,13 +59,13 @@ $this->title = Yii::t('app', 'Products');
                                         data-actv-type="0" data-actv-n="0" data-actv-x="1"
                                         data-price="10" data-origin="10" data-stock="9999" data-attrs="24727306">
                                         <div class="food-content1 clearfix">
-                                            <a href="<?= Url::toRoute(['/product/view', 'id'=>$product->id]) ?>">
+                                            <a href="<?= Url::toRoute(['/product/view', 'id'=>$product->id]) ?>" data-ignore-cache="true">
                                                 <div class="food-pic-wrap">
                                                     <img class="j-food-pic food-pic" src="<?= $product->image_small ?>" style="height: 62px;">
                                                 </div>
                                             </a>
                                             <div class="food-cont">
-                                                <a href="<?= Url::toRoute(['/product/view', 'id'=>$product->id]) ?>">
+                                                <a href="<?= Url::toRoute(['/product/view', 'id'=>$product->id]) ?>" data-ignore-cache="true">
                                                     <div class="j-foodname foodname"><?= $product->name ?></div>
                                                     <div class="food-desc"><?= $product->short_description ?></div>
                                                     <div class="food-content1-sub">

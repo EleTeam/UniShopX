@@ -38,12 +38,12 @@ use common\models\Cart;
             <div class="cart-empty" style="display: block;">
                 <div class="empty-tips">
                     <div>
-                        <a href="<?=Url::toRoute('/user/login?reload_page=/cart')?>">
+                        <a href="<?=Url::toRoute('/user/login?reload_page=/cart/view')?>">
                             登录后可同步账户购物车中的商品
                         </a>
                     </div>
                     <div class="float-right">
-                        <a href="<?=Url::toRoute('/user/login?reload_page=/cart')?>"><i class="icon icon-right"></i></a>
+                        <a href="<?=Url::toRoute('/user/login?reload_page=/cart/view')?>"><i class="icon icon-right"></i></a>
                     </div>
                 </div>
                 <?php if(!($cart && $cart->cartItems)): ?>
@@ -137,7 +137,7 @@ use common\models\Cart;
                             <?php if($is_logged_in): ?>
                                 href="<?=Url::toRoute('/preorder')?>"
                             <?php else: ?>
-                                href="<?=Url::toRoute('/user/login?reload_page=/cart')?>"
+                                href="<?=Url::toRoute('/user/login?reload_page=/cart/view')?>"
                             <?php endif; ?>
                             >结算(<span class="num"><?=$cart_num?></span>)</a>
                     </div>
