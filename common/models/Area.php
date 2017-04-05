@@ -167,4 +167,30 @@ class Area extends ETActiveRecord
         return $path_names_4print;
 
     }
+
+    /**
+     * 获得树形结构数组
+     *
+     * @return array
+     */
+    public static function findToTree()
+    {
+        $areas = [];
+        $provinces = static::findAll(['parent_id'=>static::PROVINCE_PARENT_ID]);
+        foreach($provinces as $province)
+        {
+            $cities = static::findAll(['parent_id'=>$province->id]);
+            $provinceChildren = [];
+            foreach($cities as $city){
+                $regions = static::findAll(['parent_id'=>$city->id]);
+                $cityChildren = [];
+                foreach($regions as $region){
+                    $cityChildren[$region->id] = ['name'=>$region->name];
+                }
+                $provinceChildren[$city->id] = ['name'=>$city->name, 'children'=>$cityChildren];
+            }
+            $areas[$province->id] = ['name'=>$province->name, 'children'=>$provinceChildren];
+        }
+        return $areas;
+    }
 }

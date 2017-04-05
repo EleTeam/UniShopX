@@ -58,6 +58,128 @@ $$('#tab-my-icon').on('click', function(){
     tabMyView.router.load({url:url, animatePages:false, ignoreCache:true, reload:true});
 });
 
+//全局地址对象, 在地址列表页赋值
+var g_areas = null;
+/*
+var g_areas = {
+    3: {
+        'id': 2,
+        'name': '广东',
+        'children': {
+            22: {
+                'id': 22,
+                'name': '深圳',
+                'children': {
+                    222: {
+                        'id': 222,
+                        'name': '宝安',
+                    },
+                    221: {
+                        'id': 221,
+                        'name': '福田',
+                    }
+                }
+            },
+            21: {
+                'id': 21,
+                'name': '广州',
+                'children': {
+                    222: {
+                        'id': 222,
+                        'name': '白云',
+                    },
+                    221: {
+                        'id': 221,
+                        'name': '天河',
+                    }
+                }
+            }
+        }
+    },
+    2: {
+        'id': 2,
+        'name': '广东1',
+        'children': {
+            22: {
+                'id': 22,
+                'name': '深圳1',
+                'children': {
+                    222: {
+                        'id': 222,
+                        'name': '宝安1',
+                    },
+                    221: {
+                        'id': 221,
+                        'name': '福田1',
+                    }
+                }
+            },
+            21: {
+                'id': 21,
+                'name': '广州1',
+                'children': {
+                    222: {
+                        'id': 222,
+                        'name': '白云1',
+                    },
+                    221: {
+                        'id': 221,
+                        'name': '天河1',
+                    }
+                }
+            }
+        }
+    },
+};
+*/
+function getProvinces()
+{
+    var ids = [];
+    var names = [];
+    for(var id in g_areas){
+        ids.push(id);
+        names.push(g_areas[id]['name']);
+    }
+    return {'ids':ids, 'names':names};
+}
+function getCities(province_id)
+{
+    var cities = g_areas[province_id]['children'];
+    var ids = [];
+    var names = [];
+    for(var id in cities){
+        ids.push(id);
+        names.push(cities[id]['name']);
+    }
+    return {'ids':ids, 'names':names};
+}
+function getRegions(province_id, city_id)
+{
+    var cities = g_areas[province_id]['children'];
+    var regions = cities[city_id]['children'];
+    var ids = [];
+    var names = [];
+    for(var id in regions){
+        ids.push(id);
+        names.push(regions[id]['name']);
+    }
+    return {'ids':ids, 'names':names};
+}
+function getFirstProvinceId()
+{
+    for(var id in g_areas){
+        return id;
+    }
+}
+function getFirstCityId()
+{
+    var province_id = getFirstProvinceId();
+    var provinces = g_areas[province_id]['children'];
+    for(var id in provinces){
+        return id;
+    }
+}
+
 //首页
 myApp.onPageInit('home', function(page){
     //幻灯片
@@ -287,4 +409,102 @@ myApp.onPageInit('product-view', function(page){
         });
     });
     //直接购买
+});
+
+//预订单 - 创建地址
+myApp.onPageInit('address-create', function(page){
+    //选择地址级联
+    var pickerDependent = null;
+    $$('#picker-dependent').on('click', function(){
+        //同步获取地址树
+        if (!g_areas) {
+            var url = $$('#url-get-all-areas').attr('data-url');
+            var _csrf = $$('input[name="_csrf"]').val();
+            var data = '_csrf=' + _csrf;
+            myApp.showIndicator();
+            $$.ajax({
+                url: url,
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    myApp.hideIndicator();
+                    if (result.status) {
+                        g_areas = result.data.areas;
+                    }
+                }
+            });
+        }
+
+        //地址级联框
+        if (!pickerDependent) {
+            pickerDependent = myApp.picker({
+                input: '#picker-dependent',
+                rotateEffect: true,
+                toolbarCloseText: '完成',
+                formatValue: function (picker, values, displayValues) {
+                    return displayValues; //逗号风格的string, 如广东,深圳,福田
+                },
+                cols: [
+                    {
+                        textAlign: 'left',
+                        width: '300px',
+                        values: getProvinces().ids, //初始化的值, 要求数组, 如果id是数字则列表排列顺序根据该值的大小
+                        displayValues: getProvinces().names,
+                        onChange: function (picker, province_id, province_name) {
+                            if (picker.cols[1].replaceValues) { //必须先判断, 因为在初始化时会报错: TypeError: picker.cols[1].replaceValues is not a function
+                                var cities = getCities(province_id);
+                                picker.cols[1].replaceValues(cities.ids, cities.names);
+                            }
+                            if (picker.cols[2].replaceValues) {
+                                var regions = getRegions(province_id, cities.ids[0]);
+                                picker.cols[2].replaceValues(regions.ids, regions.names);
+                            }
+                        }
+                    },
+                    {
+                        width: '300px',
+                        values: getCities(getFirstProvinceId()).ids,
+                        displayValues: getCities(getFirstProvinceId()).names,
+                        onChange: function (picker, city_id, city_name) {
+                            var province_id = picker.cols[0].value;
+                            if (picker.cols[2].replaceValues) {
+                                var regions = getRegions(province_id, city_id);
+                                picker.cols[2].replaceValues(regions.ids, regions.names);
+                            }
+                        }
+                    },
+                    {
+                        width: '300px',
+                        values: getRegions(getFirstProvinceId(), getFirstCityId()).ids,
+                        displayValues: getRegions(getFirstProvinceId(), getFirstCityId()).names,
+                    },
+                ]
+            });
+            pickerDependent.open(); // open Picker
+        }
+    });
+
+    $$('.address-create .js-post').on('click', function(){
+        var url = $$('.address-create .address-form').attr('action');
+        var data = myApp.formToJSON($$('.address-create .address-form'));
+        var reloadPage = $$(this).attr('data-reload-page');
+        myApp.showIndicator();
+        $$.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function(result){
+                myApp.hideIndicator();
+                if(result.status){
+                    myApp.getCurrentView().router.back({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
+                }else{
+                    var toast = myApp.toast(result.message, '', {});
+                    toast.show(true);
+                }
+            }
+        });
+    });
 });

@@ -30,14 +30,17 @@ use common\models\Address;
 </div>
 <div class="page no-tabbar address-create" data-page="address-create">
     <div class="page-content">
-        <form class="list-block" id="address-form">
+        <i style="display: none;" id="url-get-all-areas" data-url="<?=Url::toRoute('address/get-all-areas')?>"></i>
+
+        <form class="list-block address-form" action="<?=Url::toRoute('address/create-post')?>">
+            <input name="_csrf" type="hidden" id="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
             <ul>
                 <!-- Text inputs -->
                 <li>
                     <div class="item-content">
                         <div class="item-inner">
                             <div class="item-input">
-                                <input required="required" name="custname" placeholder="收货人姓名" type="text">
+                                <input required="required" name="fullname" placeholder="收货人姓名" type="text">
                             </div>
                         </div>
                     </div>
@@ -49,7 +52,7 @@ use common\models\Address;
                                 <input name="province" id="province" type="hidden">
                                 <input name="city" id="city" type="hidden">
                                 <input name="county" id="county" value="110101" type="hidden">
-                                <input required="required" name="custorign" placeholder="所属地区" id="picker-dependent" readonly="" class="" type="text">
+                                <input required="required" name="area_text" placeholder="所属地区" id="picker-dependent" readonly="readonly" class="" type="text">
                             </div>
                         </div>
                     </div>
@@ -58,7 +61,7 @@ use common\models\Address;
                     <div class="item-content">
                         <div class="item-inner">
                             <div class="item-input">
-                                <input required="required" name="custaddr" placeholder="您的详细地址" class="" type="text">
+                                <input required="required" name="detail_address" placeholder="您的详细地址" class="" type="text">
                             </div>
                         </div>
                     </div>
@@ -67,17 +70,7 @@ use common\models\Address;
                     <div class="item-content">
                         <div class="item-inner">
                             <div class="item-input">
-                                <input name="hiddenPhone" id="hiddenPhone" type="hidden">
-                                <input required="required" name="custphone" id="custPhone" placeholder="手机号码" type="tel">
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-input">
-                                <input required="required" maxlength="6" name="custzip" placeholder="邮编号码" type="tel">
+                                <input required="required" name="telephone" placeholder="手机号码" type="tel">
                             </div>
                         </div>
                     </div>
@@ -85,7 +78,7 @@ use common\models\Address;
                 <li>
                     <div class="item-content">
                         <label class="label-checkbox box display-box-pack">
-                            <input name="isdefault" type="checkbox">
+                            <input name="is_default" type="checkbox">
                             <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
                             <div class="box-flex">设置成默认地址</div>
                         </label>
@@ -93,7 +86,7 @@ use common\models\Address;
                 </li>
                 <li>
                     <div class="item-content">
-                        <a href="#" class="btn btn-blue form-to-json">确 定</a>
+                        <a href="#" class="btn btn-blue js-post" data-reload-page="<?=Url::toRoute('/address')?>">确 定</a>
                     </div>
                 </li>
             </ul>
