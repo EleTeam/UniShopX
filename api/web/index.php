@@ -9,8 +9,15 @@
  * @license The MIT License (MIT)
  */
 
-defined('YII_DEBUG') or define('YII_DEBUG', true);
-defined('YII_ENV') or define('YII_ENV', 'dev');
+if(strpos($_SERVER['HTTP_HOST'], 'local.') === 0){
+    define('YII_DEBUG', true);
+    define('YII_ENV', 'dev');
+}else{
+    define('YII_DEBUG', false);
+    define('YII_ENV', 'pro');
+}
+//defined('YII_DEBUG') or define('YII_DEBUG', true);
+//defined('YII_ENV') or define('YII_ENV', 'dev');
 
 require(__DIR__ . '/../../vendor/autoload.php');
 require(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');
