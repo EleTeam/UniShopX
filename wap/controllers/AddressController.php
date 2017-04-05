@@ -55,10 +55,14 @@ class AddressController extends BaseController
         $area_id = Yii::$app->request->post('area_id');
         $detail_address = Yii::$app->request->post('detail_address');
         $telephone = Yii::$app->request->post('telephone');
-        $is_default = Yii::$app->request->post('is_default');
+        $is_default = Yii::$app->request->post('is_default') ? 1 : 0;
 
         if(!$fullname || !$area_id || !$detail_address || !$telephone){
             return $this->jsonFail([], "请把信息填写完整");
+        }
+
+        if(!is_numeric($telephone) || strlen($telephone) < 11 || substr($telephone,0,1) != '1'){
+            return $this->jsonFail([], "请输入正确手机号");
         }
 
         $area = Area::findOne($area_id);
@@ -71,47 +75,43 @@ class AddressController extends BaseController
           //  return $this->jsonFail([], '请填写门牌地址，用于收货');
         //}
 
-        //清除默认地址, 因为把每次添加的地址作为默认地址
-        Address::updateAll(['is_default'=>Address::NO], 'user_id=:user_id', [':user_id'=>$user_id]);
+        //取消默认地址
+        if($is_default) {
+            Address::updateAll(['is_default' => Address::NO], 'user_id=:user_id', [':user_id' => $user_id]);
+        }
 
         //添加收货地址
         $address = new Address();
-        $addressData = $_REQUEST;
-        $addressData['is_default'] = Address::YES;
-        $addressData['user_id'] = $user_id;
+        $addressData = [
+            'user_id' => $user_id,
+            'is_default' => $is_default,
+            'telephone' => $telephone,
+            'detail_address' => $detail_address,
+            'area_id' => $area_id,
+            'fullname' => $fullname
+        ];
         if(!($address->load($addressData, '') && $address->save())) {
             return $this->jsonFail([], $address->errorsToString());
         }
 
         //我的收货列表
-        $addresses = Address::findByUser($user_id);
-        $addressesArr = [];
-        foreach($addresses as $item){
-            $addressesArr[] = $item->toArray([], ['area']);
-        }
+//        $addresses = Address::findByUser($user_id);
+//        $addressesArr = [];
+//        foreach($addresses as $item){
+//            $addressesArr[] = $item->toArray([], ['area']);
+//        }
+//
+//        //带有区域对象的新地址
+//        $addrArr = [];
+//        $addrArr[] = $address->toArray();
+//        $addrArr['area'] = $address->area->toArray();
+//        $addrArr['area']['path_names_4print'] = $address->area->getPathNames4Print();
+//
+//        $data = [
+//            'addresses' => $addressesArr,
+//            'address' => $addrArr,
+//        ];
+        return $this->jsonSuccess([], '添加成功');
 
-        //带有区域对象的新地址
-        $addrArr = [];
-        $addrArr[] = $address->toArray();
-        $addrArr['area'] = $address->area->toArray();
-        $addrArr['area']['path_names_4print'] = $address->area->getPathNames4Print();
-
-        $data = [
-            'addresses' => $addressesArr,
-            'address' => $addrArr,
-        ];
-        return $this->jsonSuccess($data);
-
-    }
-
-    /**
-     * 获得所有地址对象, json编码
-     * @link http://local.m.eleteam.com/address/get-all-areas
-     */
-    public function actionGetAllAreas()
-    {
-        $areas = AreaHelper::getTree();
-        //$areas = Area::findToTree();
-        return $this->jsonSuccess(['areas'=>$areas]);
     }
 }

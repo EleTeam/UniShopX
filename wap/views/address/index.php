@@ -37,7 +37,7 @@ use common\models\Address;
                 <ul>
                     <li class="swipeout">
                         <div class="swipeout-content item-content">
-                            <div class="card" data-addressid="8127" data-cityid="110100">
+                            <div class="card address-item" data-addressid="<?=$address->id?>">
                                 <div class="card-header">
                                     <div class="box-flex">
                                         <span><?=$address->fullname?></span>

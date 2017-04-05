@@ -30,7 +30,7 @@ use common\models\Address;
 </div>
 <div class="page no-tabbar address-create" data-page="address-create">
     <div class="page-content">
-        <i style="display: none;" id="url-get-all-areas" data-url="<?=Url::toRoute('address/get-all-areas')?>"></i>
+        <i style="display: none;" id="url-get-all-areas" data-url="<?=Url::toRoute('/area/get-all-areas')?>"></i>
 
         <form class="list-block address-form" action="<?=Url::toRoute('address/create-post')?>">
             <input name="_csrf" type="hidden" id="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
@@ -49,9 +49,7 @@ use common\models\Address;
                     <div class="item-content">
                         <div class="item-inner">
                             <div class="item-input">
-                                <input name="province" id="province" type="hidden">
-                                <input name="city" id="city" type="hidden">
-                                <input name="county" id="county" value="110101" type="hidden">
+                                <input name="area_id" id="area_id" type="hidden">
                                 <input required="required" name="area_text" placeholder="所属地区" id="picker-dependent" readonly="readonly" class="" type="text">
                             </div>
                         </div>
@@ -78,7 +76,7 @@ use common\models\Address;
                 <li>
                     <div class="item-content">
                         <label class="label-checkbox box display-box-pack">
-                            <input name="is_default" type="checkbox">
+                            <input name="is_default" type="checkbox" checked="checked">
                             <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
                             <div class="box-flex">设置成默认地址</div>
                         </label>

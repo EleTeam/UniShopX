@@ -94,6 +94,6 @@ class Address extends \common\components\ETActiveRecord
     {
         return static::find()->where('user_id=:user_id and status=:status',
             ['user_id'=>$user_id, 'status'=>static::STATUS_ACTIVE])
-            ->with(['area'])->all();
+            ->with(['area'])->orderBy('is_default desc')->all();
     }
 }

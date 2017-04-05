@@ -444,6 +444,8 @@ myApp.onPageInit('address-create', function(page){
                 rotateEffect: true,
                 toolbarCloseText: '完成',
                 formatValue: function (picker, values, displayValues) {
+                    var area_id = values[values.length-1];
+                    $$('#area_id').val(area_id);
                     return displayValues; //逗号风格的string, 如广东,深圳,福田
                 },
                 cols: [
