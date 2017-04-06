@@ -9,7 +9,6 @@
  * @license The MIT License (MIT)
  */
 
-
 if(strpos($_SERVER['HTTP_HOST'], 'local.') === 0){
     define('YII_DEBUG', true);
     define('YII_ENV', 'dev');

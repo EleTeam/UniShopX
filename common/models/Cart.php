@@ -253,6 +253,7 @@ class Cart extends ETActiveRecord
                     'user_id' => $user_id,
                     'app_cart_cookie_id' => $app_cart_cookie_id,
                     'is_selected' => CartItem::YES,
+                    'is_ordered' => CartItem::NO,
                 ];
                 if(!($cartItemNew->load($itemData, '') && $cartItemNew->save())){
                     throw new DbException($cartItemNew->errorsToString());
@@ -276,6 +277,7 @@ class Cart extends ETActiveRecord
                     'sku_id' => $sku_id,
                     'count' => $count,
                     'is_selected' => CartItem::YES,
+                    'is_ordered' => CartItem::NO,
                 ];
                 if(!($item->load($itemData, '') && $item->save())){
                     throw new DbException($item->errorsToString());

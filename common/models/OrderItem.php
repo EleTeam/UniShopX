@@ -32,10 +32,16 @@ use Yii;
  * @property string $featured_image
  * @property string $image_small
  * @property string $name
- * @property string $price
+ * @property string $price 购买时的最终价格
+ * @property string $sku_price ProductSku::$price
  * @property string $subtotal_price
  * @property integer $type
  * @property integer $status
+ * @property integer $sku_id ProductSku::$id
+ * @property string $spec_ids ProductSku::$spec_ids
+ * @property string $spec_value_ids ProductSku::$spec_value_ids
+ * @property string $code ProductSku::$code
+ * @property string $type_id Product::$type_id
  *
  * @property Order $order
  * @property OrderItemAttr[] $orderItemAttrs

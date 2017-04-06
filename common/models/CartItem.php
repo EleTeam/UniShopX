@@ -159,12 +159,13 @@ class CartItem extends ETActiveRecord
      * 获得购物车唯一的产品, 如某个购物车的某个商品带着某些属性
      * @param $cart_id
      * @param $sku_id
+     * @param $is_ordered
      * @return CartItem|null
      */
-    public static function findOneBy($cart_id, $sku_id)
+    public static function findOneBy($cart_id, $sku_id, $is_ordered=0)
     {
         $cartItem = self::find()
-            ->where(['cart_id'=>$cart_id, 'sku_id'=>$sku_id, 'status'=>self::STATUS_ACTIVE])
+            ->where(['cart_id'=>$cart_id, 'sku_id'=>$sku_id, 'is_ordered'=>$is_ordered, 'status'=>self::STATUS_ACTIVE])
             ->one();
         return $cartItem;
     }

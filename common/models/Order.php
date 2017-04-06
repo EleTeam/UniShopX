@@ -12,6 +12,7 @@
 namespace common\models;
 
 use common\components\ETActiveRecord;
+use common\components\Util;
 use Yii;
 
 /**
@@ -21,6 +22,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $created_by
  * @property integer $status
+ * @property integer $state
  * @property integer $updated_at
  * @property integer $updated_by
  * @property string $address_detail
@@ -44,8 +46,8 @@ use Yii;
  * @property integer $print_count
  * @property string $coupon_item_id  用户代金券id, CouponItem::$id
  * @property string $coupon_item_total_price  用户代金券总额, CouponItem::$total_price
- * @property string $origin_total_price  订单未减去优惠(如代金券)的价格
- * @property string $address_id
+ * @property string $origin_total_price  订单未减去优惠(如代金券, 积分抵扣, 节日立减等)的价格
+ * @property integer $address_id
  * @property integer $is_paid
  * @property integer $pay_type
  * @property string $notice
@@ -93,12 +95,12 @@ class Order extends ETActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'area_id', 'area_parent_id', 'cart_id', 'cookie_id', 'ip', 'preorder_id', 'user_id', 'total_count', 'print_count', 'is_paid', 'pay_type', 'store_id'], 'integer'],
+            [['created_at', 'created_by', 'status', 'updated_at', 'updated_by', 'area_id', 'address_id', 'area_parent_id', 'cart_id', 'cookie_id', 'ip', 'preorder_id', 'user_id', 'total_count', 'print_count', 'is_paid', 'pay_type', 'store_id'], 'integer'],
             [['status', 'address_fullname', 'address_telephone', 'area_id', 'area_name', 'area_parent_id', 'area_path_ids', 'area_path_names', 'total_price', 'total_count'], 'required'],
             [['total_price', 'coupon_item_total_price', 'origin_total_price'], 'number'],
             [['paid_date'], 'safe'],
             [['address_detail', 'address_fullname', 'address_telephone', 'area_name', 'area_path_ids', 'area_path_names', 'area_simple_name', 'area_zip_code', 'serial_no', 'status_union'], 'string', 'max' => 255],
-            [['coupon_item_id', 'address_id', 'status_id', 'op_transaction_id'], 'string', 'max' => 64],
+            [['coupon_item_id', 'status_id', 'op_transaction_id'], 'string', 'max' => 64],
             [['notice'], 'string', 'max' => 1000],
             [['rough_pay_type'], 'string', 'max' => 1],
             [['min_total_price_label'], 'string', 'max' => 50],
@@ -177,5 +179,10 @@ class Order extends ETActiveRecord
             default:
                 return self::ROUGH_PAY_TYPE_OP;
         }
+    }
+
+    public static function genSerialNum()
+    {
+        return date('YmdHis') . Util::millisecond() . rand(100,999);
     }
 }

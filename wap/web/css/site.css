@@ -111,6 +111,43 @@ i.tabbar-demo-icon-4 {
 .block .item_ico {float: left;width: 30px;padding: 10px 10px 10px 0;}
 .block .item_arrow {float: right;width: 16px;padding: 17px 15px 15px 0;}
 
+/* nologin-tip */
+#nologin-tip {background: none repeat scroll 0 0 #fffdee; border: 1px solid #edd28b; color: #f70; line-height: 25px; margin:20px; padding: 10px 0 10px 10px;}
+#nologin-tip i {background: url("../image/icon-warning1.png") no-repeat scroll 0 0; display: inline-block; height: 16px; margin-right: 10px; overflow: hidden; vertical-align: middle; width: 16px;}
+#nologin-tip a {margin-left:10px;}
+
+/* show-tip */
+.show-tip {background: none repeat scroll 0 0 #fffdee; border: 1px solid #edd28b; color: #f70; line-height: 25px; margin:0 10px; padding: 10px 0 10px 10px;}
+.show-tip .tip-text {font-size:16px;}
+.show-tip i {display: inline-block; height:26px; margin-right: 10px; overflow: hidden; vertical-align: middle; width:26px; }
+.fail-tip i {background: url("../image/icon-fail.png") no-repeat scroll 0 0; background-size:26px 26px;}
+.success-tip i {background: url("../image/icon-success.png") no-repeat scroll 0 0; background-size:26px 26px;}
+.fail-tip .tip-text {color:red;}
+.success-tip .tip-text {color:#61c100;}
+
+/* nothing-tip */
+.nothing-tip {text-align:center; background: none repeat scroll 0 0 #fffdee; border: 1px solid #edd28b; color: #f70; line-height: 25px; margin:20px 10px; padding: 12px 0 12px;}
+.nothing-tip i {background: url("../image/icon-warning1.png") no-repeat scroll 0 0; display: inline-block; height: 16px; margin-right: 8px; overflow: hidden; vertical-align: middle; width: 16px;}
+.nothing-tip .tip-text {font-size:18px; color:#ff7419;}
+
+/* 网络请求失败 */
+.web-fail {text-align:center; padding-top:90px;}
+.web-fail-img{width:90px;}
+.web-fail-txt1 {font-size:20px; color:#848689; padding-top:10px;}
+.web-fail-txt2 {font-size:18px; color:#c1c1c2; padding-top:20px;}
+.web-fail-txt3 {font-size:18px; color:#c1c1c2; padding-top:8px;}
+.web-fail-btn {
+    margin-top:20px;
+    background: #fd6161 none repeat scroll 0 0;
+    border-radius: 5px;
+    font-size: 18px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    padding: 4px 10px;
+    color: #fff;
+}
+
 
 /****** 首页 ******/
 .home .card-content-inner {
@@ -1066,3 +1103,67 @@ i.tabbar-demo-icon-4 {
 
 /*************************** 地址添加页 ***************************/
 .address-create .list-block { margin: 0; }
+
+
+/*************************** 订单成功页 ***************************/
+.order-success .bar {
+    height: 20px;
+}
+.order-success .success-text {line-height:30px; height:30px; color:#61c100; padding-left:36px;}
+.order-success .order-info-list {
+    font-size: 14px;
+    padding: 0;
+}
+.order-success .list {
+    overflow: hidden;
+    padding-left: 10px;
+}
+.order-success .list-item, .order-success .title-bar {
+    border-top: 1px solid #f0f0f0;
+}
+.order-success .order-info-list-item {
+    padding-left: 17px;
+}
+.order-success .list-item {
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    padding-right: 10px;
+}
+.order-success .order-info-list-item .title-main {
+    color: #848689;
+    float: left;
+    width: 72px;
+}
+.order-success .order-info-list-item .order-info {
+    color: #595b5f;
+    margin-left: 15px;
+}
+.order-success .recommend-list-item {
+    float: left;
+    width: 50%;
+}
+.order-success .order-list::before, .order-success .order-query::before {
+    background-image: url("../image/order_view.png");
+}
+.order-success .finish-index::before {
+    background-image: url("../image/home_light.png");
+}
+.order-success .app-link::before {
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    content: "";
+    display: block;
+    height: 45px;
+    margin: 0 auto;
+    width: 45px;
+}
+.order-success .app-link {
+    color: #222;
+    display: block;
+    font-size: 12px;
+    line-height: 22px;
+    margin: 10px auto;
+    text-align: center;
+    text-decoration: none;
+}

@@ -73,63 +73,11 @@ var g_areas = {
                     222: {
                         'id': 222,
                         'name': '宝安',
-                    },
-                    221: {
-                        'id': 221,
-                        'name': '福田',
-                    }
-                }
-            },
-            21: {
-                'id': 21,
-                'name': '广州',
-                'children': {
-                    222: {
-                        'id': 222,
-                        'name': '白云',
-                    },
-                    221: {
-                        'id': 221,
-                        'name': '天河',
                     }
                 }
             }
         }
-    },
-    2: {
-        'id': 2,
-        'name': '广东1',
-        'children': {
-            22: {
-                'id': 22,
-                'name': '深圳1',
-                'children': {
-                    222: {
-                        'id': 222,
-                        'name': '宝安1',
-                    },
-                    221: {
-                        'id': 221,
-                        'name': '福田1',
-                    }
-                }
-            },
-            21: {
-                'id': 21,
-                'name': '广州1',
-                'children': {
-                    222: {
-                        'id': 222,
-                        'name': '白云1',
-                    },
-                    221: {
-                        'id': 221,
-                        'name': '天河1',
-                    }
-                }
-            }
-        }
-    },
+    }
 };
 */
 function getProvinces()
@@ -411,7 +359,34 @@ myApp.onPageInit('product-view', function(page){
     //直接购买
 });
 
-//预订单 - 创建地址
+//预订单
+myApp.onPageInit('preorder', function(page) {
+    $$('.preorder .js-post-order').on('click', function(){
+        var url = $$('.preorder .order-form').attr('action');
+        var data = myApp.formToJSON($$('.preorder .order-form'));
+        var reloadPage = $$(this).attr('data-reload-page');
+        myApp.showIndicator();
+        $$.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function(result){
+                myApp.hideIndicator();
+                if(result.status){
+                    var order = result.data.order;
+                    reloadPage += '?order_id=' + order.id;
+                    myApp.getCurrentView().router.load({url:reloadPage, animatePages:false, ignoreCache:true, reload:true, force:true});
+                }else{
+                    var toast = myApp.toast(result.message, '', {});
+                    toast.show(true);
+                }
+            }
+        });
+    });
+});
+
+//预订单-创建地址
 myApp.onPageInit('address-create', function(page){
     //选择地址级联
     var pickerDependent = null;
@@ -451,7 +426,7 @@ myApp.onPageInit('address-create', function(page){
                 cols: [
                     {
                         textAlign: 'left',
-                        width: '300px',
+                        //width: '200px',
                         values: getProvinces().ids, //初始化的值, 要求数组, 如果id是数字则列表排列顺序根据该值的大小
                         displayValues: getProvinces().names,
                         onChange: function (picker, province_id, province_name) {
@@ -466,7 +441,7 @@ myApp.onPageInit('address-create', function(page){
                         }
                     },
                     {
-                        width: '300px',
+                        //width: '200px',
                         values: getCities(getFirstProvinceId()).ids,
                         displayValues: getCities(getFirstProvinceId()).names,
                         onChange: function (picker, city_id, city_name) {
@@ -478,7 +453,7 @@ myApp.onPageInit('address-create', function(page){
                         }
                     },
                     {
-                        width: '300px',
+                        //width: '200px',
                         values: getRegions(getFirstProvinceId(), getFirstCityId()).ids,
                         displayValues: getRegions(getFirstProvinceId(), getFirstCityId()).names,
                     },
@@ -510,3 +485,23 @@ myApp.onPageInit('address-create', function(page){
         });
     });
 });
+
+//订单-成功页
+myApp.onPageInit('order-success', function(page){
+    myApp.getCurrentView().showToolbar();
+
+    $$('.order-success .js-goto-order').on('click', function() {
+        var reloadPage = $$(this).attr('data-reload-page');
+        //tabMyView.router.reloadPage(reloadPage); //不能导航到该页面
+        //myApp.getCurrentView().showToolbar();
+        $$('#tab-my-icon').trigger('click');
+    });
+
+    $$('.order-success .js-goto-home').on('click', function() {
+        var reloadPage = $$(this).attr('data-reload-page');
+        //tabHomeView.router.reloadPage(reloadPage); //不能导航到该页面
+        //myApp.getCurrentView().showToolbar();
+        $$('#tab-home-icon').trigger('click');
+    });
+});
+
