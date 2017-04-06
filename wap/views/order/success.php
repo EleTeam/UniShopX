@@ -73,12 +73,12 @@ use common\models\Order;
                 <div class="item-content box">
                     <div class="box-flex">
                         <div class="item-inner">
-                            <div>总计：<b class="price">￥<?=$order->total_price?></b></div>
+                            <div>总计：<b class="price">￥3.33</b></div>
                             <small class="font-gray-status">(免配送费)</small>
                         </div>
                     </div>
                     <div class="box-flex">
-                        <a class="button button-fill" name="submitCart" href="<?=Url::toRoute('/order/add')?>">提交订单</a>
+                        <a class="button button-fill" name="submitCart" href="#">提交订单</a>
                     </div>
                 </div>
             </div>
