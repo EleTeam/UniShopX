@@ -34,8 +34,8 @@ if(strpos($_SERVER['HTTP_HOST'], 'local.') === 0){
 }else{
     $dbConfig = [
         'class' => 'yii\db\Connection',
-        'dsn' => 'mysql:host=127.0.0.1;dbname=etshop',
-        //'dsn' => 'mysql:host=120.24.54.172;dbname=etshop',
+        //'dsn' => 'mysql:host=127.0.0.1;dbname=etshop',
+        'dsn' => 'mysql:host=120.24.54.172;dbname=etshop',
         'username' => 'etshop',
         'password' => '123456',
         'charset' => 'utf8',
