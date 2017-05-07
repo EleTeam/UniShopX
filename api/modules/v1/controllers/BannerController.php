@@ -24,10 +24,19 @@ class BannerController extends ETRestController
 {
     public function actionList()
     {
-        $banners = Banner::find()->where('started_at <= :now_time and ended_at >= :now_time and status = :status',
-                                        [':now_time'=>time(), ':status'=>Banner::STATUS_ACTIVE])
-                                 ->orderBy('position asc')
-                                 ->all();
+//        $banners = Banner::find()->where('started_at <= :now_time and ended_at >= :now_time and status = :status',
+//                                        [':now_time'=>time(), ':status'=>Banner::STATUS_ACTIVE])
+//                                 ->orderBy('position asc')
+//                                 ->all();
+        $rBanners = [];
+        $banners = Banner::findBanners();
+        //写入redis
+//        foreach($banners as $banner){
+//            $rBanner = new self();
+//            $rBanner->setAttributes($banner->getAttributes(), false);
+//            $rBanner->insert();
+//            $rBanners[] = $banner;
+//        }
         return $this->jsonSuccess(['banners'=>$banners]);
     }
 }

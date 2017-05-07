@@ -50,7 +50,7 @@ class RBanner extends ActiveRecord
         $where = ['status' => self::STATUS_ACTIVE];
         $rBanners = self::find()->where($where)->all();
 
-        if(empty($rBanners)) {
+//        if(empty($rBanners)) {
             //从数据库中查询
             $rBanners = [];
             $banners = Banner::findBanners();
@@ -61,7 +61,7 @@ class RBanner extends ActiveRecord
                 $rBanner->insert();
                 $rBanners[] = $banner;
             }
-        }
+//        }
 
         return $rBanners;
     }

@@ -87,9 +87,11 @@ class Banner extends ETActiveRecord
      */
     public static function findBanners()
     {
-        return self::find()->where('started_at <= :now_time and ended_at >= :now_time and status = :status',
-                    [':now_time'=>time(), ':status'=>Banner::STATUS_ACTIVE])
-                ->orderBy('position asc')
-                ->all();
+//        return self::find()->where('started_at <= :now_time and ended_at >= :now_time and status = :status',
+//                    [':now_time'=>time(), ':status'=>Banner::STATUS_ACTIVE])
+//                ->orderBy('position asc')
+//                ->all();
+        return self::find()->orderBy('position asc')
+            ->all();
     }
 }
