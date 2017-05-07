@@ -156,7 +156,6 @@
         后台普通用户: demo/123456
 
 ###### @author Tony Wong
-###### @email 908601756@qq.com
 ###### @copyright Copyright © 2015年 EleTeam. All rights reserved.
 ###### @license The MIT License (MIT)
 
