@@ -1,3 +1,10 @@
+### 重构项目，前后端分离，前端采用用Vue
+    Vue项目地址为：https://github.com/EleTeam/Shop-Vue
+
+
+
+### ==================== 以下项目移到分支 old-etshop ====================
+
 # Shop-PHP-Yii2
 
 #### 如果你支持这个项目，请 Star and Fork Me。
