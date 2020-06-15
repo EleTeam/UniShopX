@@ -1,3 +1,0 @@
-account	个人中心
-info	个人资料
-role	角色
