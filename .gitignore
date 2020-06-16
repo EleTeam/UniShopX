@@ -1,0 +1,65 @@
+# 不要提交这个项目，开发环境才会用到
+/xappgii
+
+/a.*
+# yii console commands
+/yii
+/yii.bat
+/yii_test
+/yii_test.bat
+
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+#/vendor
+
+# composer itself is not needed
+#composer.phar
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
+
+# vagrant runtime
+/.vagrant
+
+# ignore generated files
+/appback/web/index.php
+/appback/web/index-test.php
+/appback/web/robots.txt
+
+/appmch/web/index.php
+/appmch/web/index-test.php
+/appmch/web/robots.txt
+
+/appdemo/web/index.php
+/appdemo/web/index-test.php
+/appdemo/web/robots.txt
+
+/appapi/web/index.php
+/appapi/web/index-test.php
+/appapi/web/robots.txt
+
+/apprbapi/web/index.php
+/apprbapi/web/index-test.php
+/apprbapi/web/robots.txt
+
+/appayapi/web/index.php
+/appayapi/web/index-test.php
+/appayapi/web/robots.txt
