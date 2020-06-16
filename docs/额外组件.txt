@@ -1,0 +1,11 @@
+将当前项目地址改为阿里云镜像地址：
+    C:\xampphp7\php\php.exe composer.phar config repo.packagist composer https://mirrors.aliyun.com/composer/
+
+linslin/yii2-curl
+    C:\xampphp7\php\php.exe composer.phar require linslin/yii2-curl "dev-master"
+
+yiisoft/yii2-redis
+    C:\xampphp7\php\php.exe composer.phar require  yiisoft/yii2-redis
+
+phpgangsta/googleauthenticator
+    C:\xampphp7\php\php.exe composer.phar require phpgangsta/googleauthenticator "dev-master"

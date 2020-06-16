@@ -1,0 +1,27 @@
+1，获得所有Shop-PHP-Yii2源码，包括依赖包
+2，创建一个新的数据库，用utf8编码，数据库文件在 docs/etshop.sql
+3, 配置开发环境或者生产环境，配置数据库文件：
+    配置数据库： environments/dev/common/config/main-local.php 中的 components['db'] 配置
+4，初始化项目：C:\xampphp7\php\php.exe init
+        开发环境选择：[0] Development，生产环境选择：[1] Production
+5，配置服务器
+        <VirtualHost *:80>
+            ServerName local.appback.etshop.cc
+            DocumentRoot "D:\workspace\php\etshop\frontend\web"
+
+            <Directory "D:\workspace\php\etshop\frontend\web">
+                # use mod_rewrite for pretty URL support
+                RewriteEngine on
+                # If a directory or a file exists, use the request directly
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteCond %{REQUEST_FILENAME} !-d
+                # Otherwise forward the request to index.php
+                RewriteRule . index.php
+
+                # use index.php as index file
+                DirectoryIndex index.php
+
+                # ...other settings...
+            </Directory>
+        </VirtualHost>
+

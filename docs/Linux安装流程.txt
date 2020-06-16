@@ -1,0 +1,26 @@
+启动项目：
+    1.启动redis: cd /opt/ 表示redis db存放位置
+        cd /opt/ && nohup redis-server /usr/local/etc/redis.conf > /opt/redis_nohup.out &
+    2.关闭本地mysql
+        lnmp mysql stop
+
+安装lnmp-1.6: PHP 7.3.6, MySQL 8.0.13
+    国内下载地址：http://soft.vpser.net/lnmp/lnmp1.6-full.tar.gz
+    国外下载地址：http://soft2.vpser.net/lnmp/lnmp1.6-full.tar.gz
+    cd /usr/local/src && wget http://soft2.vpser.net/lnmp/lnmp1.6-full.tar.gz
+    tar xf lnmp1.6-full.tar.gz && cd lnmp1.6-full
+    ./install.sh  按照以下选择即可：
+        5: Install MySQL 8.0.13     password: 123456
+        Do you want to enable or disable the InnoDB Storage Engine?  y
+        9: Install PHP 7.3.6
+        1: Don't install Memory Allocator. (Default)
+
+安装redis-6.0.3
+    cd /usr/local/src/ && wget http://download.redis.io/releases/redis-6.0.3.tar.gz
+    tar xf redis-6.0.3.tar.gz && cd redis-6.0.3/
+    make && make install
+    cp redis.conf /usr/local/etc/
+    vi /usr/local/etc/redis.conf
+        requirepass 123456
+        dbfilename redis-dump.rdb  # redis指定数据文件，dbfilename can't be a path, just a filename
+    启动redis：cd /opt/ && nohup redis-server /usr/local/etc/redis.conf > /opt/redis_nohup.out &
