@@ -11,6 +11,9 @@ class PriceHelper
 
     // 返回两个小数点的金额字符串，单位为元
     public static function format2DecimalYuan($price){
+        if (is_null($price) || $price === '') {
+            return '';
+        }
         return number_format($price / 100, 2, '.', '');
     }
 
