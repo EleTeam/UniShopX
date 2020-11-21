@@ -81,7 +81,7 @@ class Product extends BaseModel
             [['description'], 'string'],
             [['image', 'featured_image', 'image_small', 'name', 'featured_position', 'app_featured_image', 'short_description', 'meta_keywords', 'meta_description', 'remarks'], 'string', 'max' => 255],
             [['image_medium', 'image_large'], 'string', 'max' => 1000],
-            ['product_status', 'in', ProductStatus::values()]
+            ['product_status', 'in', 'range' => ProductStatus::values()]
         ];
     }
 

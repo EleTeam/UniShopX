@@ -1,6 +1,6 @@
 <?php
 
-namespace appback\models\forms;
+namespace appwap\models\forms;
 
 use common\helpers\ModelHelper;
 use common\models\BaseModel;

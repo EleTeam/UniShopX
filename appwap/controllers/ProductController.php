@@ -1,8 +1,8 @@
 <?php
 
-namespace appback\controllers;
+namespace appwap\controllers;
 
-use appback\models\forms\ProductForm;
+use appwap\models\forms\ProductForm;
 use common\consts\AuditStatus;
 use common\consts\ProductStatus;
 use common\consts\ProductType;
@@ -13,7 +13,7 @@ use common\helpers\ResponseHelper;
 use common\models\ModelException;
 use Yii;
 use common\models\Product;
-use appback\models\searchs\ProductSearch;
+use appwap\models\searchs\ProductSearch;
 use yii\data\Pagination;
 
 /**

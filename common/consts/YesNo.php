@@ -6,12 +6,12 @@ namespace common\consts;
  */
 class YesNo extends ValueLabel
 {
-    const NO  = 0;
     const YES   = 1;
+    const NO  = 0;
 
     protected static $_array = [
-        self::NO  => '否',
         self::YES => '是',
+        self::NO  => '否',
     ];
 }
 
